@@ -273,6 +273,7 @@ body {
 	padding: 36px 24px;
 	font-family: var(--poppins);
 	max-height: calc(100vh - 56px);
+	overflow-y: auto;
 }
 #content main .head-title {
 	display: flex;
@@ -282,12 +283,32 @@ body {
 	flex-wrap: wrap;
 }
 #content main .head-title .left h1 {
-	font-size: 36px;
-	font-weight: 600;
-	margin-bottom: 10px;
-	color: var(--dark);
-}
 
+}
+.btn-align{
+	font-size: 17px;
+	font-weight: bold;
+	margin-bottom: 12px;
+	color: var(--dark);
+	display: flex;
+	justify-content: space-between;
+}
+.add-button {
+	display: inline-block;
+	background-color: #4CAF50;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+	border-radius: 4px;
+	cursor: pointer;
+  }
+
+  .add-button:hover {
+	background-color: #45a049;
+  }
 
 
 #content main .table-data {
