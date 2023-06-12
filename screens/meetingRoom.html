@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container ">
+        <div class="container d-flex justify-content-between">
+            <h3>Meeting Rooms</h3>
+            <td><button type="button" class="btn btn-primary">Add Room</button></td>
+
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Meeting Rooms</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Slots</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Hall one</td>
+                    <td><button type="button" class="btn btn-primary">Available</button></td>
+                    <td><button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseExample" aria-expanded="false"
+                            aria-controls="collapseExample">Slots</button></td>
+                    <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <div class="collapse" id="collapseExample">
+                            <div>
+                                <div class="container d-flex justify-content-between">
+                                    <h3>Unavailable Slots</h3>
+                                    <button type="button" class="btn btn-primary">Add Slots</button>
+                        
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Slots</th>
+                                            <th scope="col">Time</th>
+                                            <th scope="col">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>1:00 PM - 2:00 PM</td>
+                                            <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+                        
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>5:00 PM - 6:00 PM</td>
+                                            <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+                        
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>10:00 AM - 11:00 AM</td>
+                                            <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+                        
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td><button type="button" class="btn btn-primary">Available</button></td>
+                    <td><button type="button" class="btn btn-primary">Slots</button></td>
+                    <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Larry the Bird</td>
+                    <td><button type="button" class="btn btn-primary">Unavailable</button></td>
+                    <td><button type="button" class="btn btn-primary">Slots</button></td>
+                    <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
