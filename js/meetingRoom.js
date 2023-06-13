@@ -53,7 +53,7 @@ let html =
 `<div class="container ">
     <div class="container d-flex justify-content-between">
         <h3>Meeting Rooms</h3>
-        <button type="button" class="btn btn-primary">Add Room</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoomModel">Add Room</button>
     </div>
     <table class="table">
         <thead>
