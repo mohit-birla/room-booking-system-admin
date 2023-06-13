@@ -82,29 +82,29 @@ let html =
                                 <td colspan="5" style="padding: 0">
                                     <div class="collapse" id="${item.id}">
                                         <div>
-                                            <div class="container d-flex justify-content-between">
+                                            <div class="container d-flex justify-content-between mt-2">
                                                 <h3>Unavailable Slots</h3>
                                                 <button type="button" class="btn btn-primary">Add Slots</button>
 
                                             </div>
                                             <table class="table">
                                                 <thead>
-                                                    <tr>
+                                                    ${item.slots ? `<tr>
                                                         <th scope="col">Slots</th>
                                                         <th scope="col">Time</th>
                                                         <th scope="col">Delete</th>
-                                                    </tr>
+                                                    </tr>` : ""}
                                                 </thead>
                                                 <tbody>
                                                 ${
-                                                    item.slots?.map((slots)=>{
+                                                    item.slots ? (item.slots.map((slots)=>{
                                                         return ` <tr>
                                                         <th scope="row">${slots.id}</th>
                                                         <td>${slots.time}</td>
                                                         <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
                                     
                                                     </tr>`
-                                                    })
+                                                    })) : "No Unavailable slots"
                                                 }
                                                 </tbody>
                                             </table>
