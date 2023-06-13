@@ -3,23 +3,23 @@ const array = [
     {
         id: 1,
         email: "raftar@averybit.in",
-        name: "Raftar",
+        name: "Raftar"
     },
     {
         id: 2,
         email: "raftar@averybit.in",
-        name: "Honey",
+        name: "Honey"
 
     },
     {
         id: 3,
         email: "raftar@averybit.in",
-        name: "Mustang",
+        name: "Mustang"
     },
     {
         id: 3,
         email: "raftar@averybit.in",
-        name: "Mustang",
+        name: "Mustang"
     }
 ]
 
@@ -65,16 +65,16 @@ let html = `
 let screenContent = document.getElementById("screenContent");
 
 // Getting button for adding event listner
-let users = document.getElementById("users");
+let userScreen = document.getElementById("userScreen");
 
-users.addEventListener("click", () => {
+userScreen.addEventListener("click", () => {
     // changing content on click
     screenContent.innerHTML = html;
 })
 
 // Search functionality
 const searchUser = () => {
-    var value = document.getElementById("searchValue").value;
+    var value = document.getElementById("searchValue").value.toLowerCase();
 
     let tableBody = document.getElementById("tableBody");
 
@@ -93,4 +93,26 @@ const searchUser = () => {
     })
 
     tableBody.innerHTML = innerRows;
+}
+
+// save data to localStorage
+let submit = () => {
+    let name = document.getElementById("username").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    let users = JSON.parse(localStorage.getItem('users'));
+    
+    if(users){
+        users.push({email, name, password});
+        localStorage.setItem("users", JSON.stringify(users));
+    }else{
+        let users = [];
+        users.push({email, name, password});
+        localStorage.setItem("users", JSON.stringify(users));
+    }
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+    alert("User added Succesfully")
 }
