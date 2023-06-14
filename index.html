@@ -1,260 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Room Booking System</title>
 
-    <!-- My CSS -->
-    <link rel="stylesheet" href="/css/style.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-<!-- Include jQuery UI CSS -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-        <!-- Bootstrap Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
-    />
-  </head>
+    <!-- Include jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+</head>
 
 <body>
 
 
-    <!-- Modal For Add Meeting -->
-    <div class="modal fade" id="addMeetingModal" role="dialog">
-        <div class="modal-dialog">
+    <body>
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">Add Meeting</h5>
+
+        <!-- Modal For Add Meeting -->
+        <div class="modal fade" id="addMeetingModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Add Meeting</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addRoomForm">
+                            <div class="form-group">
+                                <label for="roomNumber " class="py-2">Meeting Title</label>
+                                <input type="text" class="form-control" id="meetingTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="roomType" class="py-2">Room</label>
+                                <select class="form-control" id="roomType" required>
+                                    <option value="A1">A1</option>
+                                    <option value="A2">A2</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="datepicker" class="py-2">Date :</label><br>
+                                <input type="text" id="datepicker" placeholder="Select date" required
+                                    autocomplete="off">
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label for="clockInTime" class="py-2">Clock In Time:</label>
+                                <input type="time" class="form-control" id="clockInTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="clockOutTime" class="py-2">Clock Out Time:</label>
+                                <input type="time" class="form-control" id="clockOutTime" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Modal For Edit Meeting -->
+        <div class="modal fade" id="editModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Edit Meeting</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addRoomForm">
+                            <div class="form-group">
+                                <label for="roomNumber " class="py-2">Meeting Title</label>
+                                <input type="text" class="form-control" id="meetingTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="roomType" class="py-2">Room</label>
+                                <select class="form-control" id="roomType" required>
+                                    <option value="A1">A1</option>
+                                    <option value="A2">A2</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="datepicker" class="py-2">Date :</label><br>
+                                <input type="text" id="datepicker" placeholder="Select date" required
+                                    autocomplete="off">
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label for="clockInTime" class="py-2">Clock In Time:</label>
+                                <input type="time" class="form-control" id="clockInTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="clockOutTime" class="py-2">Clock Out Time:</label>
+                                <input type="time" class="form-control" id="clockOutTime" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Delete Room Modal -->
+        <div class="modal fade" id="deleteRoomModal" tabindex="-1" role="dialog" aria-labelledby="deleteRoomModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="deleteRoomModalLabel">Delete Meeting</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                </div>
-                <div class="modal-body">
-                    <form id="addRoomForm">
-                        <div class="form-group">
-                            <label for="roomNumber " class="py-2">Meeting Title</label>
-                            <input type="text" class="form-control" id="meetingTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="roomType" class="py-2">Room</label>
-                            <select class="form-control" id="roomType" required>
-                                <option value="A1">A1</option>
-                                <option value="A2">A2</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="datepicker" class="py-2">Date :</label><br>
-                            <input type="text" id="datepicker" placeholder="Select date" required autocomplete="off">
-                        </div>
-
-                       
-
-                        <div class="form-group">
-                            <label for="clockInTime" class="py-2">Clock In Time:</label>
-                            <input type="time" class="form-control" id="clockInTime" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="clockOutTime" class="py-2">Clock Out Time:</label>
-                            <input type="time" class="form-control" id="clockOutTime" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
-                    </form>
-
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this meeting?</p>
+                        <div id="roomDetails"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            id="cancelDeleteBtn">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                    </div>
                 </div>
             </div>
-
         </div>
-    </div>
 
 
-    <!-- Modal For Edit Meeting -->
-    <div class="modal fade" id="editModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">Edit Meeting</h5>
+        <!-- Decline Room Modal -->
+        <div class="modal fade" id="declineRoomModal" tabindex="-1" role="dialog" aria-labelledby="deleteRoomModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="deleteRoomModalLabel">Decline Meeting</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                </div>
-                <div class="modal-body">
-                    <form id="addRoomForm">
-                        <div class="form-group">
-                            <label for="roomNumber " class="py-2">Meeting Title</label>
-                            <input type="text" class="form-control" id="meetingTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="roomType" class="py-2">Room</label>
-                            <select class="form-control" id="roomType" required>
-                                <option value="A1">A1</option>
-                                <option value="A2">A2</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="datepicker" class="py-2">Date :</label><br>
-                            <input type="text" id="datepicker" placeholder="Select date" required autocomplete="off">
-                        </div>
-
-                       
-
-                        <div class="form-group">
-                            <label for="clockInTime" class="py-2">Clock In Time:</label>
-                            <input type="time" class="form-control" id="clockInTime" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="clockOutTime" class="py-2">Clock Out Time:</label>
-                            <input type="time" class="form-control" id="clockOutTime" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
-                    </form>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Delete Room Modal -->
-    <div class="modal fade" id="deleteRoomModal" tabindex="-1" role="dialog" aria-labelledby="deleteRoomModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="deleteRoomModalLabel">Delete Meeting</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete this meeting?</p>
-                    <div id="roomDetails"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="cancelDeleteBtn">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to decline this meeting?</p>
+                        <div id="roomDetails"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            id="cancelDeclineMeeting">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeclineMeeting">Decline</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-
-    <!-- Decline Room Modal -->
-		<div class="modal fade" id="declineRoomModal" tabindex="-1" role="dialog" aria-labelledby="deleteRoomModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="deleteRoomModalLabel">Decline Meeting</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to decline this meeting?</p>
-                    <div id="roomDetails"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelDeclineMeeting">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeclineMeeting">Decline</button>
+        <!-- Approve Room Modal -->
+        <div class="modal fade" id="approveRoomModal" tabindex="-1" role="dialog" aria-labelledby="deleteRoomModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="deleteRoomModalLabel">Approve Meeting</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you want to approve this meeting?</p>
+                        <div id="roomDetails"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            id="cancelAppproveMeeting">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="approveMeeting">Approve</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Approve Room Modal -->
-    <div class="modal fade" id="approveRoomModal" tabindex="-1" role="dialog" aria-labelledby="deleteRoomModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="deleteRoomModalLabel">Approve Meeting</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Do you want to approve this meeting?</p>
-                    <div id="roomDetails"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelAppproveMeeting">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="approveMeeting">Approve</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="container-fluid">
-      <div class="row flex-nowrap">
-        <!-- Sidebar -->
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-info-subtle">
-          <div
-            class="d-flex flex-column align-items-center px-3 pt-2 text-white min-vh-100"
-          >
-            <a
-              href="/"
-              class="d-flex align-items-center ms-auto pb-3 mb-md-0 me-md-auto text-decoration-none text-black"
-            >
-              <span class="fs-5 d-none d-sm-inline my-4">Averybit</span>
-            </a>
-            <ul
-              class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-              id="menu"
-            >
-              <li>
-                <a
-                  href="#submenu1"
-                  data-bs-toggle="collapse"
-                  class="nav-link px-0 align-middle text-black"
-                >
-                  <i class="fs-4 bi-speedometer2"></i>
-                  <span class="ms-1 d-none d-sm-inline">Dashboard</span>
-                </a>
-              </li>
+        <div class="container-fluid">
+            <div class="row flex-nowrap">
+                <!-- Sidebar -->
+                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-info-subtle">
+                    <div class="d-flex flex-column align-items-center px-3 pt-2 text-white min-vh-100">
+                        <a href="/"
+                            class="d-flex align-items-center ms-auto pb-3 mb-md-0 me-md-auto text-decoration-none text-black">
+                            <span class="fs-5 d-none d-sm-inline my-4">Averybit</span>
+                        </a>
+                        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                            id="menu">
+                            <li>
+                                <a href="#submenu1" data-bs-toggle="collapse"
+                                    class="nav-link px-0 align-middle text-black">
+                                    <i class="fs-4 bi-speedometer2"></i>
+                                    <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                                </a>
+                            </li>
 
-              <li>
-                <a href="#" class="nav-link px-0 align-middle text-black">
-                  <i class="fs-4 bi bi-house"></i>
-                  <span class="ms-1 d-none d-sm-inline">Rooms</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link px-0 align-middle text-black">
-                  <i class="fs-4 bi-people"></i>
-                  <span class="ms-1 d-none d-sm-inline">Users</span>
-                </a>
-              </li>
-            </ul>
-            <hr />
-          </div>
-        </div>
-        <div>
-            <nav class="navbar bg-info-subtle">
-                <div class="container-fluid">
-                  <span class="navbar-text text-black">
-                    Welcome to Admin Panel
-                  </span>
-                  
+                            <li>
+                                <a href="#" class="nav-link px-0 align-middle text-black">
+                                    <i class="fs-4 bi bi-house"></i>
+                                    <span class="ms-1 d-none d-sm-inline">Rooms</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0 align-middle text-black">
+                                    <i class="fs-4 bi-people"></i>
+                                    <span class="ms-1 d-none d-sm-inline">Users</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <hr />
+                    </div>
                 </div>
 
-                <div class="py-xl-5">
+
+
+
+
+                <div class="col py-0 px-4">
+                    <nav class="navbar bg-info-subtle">
+                        <div class="container-fluid">
+                            <span class="navbar-text text-black">
+                                Welcome to Admin Panel
+                            </span>
+
+                        </div>
+                    </nav>
                     <div class="table-responsive">
                         <table class="table">
-                            <div class="btn-align">
-                                <h3>Meetings for Approvel </h3>
+                            <div class="my-5" style="font-size: 17px;
+                            font-weight: bold;
+                            margin-bottom: 12px;
+                            color: var(--dark);
+                            display: flex;
+                            justify-content: space-between;">
+                                <h3>Upcoming Meetings</h3>
+                                <button type="button" style="display: inline-block;
+                                background-color: #4CAF50;
+                                color: #fff;
+                                border: none;
+                                padding: 10px 20px;
+                                text-align: center;
+                                text-decoration: none;
+                                font-size: 16px;
+                                border-radius: 4px;
+                                cursor: pointer;" id="myBtn">Add Meeting</button>
 
                             </div>
                             <thead>
@@ -262,34 +274,60 @@
                                     <th>No.</th>
                                     <th>Meeting Title</th>
                                     <th>Room</th>
+                                    <th>Date</th>
                                     <th>Clock In Time</th>
                                     <th>Clock Out Time:</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="approvalData">
+                            <tbody id="roomData">
                                 <!-- Dynamically generated rows will be inserted here -->
 
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="py-xl-5">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <div class="btn-align">
+                                    <h3>Meetings for Approvel </h3>
+
+                                </div>
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Meeting Title</th>
+                                        <th>Room</th>
+                                        <th>Clock In Time</th>
+                                        <th>Clock Out Time:</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="approvalData">
+                                    <!-- Dynamically generated rows will be inserted here -->
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
+                <!-- Navbar -->
             </div>
         </div>
-    </div>
 
-    <script src="/js/script.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <!-- Include jQuery UI library -->
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <!-- Include jQuery UI library -->
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="/js/script.js"></script>
-    <script src="/js/meetingRoom.js"></script>
-	<script src="/js/users.js"></script>  </body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="./js/script.js"></script>
+
+
+    </body>
+
 </html>

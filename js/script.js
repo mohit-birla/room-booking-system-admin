@@ -71,7 +71,18 @@ function generateRowsforApprovalMeeting() {
     var actionCell = document.createElement("td");
     var approveButton = document.createElement("button");
     approveButton.setAttribute("type", "button");
-    approveButton.setAttribute("class", "edit-button");
+
+    approveButton.style.margin = "8px";
+    approveButton.style.padding = "8px 18px";
+    approveButton.style.borderRadius = "4px";
+    approveButton.style.fontSize = "14px";
+    approveButton.style.textAlign = "center";
+    approveButton.style.color = "#fff";
+    approveButton.style.cursor = "pointer";
+    approveButton.style.transition = "background-color 0.3s ease";
+    approveButton.style.backgroundColor = "green";
+
+
     approveButton.setAttribute("id", "editBtn");
     approveButton.textContent = "Approve";
 
@@ -81,7 +92,19 @@ function generateRowsforApprovalMeeting() {
     });
 
     var declineButton = document.createElement("button");
-    declineButton.setAttribute("class", "delete-button");
+
+
+    declineButton.style.margin = "8px";
+    declineButton.style.padding = "8px 18px";
+    declineButton.style.borderRadius = "4px";
+    declineButton.style.fontSize = "14px";
+    declineButton.style.textAlign = "center";
+    declineButton.style.color = "#fff";
+    declineButton.style.cursor = "pointer";
+    declineButton.style.transition = "background-color 0.3s ease";
+    declineButton.style.backgroundColor = "red";
+
+
     declineButton.textContent = "Decline";
 
     declineButton.addEventListener("click", function () {
@@ -94,7 +117,7 @@ function generateRowsforApprovalMeeting() {
     confirmApproveBtn.addEventListener("click", function () {
 
       upcomingMeetingData.push(...meetingsForApprovalData);
-     
+
 
 
       saveDataToLocalStorage();
@@ -104,7 +127,7 @@ function generateRowsforApprovalMeeting() {
       $("#approveRoomModal").modal("hide");
     });
 
-    
+
 
     cancelApproveBtn.addEventListener("click", function () {
       $("#approveRoomModal").modal("hide");
@@ -174,8 +197,23 @@ function generateRows() {
     var editButton = document.createElement("button");
     editButton.setAttribute("type", "button");
     editButton.setAttribute("class", "edit-button");
+
+    editButton.style.margin = "8px";
+    editButton.style.padding = "8px 18px";
+    editButton.style.borderRadius = "4px";
+    editButton.style.fontSize = "14px";
+    editButton.style.textAlign = "center";
+    editButton.style.color = "#fff";
+    editButton.style.cursor = "pointer";
+    editButton.style.transition = "background-color 0.3s ease";
+    editButton.style.backgroundColor = "green";
+
     editButton.setAttribute("id", "editBtn");
     editButton.textContent = "Edit";
+
+
+
+
 
     editButton.addEventListener("click", function () {
       $("#editModal").modal("show");
@@ -184,6 +222,17 @@ function generateRows() {
 
     var deleteButton = document.createElement("button");
     deleteButton.setAttribute("class", "delete-button");
+
+    deleteButton.style.margin = "8px";
+    deleteButton.style.padding = "8px 18px";
+    deleteButton.style.borderRadius = "4px";
+    deleteButton.style.fontSize = "14px";
+    deleteButton.style.textAlign = "center";
+    deleteButton.style.color = "#fff";
+    deleteButton.style.cursor = "pointer";
+    deleteButton.style.transition = "background-color 0.3s ease";
+    deleteButton.style.backgroundColor = "red";
+
     deleteButton.textContent = "Delete";
 
     deleteButton.addEventListener("click", function () {
