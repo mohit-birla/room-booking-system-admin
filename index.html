@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Room Booking System</title>
 
     <!-- My CSS -->
-    <link rel="stylesheet" href="/css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
 
 <!-- Include jQuery UI CSS -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
         <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+  </head>
 
 <body>
 
@@ -191,65 +198,56 @@
     </div>
 
     <div class="container-fluid">
-        <div class="row flex-nowrap">
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                    <a href="/"
-                        class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-5 d-none d-sm-inline my-4">Menu</span>
-                    </a>
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-                        id="menu">
+      <div class="row flex-nowrap">
+        <!-- Sidebar -->
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-info-subtle">
+          <div
+            class="d-flex flex-column align-items-center px-3 pt-2 text-white min-vh-100"
+          >
+            <a
+              href="/"
+              class="d-flex align-items-center ms-auto pb-3 mb-md-0 me-md-auto text-decoration-none text-black"
+            >
+              <span class="fs-5 d-none d-sm-inline my-4">Averybit</span>
+            </a>
+            <ul
+              class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+              id="menu"
+            >
+              <li>
+                <a
+                  href="#submenu1"
+                  data-bs-toggle="collapse"
+                  class="nav-link px-0 align-middle text-black"
+                >
+                  <i class="fs-4 bi-speedometer2"></i>
+                  <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                </a>
+              </li>
 
-                        <li>
-                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                <i class="fs-4 bi-speedometer2"></i> <span
-                                    class="ms-1 d-none d-sm-inline">Dashboard</span> </a>
-
-                        </li>
-
-
-
-                        <li>
-                            <a href="#" class="nav-link px-0 align-middle">
-                                <i class="fs-4 bi bi-house"></i> <span class="ms-1 d-none d-sm-inline">Rooms</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-0 align-middle">
-                                <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Users</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <hr>
-
-                </div>
-            </div>
-            <div class="col py-0 px-4">
-
-                <div class="table-responsive">
-                    <table class="table">
-                        <div class="btn-align my-5">
-                            <h3>Upcoming Meetings</h3>
-                            <button type="button" class="add-button" id="myBtn">Add Meeting</button>
-
-                        </div>
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Meeting Title</th>
-                                <th>Room</th>
-                                <th>Date</th>
-                                <th>Clock In Time</th>
-                                <th>Clock Out Time:</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="roomData">
-                            <!-- Dynamically generated rows will be inserted here -->
-
-                        </tbody>
-                    </table>
+              <li>
+                <a href="#" class="nav-link px-0 align-middle text-black">
+                  <i class="fs-4 bi bi-house"></i>
+                  <span class="ms-1 d-none d-sm-inline">Rooms</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link px-0 align-middle text-black">
+                  <i class="fs-4 bi-people"></i>
+                  <span class="ms-1 d-none d-sm-inline">Users</span>
+                </a>
+              </li>
+            </ul>
+            <hr />
+          </div>
+        </div>
+        <div>
+            <nav class="navbar bg-info-subtle">
+                <div class="container-fluid">
+                  <span class="navbar-text text-black">
+                    Welcome to Admin Panel
+                  </span>
+                  
                 </div>
 
                 <div class="py-xl-5">
@@ -280,18 +278,18 @@
         </div>
     </div>
 
+    <script src="/js/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <!-- Include jQuery UI library -->
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="/js/script.js"></script>
     <script src="/js/meetingRoom.js"></script>
-	<script src="/js/users.js"></script>
-</body>
-
-
+	<script src="/js/users.js"></script>  </body>
 </html>
