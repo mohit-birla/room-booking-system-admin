@@ -1,8 +1,6 @@
 // Meeting Room Screen
-let screenContent = document.getElementById("screenContent");
-let meetingRooms = document.getElementById("meetingRooms");
 
-const array = [
+const meetingRoomArray = [
     {
         id: 1,
         meetingRoom: "Hall",
@@ -49,8 +47,8 @@ const array = [
     },
 ]
 
-let html = 
-`<div class="container ">
+let meetingRoomHtml = 
+`<div class="m-3 p-3">
     <div class="container d-flex justify-content-between">
         <h3>Meeting Rooms</h3>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoomModel">Add Room</button>
@@ -67,7 +65,7 @@ let html =
         </thead>
         <tbody>
             ${
-                array?.map((item)=>{
+                meetingRoomArray?.map((item)=>{
                     return `<tr>
                                 <th scope="row">${item.id}</th>
                                 <td>${item.meetingRoom}</td>
@@ -87,27 +85,29 @@ let html =
                                                 <button type="button" class="btn btn-primary">Add Slots</button>
 
                                             </div>
-                                            <table class="table">
-                                                <thead>
-                                                    ${item.slots ? `<tr>
-                                                        <th scope="col">Slots</th>
-                                                        <th scope="col">Time</th>
-                                                        <th scope="col">Delete</th>
-                                                    </tr>` : ""}
-                                                </thead>
-                                                <tbody>
-                                                ${
-                                                    item.slots ? (item.slots.map((slots)=>{
-                                                        return ` <tr>
-                                                        <th scope="row">${slots.id}</th>
-                                                        <td>${slots.time}</td>
-                                                        <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
-                                    
-                                                    </tr>`
-                                                    })) : "No Unavailable slots"
-                                                }
-                                                </tbody>
-                                            </table>
+                                            <div style="overflow: auto">
+                                                <table class="table" >
+                                                    <thead>
+                                                        ${item.slots ? `<tr>
+                                                            <th scope="col">Slots</th>
+                                                            <th scope="col">Time</th>
+                                                            <th scope="col">Delete</th>
+                                                        </tr>` : ""}
+                                                    </thead>
+                                                    <tbody>
+                                                    ${
+                                                        item.slots ? (item.slots.map((slots)=>{
+                                                            return ` <tr>
+                                                            <th scope="row">${slots.id}</th>
+                                                            <td>${slots.time}</td>
+                                                            <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+                                        
+                                                        </tr>`
+                                                        })) : "No Unavailable slots"
+                                                    }
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
@@ -119,8 +119,10 @@ let html =
     </table>
 </div>`
 
-console.log(screenContent)
-meetingRooms.addEventListener("click", () => {
-    screenContent.innerHTML = html;
-    console.log("runned")
+let MeetingRoomScreen = document.getElementById("screenContent");
+let meetingRoomButton = document.getElementById("roomButton");
+
+
+meetingRoomButton.addEventListener("click", () => {
+    MeetingRoomScreen.innerHTML = meetingRoomHtml;
 })
