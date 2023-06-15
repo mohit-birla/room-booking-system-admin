@@ -7,18 +7,18 @@ const usersArray = [
     },
     {
         id: 2,
-        email: "raftar@averybit.in",
+        email: "honey@averybit.in",
         name: "Honey"
 
     },
     {
         id: 3,
-        email: "raftar@averybit.in",
+        email: "farrari@averybit.in",
         name: "Farrari"
     },
     {
         id: 4,
-        email: "raftar@averybit.in",
+        email: "mustang@averybit.in",
         name: "Mustang"
     }
 ]
@@ -31,7 +31,7 @@ let usersHtml = `
     <div class="container d-flex justify-content-between m-0">
         <h3>Users</h3>
         <div class="input-group d-none d-md-flex w-50">
-            <input id="searchValue" onkeyup="searchUser()" type="text" class="  form-control" placeholder="Search User" aria-label="Search User" aria-describedby="button-addon2">
+            <input onkeyup="searchUser()" type="text" id="searchValue"  class="form-control" placeholder="Search User" aria-label="Search User" aria-describedby="button-addon2">
             <button class="btn btn-outline-info" type="button" id="searchUser">Search</button>
         </div>
         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addUsersModel">Add User</button>
@@ -79,13 +79,16 @@ usersButton.addEventListener("click", () => {
 
 // Search functionality
 const searchUser = () => {
-    var value = document.getElementById("searchValue").value.toLowerCase();
+    var value = document.getElementById("searchValue").value
+    console.log(value)
 
     let tableBody = document.getElementById("tableBody");
 
     let filteredUser = usersArray.filter((item)=>{
-        return item.name.toLowerCase().includes(value);
+        return item.email.toLowerCase().includes(value);
     })
+
+    console.log(filteredUser)
 
     let innerRows = filteredUser.map((usr)=>{
         return `<tr>
