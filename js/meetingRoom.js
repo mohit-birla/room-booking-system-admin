@@ -51,7 +51,7 @@ let meetingRoomHtml =
 `<div class="m-3 p-3">
     <div class="container d-flex justify-content-between">
         <h3>Meeting Rooms</h3>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoomModel">Add Room</button>
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addRoomModel">Add Room</button>
     </div>
     <table class="table">
         <thead>
@@ -69,11 +69,11 @@ let meetingRoomHtml =
                     return `<tr>
                                 <th scope="row">${item.id}</th>
                                 <td>${item.meetingRoom}</td>
-                                <td><button type="button" class="btn btn-primary">${item.status}</button></td>
-                                <td><button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                <td><button type="button" class="btn btn-info">${item.status}</button></td>
+                                <td><button class="btn btn-info" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#${item.id}" aria-expanded="false"
                                     aria-controls="collapseExample">Slots</button></td>
-                                <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+                                <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteRoomModel">Delete</button></td>
         
                             </tr>
                             <tr>
@@ -82,7 +82,7 @@ let meetingRoomHtml =
                                         <div>
                                             <div class="container d-flex justify-content-between mt-2">
                                                 <h3>Unavailable Slots</h3>
-                                                <button type="button" class="btn btn-primary">Add Slots</button>
+                                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addSlotModel">Add Slots</button>
 
                                             </div>
                                             <div style="overflow: auto">
@@ -100,7 +100,7 @@ let meetingRoomHtml =
                                                             return ` <tr>
                                                             <th scope="row">${slots.id}</th>
                                                             <td>${slots.time}</td>
-                                                            <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+                                                            <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteSlotsModel">Delete</button></td>
                                         
                                                         </tr>`
                                                         })) : "No Unavailable slots"

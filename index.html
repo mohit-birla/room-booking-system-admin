@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Room Booking System</title>
-    
+
     <link rel="stylesheet" href="./css/style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -351,7 +351,11 @@
               </li>
 
               <li>
-                <a href="#" class="nav-link px-0 align-middle text-black">
+                <a
+                  href="#"
+                  id="roomButton"
+                  class="nav-link px-0 align-middle text-black"
+                >
                   <i class="fs-4 bi bi-house"></i>
                   <span class="ms-1 d-none d-sm-inline">Rooms</span>
                 </a>
@@ -605,6 +609,186 @@
             </div>
           </div>
         </div>
+        <!-- Model for Delete Room -->
+        <div
+          class="modal fade"
+          id="deleteRoomModel"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Room</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <p>Confirm to delete Room</p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button type="button" class="btn btn-danger">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Model for Delete Room End-->
+
+        <!-- Model for Delete Slot starts -->
+        <div
+          class="modal fade"
+          id="deleteSlotsModel"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Slots</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <p>Confirm to delete Slots</p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button type="button" class="btn btn-danger">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Model for Delete slots End-->
+
+        <!-- Model for Add Room start-->
+
+        <div
+          class="modal fade"
+          id="addRoomModel"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Room</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="roomId" class="col-form-label">Room Id</label>
+                    <input type="text" class="form-control" id="roomId" />
+                  </div>
+                  <div class="mb-3">
+                    <label for="roomName" class="col-form-label"
+                      >Room Name</label
+                    >
+                    <input type="text" class="form-control" id="roomName" />
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="button" class="btn btn-info">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Model for Add Room End-->
+
+        <!-- Model for Add Slot start-->
+
+        <div class="modal fade" id="addSlotModel" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title">Add Slot</h3>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="addRoomForm">
+                  <div class="form-group mb-3">
+                    <label for="datepicker" class="py-2">Date :</label><br />
+                    <input
+                      type="text"
+                      id="datepickerForSlots"
+                      placeholder="Select date"
+                      required
+                      autocomplete="off"
+                    />
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="clockInTime" class="py-2">Clock In Time:</label>
+                    <input
+                      type="time"
+                      class="form-control"
+                      id="clockInTime"
+                      required
+                    />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="clockOutTime" class="py-2"
+                      >Clock Out Time:</label
+                    >
+                    <input
+                      type="time"
+                      class="form-control"
+                      id="clockOutTime"
+                      required
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-info mt-2">
+                    Submit
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Model for Add Slot End-->
       </div>
     </div>
 

@@ -23,6 +23,16 @@ $(document).ready(function () {
   $("#datepicker").val("");
 });
 
+$(document).ready(function () {
+  // Initialize the date picker
+  $("#datepickerForSlots").datepicker({
+    dateFormat: "dd-mm-yy", // Set the date format to yyyy-mm-dd
+    minDate: 0, // Set the minimum selectable date as today
+
+  });
+  // Clear the date picker field
+  $("#datepickerForSlots").val("");
+});
 
 
 // Data array for meetingforApproval meetings
