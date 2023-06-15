@@ -1,92 +1,328 @@
-const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+// Function to toggle dropdown for add meeting
 
-allSideMenu.forEach(item=> {
-	const li = item.parentElement;
+$(document).ready(function () {
+  $("#myBtn").click(function () {
+    console.log('test')
+    $("#addMeetingModal").modal("show");
+  });
+});
 
-	item.addEventListener('click', function () {
-		allSideMenu.forEach(i=> {
-			i.parentElement.classList.remove('active');
-		})
-		li.classList.add('active');
-	})
+$('.modal .close').click(function () {
+  $(this).closest('.modal').modal('hide');
+});
+
+//gemerate datepicker
+$(document).ready(function () {
+  // Initialize the date picker
+  $("#datepicker").datepicker({
+    dateFormat: "dd-mm-yy", // Set the date format to yyyy-mm-dd
+    minDate: 0, // Set the minimum selectable date as today
+
+  });
+  // Clear the date picker field
+  $("#datepicker").val("");
 });
 
 
 
+// Data array for meetingforApproval meetings
+var meetingsForApprovalData = [{
+  no: 1, meetingTitle: "g", room: "A2", dateofMeeting: "06/15/2023", clockInTime: "15:30", clockOutTime
+    :
+    "15:30"
 
-// TOGGLE SIDEBAR
-const menuBar = document.querySelector('#content nav .bx.bx-menu');
-const sidebar = document.getElementById('sidebar');
+}];
 
-menuBar.addEventListener('click', function () {
-	sidebar.classList.toggle('hide');
-})
+// Get the table body reference
+var approvalDataBody = document.getElementById("approvalData");
+
+function generateRowsforApprovalMeeting() {
 
 
-// Function to toggle dropdown menu
-function toggleDropdown() {
-  const dropdown = document.getElementById("profileDropdown");
-  dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+  // Generate the table rows dynamically
+  meetingsForApprovalData.forEach(function (data) {
+    var row = document.createElement("tr");
+
+    var noCell = document.createElement("td");
+    noCell.textContent = data.no;
+    row.appendChild(noCell);
+
+    var meetingTitleCell = document.createElement("td");
+    meetingTitleCell.textContent = data.meetingTitle;
+    row.appendChild(meetingTitleCell);
+
+    var roomCell = document.createElement("td");
+    roomCell.textContent = data.room;
+    row.appendChild(roomCell);
+
+    var roomDayCell = document.createElement("td");
+    roomDayCell.textContent = data.dateofMeeting;
+    row.appendChild(roomDayCell);
+
+
+    var clockInTimeCell = document.createElement("td");
+    clockInTimeCell.textContent = data.clockInTime;
+    row.appendChild(clockInTimeCell);
+
+    var clockOutTimeCell = document.createElement("td");
+    clockOutTimeCell.textContent = data.clockOutTime;
+    row.appendChild(clockOutTimeCell);
+
+    var actionCell = document.createElement("td");
+    var approveButton = document.createElement("button");
+    approveButton.setAttribute("type", "button");
+
+    approveButton.style.margin = "8px";
+    approveButton.style.padding = "8px 18px";
+    approveButton.style.borderRadius = "4px";
+    approveButton.style.fontSize = "14px";
+    approveButton.style.textAlign = "center";
+    approveButton.style.color = "#fff";
+    approveButton.style.cursor = "pointer";
+    approveButton.style.transition = "background-color 0.3s ease";
+    approveButton.style.backgroundColor = "green";
+
+
+    approveButton.setAttribute("id", "editBtn");
+    approveButton.textContent = "Approve";
+
+    approveButton.addEventListener("click", function () {
+      $("#approveRoomModal").modal("show");
+
+    });
+
+    var declineButton = document.createElement("button");
+
+
+    declineButton.style.margin = "8px";
+    declineButton.style.padding = "8px 18px";
+    declineButton.style.borderRadius = "4px";
+    declineButton.style.fontSize = "14px";
+    declineButton.style.textAlign = "center";
+    declineButton.style.color = "#fff";
+    declineButton.style.cursor = "pointer";
+    declineButton.style.transition = "background-color 0.3s ease";
+    declineButton.style.backgroundColor = "red";
+
+
+    declineButton.textContent = "Decline";
+
+    declineButton.addEventListener("click", function () {
+      $("#declineRoomModal").modal("show");
+    });
+
+    var cancelApproveBtn = document.getElementById("cancelAppproveMeeting");
+    var confirmApproveBtn = document.getElementById("approveMeeting");
+
+    confirmApproveBtn.addEventListener("click", function () {
+
+      upcomingMeetingData.push(...meetingsForApprovalData);
+
+
+
+      saveDataToLocalStorage();
+
+      generateRows();
+
+      $("#approveRoomModal").modal("hide");
+    });
+
+
+
+    cancelApproveBtn.addEventListener("click", function () {
+      $("#approveRoomModal").modal("hide");
+    });
+
+    var cancelDeclineBtn = document.getElementById("cancelDeclineMeeting");
+    var confirmDeclineButton = document.getElementById("confirmDeclineMeeting");
+
+    confirmDeclineButton.addEventListener("click", function () {
+      $("#declineRoomModal").modal("hide");
+    });
+
+    cancelDeclineBtn.addEventListener("click", function () {
+      $("#declineRoomModal").modal("hide");
+    });
+
+    actionCell.appendChild(approveButton);
+    actionCell.appendChild(declineButton);
+    row.appendChild(actionCell);
+
+    approvalDataBody.appendChild(row);
+  });
 }
 
-
-// Function to close the dropdown
-function closeDropdown(event) {
-	event.stopPropagation();
-	const dropdown = document.getElementById("profileDropdown");
-	dropdown.style.display = "none";
-  }
-  
-  // Attach click event listener to profile button
-const profileButton = document.getElementById("profileButton");
-profileButton.addEventListener("click", toggleDropdown);
+generateRowsforApprovalMeeting();
 
 
+// Data array for upcoming meetings
+var upcomingMeetingData = [];
+
+// Get the table body reference
+var roomDataBody = document.getElementById("roomData");
+
+function generateRows() {
+  roomDataBody.innerHTML = ""; // Clear existing rows
+
+  // Generate the table rows dynamically
+  upcomingMeetingData.forEach(function (data) {
+    var row = document.createElement("tr");
+
+    var noCell = document.createElement("td");
+    noCell.textContent = data.no;
+    row.appendChild(noCell);
+
+    var meetingTitleCell = document.createElement("td");
+    meetingTitleCell.textContent = data.meetingTitle;
+    row.appendChild(meetingTitleCell);
+
+    var roomCell = document.createElement("td");
+    roomCell.textContent = data.room;
+    row.appendChild(roomCell);
+
+    var roomDayCell = document.createElement("td");
+    roomDayCell.textContent = data.dateofMeeting;
+    row.appendChild(roomDayCell);
 
 
-const searchButton = document.querySelector('#content nav form .form-input button');
-const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-const searchForm = document.querySelector('#content nav form');
+    var clockInTimeCell = document.createElement("td");
+    clockInTimeCell.textContent = data.clockInTime;
+    row.appendChild(clockInTimeCell);
 
-searchButton.addEventListener('click', function (e) {
-	if(window.innerWidth < 576) {
-		e.preventDefault();
-		searchForm.classList.toggle('show');
-		if(searchForm.classList.contains('show')) {
-			searchButtonIcon.classList.replace('bx-search', 'bx-x');
-		} else {
-			searchButtonIcon.classList.replace('bx-x', 'bx-search');
-		}
-	}
-})
+    var clockOutTimeCell = document.createElement("td");
+    clockOutTimeCell.textContent = data.clockOutTime;
+    row.appendChild(clockOutTimeCell);
+
+    var actionCell = document.createElement("td");
+    var editButton = document.createElement("button");
+    editButton.setAttribute("type", "button");
+    editButton.setAttribute("class", "edit-button");
+
+    editButton.style.margin = "8px";
+    editButton.style.padding = "8px 18px";
+    editButton.style.borderRadius = "4px";
+    editButton.style.fontSize = "14px";
+    editButton.style.textAlign = "center";
+    editButton.style.color = "#fff";
+    editButton.style.cursor = "pointer";
+    editButton.style.transition = "background-color 0.3s ease";
+    editButton.style.backgroundColor = "green";
+
+    editButton.setAttribute("id", "editBtn");
+    editButton.textContent = "Edit";
 
 
 
 
 
-if(window.innerWidth < 768) {
-	sidebar.classList.add('hide');
-} else if(window.innerWidth > 576) {
-	searchButtonIcon.classList.replace('bx-x', 'bx-search');
-	searchForm.classList.remove('show');
+    editButton.addEventListener("click", function () {
+      $("#editModal").modal("show");
+      // You can add logic here to pre-fill the modal with the room data for editing
+    });
+
+    var deleteButton = document.createElement("button");
+    deleteButton.setAttribute("class", "delete-button");
+
+    deleteButton.style.margin = "8px";
+    deleteButton.style.padding = "8px 18px";
+    deleteButton.style.borderRadius = "4px";
+    deleteButton.style.fontSize = "14px";
+    deleteButton.style.textAlign = "center";
+    deleteButton.style.color = "#fff";
+    deleteButton.style.cursor = "pointer";
+    deleteButton.style.transition = "background-color 0.3s ease";
+    deleteButton.style.backgroundColor = "red";
+
+    deleteButton.textContent = "Delete";
+
+    deleteButton.addEventListener("click", function () {
+      $("#deleteRoomModal").modal("show");
+    });
+
+    var cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+
+    var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+
+    confirmDeleteBtn.addEventListener("click", function () {
+      $("#deleteRoomModal").modal("hide");
+    });
+    cancelDeleteBtn.addEventListener("click", function () {
+      $("#deleteRoomModal").modal("hide");
+    });
+
+    actionCell.appendChild(editButton);
+    actionCell.appendChild(deleteButton);
+    row.appendChild(actionCell);
+
+    roomDataBody.appendChild(row);
+  });
 }
 
+// Load the data from local storage if available
+var upcomingMeetingData = JSON.parse(localStorage.getItem("upcomingMeetingData")) || [];
 
-window.addEventListener('resize', function () {
-	if(this.innerWidth > 576) {
-		searchButtonIcon.classList.replace('bx-x', 'bx-search');
-		searchForm.classList.remove('show');
-	}
-})
+// Function to save the data to local storage
+function saveDataToLocalStorage() {
+  localStorage.setItem("upcomingMeetingData", JSON.stringify(upcomingMeetingData));
+}
+
+// Handle form submission to add a new room
+var addRoomForm = document.getElementById("addRoomForm");
+addRoomForm.addEventListener("submit", function (event) {
+  event.preventDefault(); // Prevent form submission
+
+  var meetingTitleInput = document.getElementById("meetingTitle");
+  var roomInput = document.getElementById("roomType");
+  var dateInput = document.getElementById("datepicker");
+  var clockInTimeInput = document.getElementById("clockInTime");
+  var clockOutTimeInput = document.getElementById("clockOutTime");
+
+  var meetingTitle = meetingTitleInput.value;
+  var room = roomInput.value;
+  var dateofMeeting = dateInput.value;
+  var clockInTime = clockInTimeInput.value;
+  var clockOutTime = clockOutTimeInput.value;
+
+  // Generate a unique ID for the new room
+  var serialNumber = upcomingMeetingData.length + 1;
+
+  // Add the new room to the dummyData array
+  upcomingMeetingData.push({
+    no: serialNumber,
+    meetingTitle: meetingTitle,
+    room: room,
+    dateofMeeting: dateofMeeting,
+    clockInTime: clockInTime,
+    clockOutTime: clockOutTime
+  });
+
+
+  // Save the data to local storage
+  saveDataToLocalStorage();
+
+  // Clear the form inputs
+  meetingTitleInput.value = "";
+  roomInput.value = "";
+  dateInput.value = "";
+  clockInTimeInput.value = "";
+  clockOutTimeInput.value = "";
+
+  // Generate the updated table rows
+  generateRows();
+
+  // Hide the modal
+  $("#addMeetingModal").modal("hide");
+});
+
+generateRows();
 
 
 
-const switchMode = document.getElementById('switch-mode');
 
-switchMode.addEventListener('change', function () {
-	if(this.checked) {
-		document.body.classList.add('dark');
-	} else {
-		document.body.classList.remove('dark');
-	}
-})
+
+
+
+
+
+
+
