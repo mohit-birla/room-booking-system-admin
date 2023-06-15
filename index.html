@@ -361,6 +361,10 @@
           <div class="modal-body">
             <form>
               <div class="mb-3">
+                <label for="userId" class="col-form-label">userId</label>
+                <input type="text" class="form-control" id="userId" />
+              </div>
+              <div class="mb-3">
                 <label for="username" class="col-form-label">Username</label>
                 <input type="text" class="form-control" id="username" />
               </div>
@@ -385,7 +389,7 @@
             <button
               type="button"
               class="btn btn-info"
-              onclick="submit()"
+              onclick="submitUser()"
               data-bs-dismiss="modal"
             >
               Submit

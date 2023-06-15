@@ -3,11 +3,11 @@ var usersArray;
 let usersButton = document.getElementById("usersButton");
 
 usersButton.addEventListener("click", () => {
-    usersArray = JSON.parse(localStorage.getItem('rooms'));
+    usersArray = JSON.parse(localStorage.getItem('users'));
     generateUsersScreen(usersArray);
 })
 
-const generateRoomsScreen = (usersArray) => {
+const generateUsersScreen = (usersArray) => {
     let usersScreen = document.getElementById("screenContent");
     let usersHtml = `
     <div class="w-75 m-3 p-3">
@@ -27,7 +27,7 @@ const generateRoomsScreen = (usersArray) => {
         ${
             usersArray ?
         `<div style="overflow: auto">
-        <table class="table table-bordered">
+        <table class="table table-bordered mt-2">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -42,16 +42,16 @@ const generateRoomsScreen = (usersArray) => {
                     usersArray.map((usr)=>{
                     return `<tr>
                             <th scope="row">${usr.id}</th>
-                            <td>${usr.name}</td>
+                            <td>${usr.username}</td>
                             <td>${usr.email}</td>
                             <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editUserModel">Edit</button></td>
-                            <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModel">Delete</button></td>
+                            <td><button type="button" class="btn btn-outline-danger" onclick="deleteUser(${usr.id})">Delete</button></td>
                         </tr>`
                     })
                 }
             </tbody>
         </table>
-        </div>` : `<div style="text-align: center; margin-top: 10rem"><h5>No Meeting Room</h5></div>`
+        </div>` : `<div style="text-align: center; margin-top: 10rem"><h5>No Users</h5></div>`
         } 
     </div>
     `
@@ -61,30 +61,30 @@ const generateRoomsScreen = (usersArray) => {
 
 
 // Search functionality
-const searchUser = () => {
-    var value = document.getElementById("searchValue").value
-    console.log(value)
+// const searchUser = () => {
+//     var value = document.getElementById("searchValue").value
+//     console.log(value)
 
-    let tableBody = document.getElementById("tableBody");
+//     let tableBody = document.getElementById("tableBody");
 
-    let filteredUser = usersArray.filter((item)=>{
-        return item.email.toLowerCase().includes(value);
-    })
+//     let filteredUser = usersArray.filter((item)=>{
+//         return item.email.toLowerCase().includes(value);
+//     })
 
-    console.log(filteredUser)
+//     console.log(filteredUser)
 
-    let innerRows = filteredUser.map((usr)=>{
-        return `<tr>
-                    <th scope="row">${usr.id}</th>
-                    <td>${usr.name}</td>
-                    <td>${usr.email}</td>
-                    <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editUserModel">Edit</button></td>
-                    <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModel">Delete</button></td>
-                </tr>`
-    })
+//     let innerRows = filteredUser.map((usr)=>{
+//         return `<tr>
+//                     <th scope="row">${usr.id}</th>
+//                     <td>${usr.name}</td>
+//                     <td>${usr.email}</td>
+//                     <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editUserModel">Edit</button></td>
+//                     <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModel">Delete</button></td>
+//                 </tr>`
+//     })
 
-    tableBody.innerHTML = innerRows;
-}
+//     tableBody.innerHTML = innerRows;
+// }
 
 // save data to localStorage
 // Add Users
@@ -92,23 +92,43 @@ let submitUser = () => {
     let username = document.getElementById("username").value;
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
+    let id = document.getElementById("userId").value;
 
     if(!username && !email && !password){
         alert("Please, Fill all Field");
     } else {
-        let rooms = JSON.parse(localStorage.getItem('rooms'));
+        let users = JSON.parse(localStorage.getItem('users'));
     
-        if(rooms){
-            rooms.push({roomId, roomName, roomStatus:  "Available", roomSlots: [] });
-            localStorage.setItem("rooms", JSON.stringify(rooms));
+        if(users){
+            users.push({id, username, email, password });
+            localStorage.setItem("users", JSON.stringify(users));
         } else{
-            let rooms = [];
-            rooms.push({roomId, roomName, roomStatus:  "Available", roomSlots: [] });
-            localStorage.setItem("rooms", JSON.stringify(rooms));
+            let users = [];
+            users.push({id, username, email, password });
+            localStorage.setItem("users", JSON.stringify(users));
         }
-        document.getElementById("roomId").value = "";
-        document.getElementById("roomName").value = "";
-        alert("Room added Succesfully")
+        document.getElementById("username").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("userId").value = "";
+        alert("Users added Succesfully")
         location.reload()
+    }
+}
+
+const deleteUser = (userId) => {
+    localStorage.setItem("userId", userId);
+    if (confirm("Are you sure you want to delete this user?")) {
+        let users = JSON.parse(localStorage.getItem('users'));
+        const userIndex = users.findIndex((user) => Number(user.id) === userId);
+        console.log(userIndex)
+        if (userIndex !== -1) {
+            users.splice(userIndex, 1);
+            localStorage.setItem("users", JSON.stringify(users));
+            alert("User deleted successfully");
+        } else {
+            alert("User not found");
+        }
+        location.reload();
     }
 }
