@@ -70,7 +70,7 @@ function generateRowsforApprovalMeeting() {
     approveButton.addEventListener("click", function () {
       $("#approveRoomModal").modal("show");
     });
-    
+
     var declineButton = document.createElement("button");
     declineButton.style.margin = "8px";
     declineButton.style.padding = "8px 18px";
@@ -82,9 +82,11 @@ function generateRowsforApprovalMeeting() {
     declineButton.style.transition = "background-color 0.3s ease";
     declineButton.style.backgroundColor = "red";
     declineButton.textContent = "Decline";
+
     declineButton.addEventListener("click", function () {
       $("#declineRoomModal").modal("show");
     });
+
     var cancelApproveBtn = document.getElementById("cancelAppproveMeeting");
     var confirmApproveBtn = document.getElementById("approveMeeting");
     confirmApproveBtn.addEventListener("click", function () {
@@ -97,10 +99,26 @@ function generateRowsforApprovalMeeting() {
       $("#approveRoomModal").modal("hide");
     });
     var cancelDeclineBtn = document.getElementById("cancelDeclineMeeting");
-    var confirmDeclineButton = document.getElementById("confirmDeclineMeeting");
-    confirmDeclineButton.addEventListener("click", function () {
+    var confirmEmailDeclineButton = document.getElementById(
+      "confirmDeclineMeeting"
+    );
+
+    confirmEmailDeclineButton.addEventListener("click", function () {
+      var cancelReason = document.getElementById("cancelReason").value;
+      Email.send({
+        Host: "smtp.elasticemail.com",
+        Username: "pawan.sahu@gmail.com",
+        Password: "0D98FA4BC759E4FF8434DDC48E7360564E0A",
+        To: "vaishali.mandloi@averybit.in",
+        From: "sahu.pawan2001@gmail.com",
+        Subject: "Regarding Meeting Cancellation",
+        Body: cancelReason,
+      }).then((message) => alert(message));
+
+      console.log("mail sent");
       $("#declineRoomModal").modal("hide");
     });
+
     cancelDeclineBtn.addEventListener("click", function () {
       $("#declineRoomModal").modal("hide");
     });
@@ -149,9 +167,70 @@ function generateRows() {
 
     editButton.setAttribute("id", "editBtn");
     editButton.textContent = "Edit";
+
     editButton.addEventListener("click", function () {
+      var noToUpdate = data.no;
       $("#editModal").modal("show");
-      // You can add logic here to pre-fill the modal with the room data for editing
+
+      // Pre-fill the modal with the room data for editing
+
+      var editModalMeetingTitle = document.getElementById(
+        "editModalMeetingTitle"
+      );
+      var editModalRoom = document.getElementById("editModalRoom");
+      var editModalDate = document.getElementById("editModalDate");
+      var editModalClockInTime = document.getElementById(
+        "editModalClockInTime"
+      );
+      var editModalClockOutTime = document.getElementById(
+        "editModalClockOutTime"
+      );
+
+      // Retrieve the data from localStorage
+      var upcomingMeetingData = JSON.parse(
+        localStorage.getItem("upcomingMeetingData")
+      );
+
+      // Find the object with the matching 'no' value
+      var meetingToEdit = upcomingMeetingData.find(function (meeting) {
+        return meeting.no === noToUpdate;
+      });
+
+      console.log("test up", meetingToEdit);
+      if (meetingToEdit) {
+        // Pre-fill the modal fields with the meeting data
+        $("#editModalMeetingTitle").val(meetingToEdit.meetingTitle);
+        $("#editModalRoom").val(meetingToEdit.room);
+        $("#editModalDate").val(meetingToEdit.dateofMeeting);
+        $("#editModalClockInTime").val(meetingToEdit.clockInTime);
+        $("#editModalClockOutTime").val(meetingToEdit.clockOutTime);
+
+        // Update the meeting data with the new values
+        upcomingMeetingData.meetingTitle = editModalMeetingTitle.value;
+        upcomingMeetingData.room = editModalRoom.value;
+        upcomingMeetingData.dateofMeeting = editModalDate.value;
+        upcomingMeetingData.clockInTime = editModalClockInTime.value;
+        upcomingMeetingData.clockOutTime = editModalClockOutTime.value;
+      }
+
+      var saveEditBtn = document.getElementById("saveEditBtn");
+
+      saveEditBtn.addEventListener("click", function () {
+        // Update the meeting data with the new values
+        meetingToEdit.meetingTitle = editModalMeetingTitle.value;
+        meetingToEdit.room = editModalRoom.value;
+        meetingToEdit.dateofMeeting = editModalDate.value;
+        meetingToEdit.clockInTime = editModalClockInTime.value;
+        meetingToEdit.clockOutTime = editModalClockOutTime.value;
+
+        localStorage.setItem(
+          "upcomingMeetingData",
+          JSON.stringify(upcomingMeetingData)
+        );
+
+        generateRows();
+        $("#editModal").modal("hide");
+      });
     });
     var deleteButton = document.createElement("button");
 
@@ -219,11 +298,13 @@ addRoomForm.addEventListener("submit", function (event) {
   var dateInput = document.getElementById("datepicker");
   var clockInTimeInput = document.getElementById("clockInTime");
   var clockOutTimeInput = document.getElementById("clockOutTime");
+
   var meetingTitle = meetingTitleInput.value;
   var room = roomInput.value;
   var dateofMeeting = dateInput.value;
   var clockInTime = clockInTimeInput.value;
   var clockOutTime = clockOutTimeInput.value;
+
   // Generate a unique ID for the new room
   var serialNumber = upcomingMeetingData.length + 1;
   // Add the new room to the dummyData array
