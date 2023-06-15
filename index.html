@@ -707,13 +707,23 @@
                 <form>
                   <div class="mb-3">
                     <label for="roomId" class="col-form-label">Room Id</label>
-                    <input type="text" class="form-control" id="roomId" />
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="roomId"
+                      required
+                    />
                   </div>
                   <div class="mb-3">
                     <label for="roomName" class="col-form-label"
                       >Room Name</label
                     >
-                    <input type="text" class="form-control" id="roomName" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="roomName"
+                      required
+                    />
                   </div>
                 </form>
               </div>
@@ -725,7 +735,13 @@
                 >
                   Close
                 </button>
-                <button type="button" class="btn btn-info">Submit</button>
+                <button
+                  type="submit"
+                  onclick="submitRoom()"
+                  class="btn btn-info"
+                >
+                  Submit
+                </button>
               </div>
             </div>
           </div>
@@ -748,12 +764,13 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <form id="addRoomForm">
+                <form>
                   <div class="form-group mb-3">
-                    <label for="datepicker" class="py-2">Date :</label><br />
+                    <label for="roomSlotDate" class="py-2">Date :</label><br />
                     <input
                       type="text"
-                      id="datepickerForSlots"
+                      id="roomSlotDate"
+                      class="form-control"
                       placeholder="Select date"
                       required
                       autocomplete="off"
@@ -761,26 +778,26 @@
                   </div>
 
                   <div class="form-group mb-3">
-                    <label for="clockInTime" class="py-2">Clock In Time:</label>
+                    <label for="roomSlotStartTime" class="py-2">Start Time:</label>
                     <input
                       type="time"
                       class="form-control"
-                      id="clockInTime"
+                      id="roomSlotStartTime"
                       required
                     />
                   </div>
                   <div class="form-group mb-3">
-                    <label for="clockOutTime" class="py-2"
-                      >Clock Out Time:</label
+                    <label for="roomSlotEndTime" class="py-2"
+                      >End Time:</label
                     >
                     <input
                       type="time"
                       class="form-control"
-                      id="clockOutTime"
+                      id="roomSlotEndTime"
                       required
                     />
                   </div>
-                  <button type="submit" class="btn btn-info mt-2">
+                  <button type="submit" onclick="addSlot()" class="btn btn-info mt-2">
                     Submit
                   </button>
                 </form>
