@@ -7,28 +7,31 @@ const usersArray = [
     },
     {
         id: 2,
-        email: "raftar@averybit.in",
+        email: "honey@averybit.in",
         name: "Honey"
 
     },
     {
         id: 3,
-        email: "raftar@averybit.in",
+        email: "farrari@averybit.in",
         name: "Farrari"
     },
     {
         id: 4,
-        email: "raftar@averybit.in",
+        email: "mustang@averybit.in",
         name: "Mustang"
     }
 ]
 
 let usersHtml = `
 <div class="m-3 p-3">
+    <div class="input-group d-flex d-sm-none w-100 mb-2">
+        <input id="searchValue" onkeyup="searchUser()" type="text" class="  form-control" placeholder="Search User" aria-label="Search User" aria-describedby="button-addon2">
+    </div>
     <div class="container d-flex justify-content-between m-0">
         <h3>Users</h3>
-        <div class="input-group w-50">
-            <input id="searchValue" onkeyup="searchUser()" type="text" class="form-control" placeholder="Search User" aria-label="Search User" aria-describedby="button-addon2">
+        <div class="input-group d-none d-md-flex w-50">
+            <input onkeyup="searchUser()" type="text" id="searchValue"  class="form-control" placeholder="Search User" aria-label="Search User" aria-describedby="button-addon2">
             <button class="btn btn-outline-info" type="button" id="searchUser">Search</button>
         </div>
         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addUsersModel">Add User</button>
@@ -72,32 +75,26 @@ usersButton.addEventListener("click", () => {
     usersScreen.innerHTML = usersHtml;
 })
 
-const hideSearchBar = (x) => {
-    if (x.matches) {
-      document.getElementById("searchValue").style.display = none;
-    } 
-  }
-  
-  var x = window.matchMedia("(max-width: 420px)")
-  myFunction(x) // Call listener function at run time
-  x.addListener(hideSearchBar)
 
 // Search functionality
 const searchUser = () => {
-    var value = document.getElementById("searchValue").value.toLowerCase();
+    var value = document.getElementById("searchValue").value
+    console.log(value)
 
     let tableBody = document.getElementById("tableBody");
 
     let filteredUser = usersArray.filter((item)=>{
-        return item.name.toLowerCase().includes(value);
+        return item.email.toLowerCase().includes(value);
     })
+
+    console.log(filteredUser)
 
     let innerRows = filteredUser.map((usr)=>{
         return `<tr>
                     <th scope="row">${usr.id}</th>
                     <td>${usr.name}</td>
                     <td>${usr.email}</td>
-                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModel">Edit</button></td>
+                    <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editUserModel">Edit</button></td>
                     <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModel">Delete</button></td>
                 </tr>`
     })
