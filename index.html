@@ -30,6 +30,7 @@
 </head>
 
 <body>
+
   <!-- Modal For Add Meeting -->
   <div class="modal fade" id="addMeetingModal" role="dialog">
     <div class="modal-dialog">
@@ -170,11 +171,6 @@
           <input type="text" class="form-control" id="cancelReason" placeholder="Reason for cancellation" />
 
         </div>
-
-
-
-
-
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelDeclineMeeting">
             Cancel
@@ -216,6 +212,217 @@
     </div>
   </div>
 
+
+  <!-- Model for Add User -->
+  <div class="modal fade" id="addUsersModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Users</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="username" class="col-form-label">Username</label>
+              <input type="text" class="form-control" id="username" />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="col-form-label">Email</label>
+              <input type="email" class="form-control" id="email" />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="col-form-label">Password</label>
+              <input type="password" class="form-control" id="password" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-info" onclick="submit()" data-bs-dismiss="modal">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Model for Edit User -->
+  <div class="modal fade" id="editUserModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="username" class="col-form-label">Username</label>
+              <input type="text" class="form-control" id="editUsername" />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="col-form-label">Email</label>
+              <input type="email" class="form-control" id="editEmail" />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="col-form-label">Password</label>
+              <input type="password" class="form-control" id="editPassword" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-info">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Model for Delete User -->
+  <div class="modal fade" id="deleteUserModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Confirm to delete user</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-danger">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model for Delete Room -->
+  <div class="modal fade" id="deleteRoomModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Room</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Confirm to delete Room</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-danger">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model for Delete Room End-->
+
+  <!-- Model for Delete Slot starts -->
+  <div class="modal fade" id="deleteSlotsModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Slots</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Confirm to delete Slots</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-danger">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model for Delete slots End-->
+
+  <!-- Model for Add Room start-->
+
+  <div class="modal fade" id="addRoomModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Room</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="roomId" class="col-form-label">Room Id</label>
+              <input type="number" class="form-control" id="roomId" required />
+            </div>
+            <div class="mb-3">
+              <label for="roomName" class="col-form-label">Room Name</label>
+              <input type="text" class="form-control" id="roomName" required />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" onclick="submitRoom()" class="btn btn-info">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model for Add Room End-->
+
+  <!-- Model for Add Slot start-->
+
+  <div class="modal fade" id="addSlotModel" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Add Slot</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group mb-3">
+              <label for="roomSlotDate" class="py-2">Date :</label><br />
+              <input type="text" id="roomSlotDate" class="form-control" placeholder="Select date" required
+                autocomplete="off" />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="roomSlotStartTime" class="py-2">Start Time:</label>
+              <input type="time" class="form-control" id="roomSlotStartTime" required />
+            </div>
+            <div class="form-group mb-3">
+              <label for="roomSlotEndTime" class="py-2">End Time:</label>
+              <input type="time" class="form-control" id="roomSlotEndTime" required />
+            </div>
+            <button type="submit" onclick="addSlot()" class="btn btn-info mt-2">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <!-- Model for Add Slot End-->
+  </div>
+
+
+
+
+
+
   <div class="container-fluid">
     <div class="row flex-nowrap">
       <!-- Sidebar -->
@@ -226,9 +433,9 @@
           </a>
           <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
             <li>
-              <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-black">
+              <a href="#" class="nav-link px-0 align-middle text-black" id="dashboardScreen">
                 <i class="fs-4 bi-speedometer2"></i>
-                <span class="ms-1 d-none d-sm-inline" id="dashboardScreen">Dashboard</span>
+                <span class="ms-1 d-none d-sm-inline"></span>Dashboard</span>
               </a>
             </li>
 
@@ -258,6 +465,7 @@
           </div>
         </nav>
         <div id="screenContent">
+
           <div class="d-flex justify-content-between my-4">
             <div>
               <h3>Upcoming Meetings</h3>
@@ -312,222 +520,13 @@
                   <!-- Dynamically generated rows will be inserted here -->
                 </tbody>
               </table>
-            </div>
-          </div>
-
-
-
-          <!-- Navbar -->
-          <!-- Model for Add User -->
-          <div class="modal fade" id="addUsersModel" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Add Users</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="mb-3">
-                      <label for="username" class="col-form-label">Username</label>
-                      <input type="text" class="form-control" id="username" />
-                    </div>
-                    <div class="mb-3">
-                      <label for="email" class="col-form-label">Email</label>
-                      <input type="email" class="form-control" id="email" />
-                    </div>
-                    <div class="mb-3">
-                      <label for="password" class="col-form-label">Password</label>
-                      <input type="password" class="form-control" id="password" />
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
-                  </button>
-                  <button type="button" class="btn btn-info" onclick="submit()" data-bs-dismiss="modal">
-                    Submit
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Model for Edit User -->
-          <div class="modal fade" id="editUserModel" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="mb-3">
-                      <label for="username" class="col-form-label">Username</label>
-                      <input type="text" class="form-control" id="editUsername" />
-                    </div>
-                    <div class="mb-3">
-                      <label for="email" class="col-form-label">Email</label>
-                      <input type="email" class="form-control" id="editEmail" />
-                    </div>
-                    <div class="mb-3">
-                      <label for="password" class="col-form-label">Password</label>
-                      <input type="password" class="form-control" id="editPassword" />
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
-                  </button>
-                  <button type="button" class="btn btn-info">Submit</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Model for Delete User -->
-          <div class="modal fade" id="deleteUserModel" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <p>Confirm to delete user</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Cancel
-                  </button>
-                  <button type="button" class="btn btn-danger">Confirm</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Model for Delete Room -->
-          <div class="modal fade" id="deleteRoomModel" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Delete Room</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <p>Confirm to delete Room</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Cancel
-                  </button>
-                  <button type="button" class="btn btn-danger">Confirm</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Model for Delete Room End-->
-
-          <!-- Model for Delete Slot starts -->
-          <div class="modal fade" id="deleteSlotsModel" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Delete Slots</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <p>Confirm to delete Slots</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Cancel
-                  </button>
-                  <button type="button" class="btn btn-danger">Confirm</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Model for Delete slots End-->
-
-          <!-- Model for Add Room start-->
-
-          <div class="modal fade" id="addRoomModel" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Add Room</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="mb-3">
-                      <label for="roomId" class="col-form-label">Room Id</label>
-                      <input type="number" class="form-control" id="roomId" required />
-                    </div>
-                    <div class="mb-3">
-                      <label for="roomName" class="col-form-label">Room Name</label>
-                      <input type="text" class="form-control" id="roomName" required />
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
-                  </button>
-                  <button type="submit" onclick="submitRoom()" class="btn btn-info">
-                    Submit
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Model for Add Room End-->
-
-          <!-- Model for Add Slot start-->
-
-          <div class="modal fade" id="addSlotModel" role="dialog">
-            <div class="modal-dialog">
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h3 class="modal-title">Add Slot</h3>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="form-group mb-3">
-                      <label for="roomSlotDate" class="py-2">Date :</label><br />
-                      <input type="text" id="roomSlotDate" class="form-control" placeholder="Select date" required
-                        autocomplete="off" />
-                    </div>
-
-                    <div class="form-group mb-3">
-                      <label for="roomSlotStartTime" class="py-2">Start Time:</label>
-                      <input type="time" class="form-control" id="roomSlotStartTime" required />
-                    </div>
-                    <div class="form-group mb-3">
-                      <label for="roomSlotEndTime" class="py-2">End Time:</label>
-                      <input type="time" class="form-control" id="roomSlotEndTime" required />
-                    </div>
-                    <button type="submit" onclick="addSlot()" class="btn btn-info mt-2">
-                      Submit
-                    </button>
-                  </form>
-                </div>
-              </div>
 
             </div>
-            <!-- Model for Add Slot End-->
+
+
+
           </div>
+
         </div>
       </div>
 
@@ -539,6 +538,7 @@
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script src="https://smtpjs.com/v3/smtp.js"></script>
       <script src="./js/script.js"></script>
       <script src="./js/meetingRoom.js"></script>
       <script src="./js/users.js"></script>
