@@ -34,7 +34,7 @@ const generateRoomsScreen = (meetingRooms) => {
                             return `<tr>
                                         <th scope="row">${item.roomId}</th>
                                         <td>${item.roomName}</td>
-                                        <td><button type="button" class="btn btn-info">${item.roomStatus}</button></td>
+                                        <td><button type="button" class="btn btn-info" id="roomStatus" onclick="changeStatus()">${item.roomStatus}</button></td>
                                         <td><button class="btn btn-info" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#${item.roomId}" aria-expanded="false"
                                             aria-controls="collapseExample">Slots</button></td>
@@ -202,3 +202,9 @@ $(document).ready(function () {
     // Clear the date picker field
     $("#roomSlotDate").val("");
   });
+
+  // change status
+  const changeStatus = () => {
+    let value = document.getElementById("roomStatus").innerHTML;
+    document.getElementById("roomStatus").innerHTML = value == "Available" ? "Unavilable" : "Available"
+  }

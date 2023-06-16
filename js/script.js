@@ -366,3 +366,10 @@ addRoomForm.addEventListener("submit", function (event) {
   $("#addMeetingModal").modal("hide");
 });
 generateRows();
+
+$(document).ready(function () {
+  // Initialize the date picker
+  $("#dashboardButton").click(function () {
+    location.reload()
+  });
+});

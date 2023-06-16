@@ -649,15 +649,15 @@
     <div class="container-fluid">
       <div class="row flex-nowrap">
         <!-- Sidebar -->
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-info-subtle">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #e3f2fd;">
           <div
             class="d-flex flex-column align-items-center px-3 pt-2 text-white min-vh-100"
           >
             <a
               href="/"
-              class="d-flex align-items-center ms-auto pb-3 mb-md-0 me-md-auto text-decoration-none text-black"
+              class="d-flex align-items-center ms-auto pb-3 mb-md-0 me-md-auto text-decoration-none text-black mt-2"
             >
-              <span class="fs-5 d-none d-sm-inline my-4">Averybit</span>
+            <img src="/images/averybit-logo.jpg" alt="" width="107px" height="50px">
             </a>
             <ul
               class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
@@ -665,9 +665,10 @@
             >
               <li>
                 <a
-                  href="#submenu1"
+                  href="#"
                   data-bs-toggle="collapse"
                   class="nav-link px-0 align-middle text-black"
+                  id="dashboardButton"
                 >
                   <i class="fs-4 bi-speedometer2"></i>
                   <span class="ms-1 d-none d-sm-inline" id="dashboardScreen"
@@ -702,7 +703,7 @@
         </div>
 
         <div class="col py-0 px-4">
-          <nav class="navbar bg-info-subtle">
+          <nav class="navbar " style="background-color: #e3f2fd;">
             <div class="container-fluid">
               <span class="navbar-text text-black">
                 Welcome to Admin Panel
