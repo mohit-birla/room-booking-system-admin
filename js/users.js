@@ -113,6 +113,7 @@ let submitUser = () => {
         document.getElementById("password").value = "";
         document.getElementById("userId").value = "";
         alert("Users added Succesfully")
+        sendEmail(email, "User added");
         location.reload()
     }
 }
@@ -124,6 +125,7 @@ const deleteUser = (userId) => {
         let users = JSON.parse(localStorage.getItem('users'));
         const userIndex = users.findIndex((user) => Number(user.id) === userId);
         if (userIndex !== -1) {
+            sendEmail(users[userIndex].email, "Account Deleted");
             users.splice(userIndex, 1);
             localStorage.setItem("users", JSON.stringify(users));
             alert("User deleted successfully");
@@ -170,6 +172,23 @@ const editUser = () => {
         } else {
             alert("User not found");
         }
+        sendEmail(users[userIndex].email, "Account Edited");
         location.reload();
     }
+}
+
+
+// sendEmail to user
+const sendEmail = (userEmail, msg) => {
+    console.log("runned")
+    console.log(userEmail)
+    Email.send({
+        Host : "smtp.elasticemail.com",
+        Username : "sumit.vishwakarma@averybit.in",
+        Password : "B5817F36815288F5FC9E97DABA161074033F",
+        To : userEmail,
+        From : "sumit.vishwakarma@averybit.in",
+        Subject : "Account Info Changes",
+        Body : msg
+    })
 }
