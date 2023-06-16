@@ -190,5 +190,7 @@ const sendEmail = (userEmail, msg) => {
         From : "sumit.vishwakarma@averybit.in",
         Subject : "Account Info Changes",
         Body : msg
-    })
+    }).then(function (message) {
+        // alert("mail sent successfully")
+      });
 }
