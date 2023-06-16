@@ -17,7 +17,7 @@ const generateRoomsScreen = (meetingRooms) => {
             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addRoomModel">Add Room</button>
         </div>
         ${
-        meetingRooms.length > 0 ? `<div style="overflow: auto">
+        meetingRooms ? `<div style="overflow: auto">
             <table class="table table-bordered mt-2">
                 <thead>
                     <tr>

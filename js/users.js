@@ -1,5 +1,5 @@
 // Users Screen
-var usersArray; 
+var usersArray = []; 
 let usersButton = document.getElementById("usersButton");
 
 usersButton.addEventListener("click", () => {
@@ -25,7 +25,7 @@ const generateUsersScreen = (usersArray) => {
         <div>
         </div>
         ${
-            usersArray.length > 0 ?
+            usersArray ?
         `<div style="overflow: auto">
         <table class="table table-bordered mt-4">
             <thead>
