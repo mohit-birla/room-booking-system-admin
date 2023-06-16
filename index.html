@@ -361,7 +361,7 @@
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="userId" class="col-form-label">userId</label>
+                <label for="userId" class="col-form-label">User Id</label>
                 <input type="text" class="form-control" id="userId" />
               </div>
               <div class="mb-3">
@@ -421,15 +421,15 @@
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="username" class="col-form-label">Username</label>
+                <label for="editUsername" class="col-form-label">Username</label>
                 <input type="text" class="form-control" id="editUsername" />
               </div>
               <div class="mb-3">
-                <label for="email" class="col-form-label">Email</label>
+                <label for="editEmail" class="col-form-label">Email</label>
                 <input type="email" class="form-control" id="editEmail" />
               </div>
               <div class="mb-3">
-                <label for="password" class="col-form-label">Password</label>
+                <label for="editPassword" class="col-form-label">Password</label>
                 <input type="password" class="form-control" id="editPassword" />
               </div>
             </form>
@@ -442,7 +442,7 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-info">Submit</button>
+            <button type="button" id="editUserButton" class="btn btn-info" onclick="editUser()">Submit</button>
           </div>
         </div>
       </div>
