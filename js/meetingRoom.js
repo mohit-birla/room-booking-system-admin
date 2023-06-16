@@ -1,6 +1,6 @@
 // Meeting Room Screen
 let meetingRoomButton = document.getElementById("roomButton");
-var meetingRooms;
+var meetingRooms = [];
 
 meetingRoomButton.addEventListener("click", () => {
     meetingRooms = JSON.parse(localStorage.getItem('rooms'));
@@ -17,7 +17,7 @@ const generateRoomsScreen = (meetingRooms) => {
             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addRoomModel">Add Room</button>
         </div>
         ${
-        meetingRooms ? `<div style="overflow: auto">
+            !isEmpty(meetingRooms) ? `<div style="overflow: auto">
             <table class="table table-bordered mt-2">
                 <thead>
                     <tr>
@@ -47,15 +47,16 @@ const generateRoomsScreen = (meetingRooms) => {
                                                 <div>
                                                     <div class="container d-flex justify-content-between mt-2">
                                                         <h3>Unavailable Slots</h3>
-                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addSlotModel" id="${item.roomId}">Add Slots</button>
+                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addSlotModel" onclick="addSlotFunction(${item.roomId})">Add Slots</button>
 
                                                     </div>
                                                     ${
-                                                        item.roomSlots > 0 ? `<div style="overflow: auto">
+                                                        !isEmpty(item.roomSlots) ? `<div style="overflow: auto">
                                                             <table class="table" >
                                                                 <thead>
                                                                     ${item.roomSlots ? `<tr>
                                                                         <th scope="col">Slots</th>
+                                                                        <th scope="col">Date</th>
                                                                         <th scope="col">Time</th>
                                                                         <th scope="col">Delete</th>
                                                                     </tr>` : ""}
@@ -64,9 +65,10 @@ const generateRoomsScreen = (meetingRooms) => {
                                                                 ${
                                                                     item.roomSlots ? (item.roomSlots.map((slots)=>{
                                                                         return ` <tr>
-                                                                        <th scope="row">${slots.id}</th>
-                                                                        <td>${slots.time}</td>
-                                                                        <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteSlotsModel">Delete</button></td>
+                                                                        <th scope="row">${slots.roomSlotId}</th>
+                                                                        <td>${slots.roomSlotDate}</td>
+                                                                        <td>${slots.roomSlotStartTime} - ${slots.roomSlotEndTime}</td>
+                                                                        <td><button type="button" class="btn btn-outline-danger"  onclick="deletSlot(${item.roomId}, ${slots.roomSlotId})">Delete</button></td>
                                                     
                                                                     </tr>`
                                                                     })) : "No Unavailable slots"
@@ -89,6 +91,11 @@ const generateRoomsScreen = (meetingRooms) => {
         }
     </div>` 
     meetingRoomScreen.innerHTML = meetingRoomHtml;
+}
+
+// Emty checker
+const isEmpty = (value) => {
+    return value === undefined || value === null || value === [];
 }
 
 // Add Room
@@ -116,29 +123,55 @@ let submitRoom = () => {
 }
 
 // Add Slot
-// Incomplete
+const addSlotFunction = (editRoomId) => {
+    localStorage.setItem("editRoomId", editRoomId);
+}
+
+
 const addSlot = () => {
     let roomSlotDate = document.getElementById("roomSlotDate").value;
     let roomSlotStartTime = document.getElementById("roomSlotStartTime").value;
     let roomSlotEndTime = document.getElementById("roomSlotEndTime").value;
+    let roomSlotId = document.getElementById("roomSlotId").value;
+    let editRoomId = localStorage.getItem("editRoomId");
+
 
     if(!roomSlotDate && !roomSlotStartTime && !roomSlotEndTime){
         alert("Please, Fill all Field");
     } else {
         let rooms = JSON.parse(localStorage.getItem('rooms'));
-    
-        if(rooms.roomSlots){
-            rooms.roomSlots.push({roomId, roomName, roomStatus:  "Available", roomSlots: [] });
+
+        const roomIndex = rooms.findIndex((room) => room.roomId === editRoomId);
+        if (roomIndex !== -1) {
+            rooms[roomIndex].roomSlots.push({roomSlotId, roomSlotDate, roomSlotStartTime, roomSlotEndTime});
             localStorage.setItem("rooms", JSON.stringify(rooms));
-        } else{
-            let rooms = [];
-            rooms.push({roomId, roomName, roomStatus:  "Available", roomSlots: [] });
-            localStorage.setItem("rooms", JSON.stringify(rooms));
+        
+            document.getElementById("roomSlotDate").value = "";
+            document.getElementById("roomSlotStartTime").value = "";
+            document.getElementById("roomSlotEndTime").value = "";
+            alert("Slots added Succesfully")
+        } else {
+            alert("Someting Went Wrong");
         }
-        document.getElementById("roomId").value = "";
-        document.getElementById("roomName").value = "";
-        alert("Room added Succesfully")
+        
         location.reload()
+    }
+}
+
+// Delete Slot
+const deletSlot = (roomId, deleteSlotId) => {
+    if (confirm("Are you sure you want to delete this slot?")) {
+        let rooms = JSON.parse(localStorage.getItem('rooms'));
+        const roomIndex = rooms.findIndex((room) => Number(room.roomId) === roomId);
+        rooms[roomIndex].roomSlots.findIndex((slots)=> slots.roomSlotId === deleteSlotId)
+        if (roomIndex !== -1) {
+            rooms[roomIndex].roomSlots.splice(roomIndex, 1);
+            localStorage.setItem("rooms", JSON.stringify(rooms));
+            alert("Slot deleted successfully");
+        } else {
+            alert("Slot not found");
+        }
+        location.reload();
     }
 }
 
@@ -158,3 +191,14 @@ const deleteRoom = (roomId) => {
         location.reload();
     }
 }
+
+// for calender
+$(document).ready(function () {
+    // Initialize the date picker
+    $("#roomSlotDate").datepicker({
+      dateFormat: "dd-mm-yy", // Set the date format to yyyy-mm-dd
+      minDate: 0, // Set the minimum selectable date as today
+    });
+    // Clear the date picker field
+    $("#roomSlotDate").val("");
+  });

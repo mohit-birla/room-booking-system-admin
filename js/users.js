@@ -123,7 +123,6 @@ const deleteUser = (userId) => {
     if (confirm("Are you sure you want to delete this user?")) {
         let users = JSON.parse(localStorage.getItem('users'));
         const userIndex = users.findIndex((user) => Number(user.id) === userId);
-        console.log(userIndex)
         if (userIndex !== -1) {
             users.splice(userIndex, 1);
             localStorage.setItem("users", JSON.stringify(users));
@@ -138,11 +137,9 @@ const deleteUser = (userId) => {
 // Edit User Model Open
 const editUserFunction = (editUserId) => {
     localStorage.setItem("editUserId", editUserId);
-    console.log(editUserId)
 
     let users = JSON.parse(localStorage.getItem('users'));
     const user = users.find((user) => Number(user.id) === editUserId);
-    console.log(user)
 
     document.getElementById("editUsername").value = user.username;
     document.getElementById("editEmail").value = user.email;
