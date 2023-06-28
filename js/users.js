@@ -42,7 +42,7 @@ const generateUsersScreen = (usersArray) => {
                                 <th scope="row">${usr.id}</th>
                                 <td>${usr.username}</td>
                                 <td>${usr.email}</td>
-                                <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editUserModel" onclick="editUserFunction(${usr.id})">Edit</button></td>
+                                <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editUserModel" onclick="editUserFunction(${usr.id})">Edit</button></td>
                                 <td><button type="button" class="btn btn-outline-danger" onclick="deleteUser(${usr.id})">Delete</button></td>
                             </tr>`
                         })
@@ -64,7 +64,7 @@ const searchUser = () => {
     let tableBody = document.getElementById("tableBody");
 
     let filteredUser = usersArray.filter((item)=>{
-        return item.email.toLowerCase().includes(value);
+        return item.username.toLowerCase().includes(value);
     })
 
     var innerRows ='';

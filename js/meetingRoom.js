@@ -22,9 +22,9 @@ const generateRoomsScreen = (meetingRooms) => {
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Meeting Rooms</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Slots</th>
+                        <th scope="col">Room Name</th>
+                        <th scope="col">Short Code</th>
+                        <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
                     </tr>
                 </thead>
@@ -34,14 +34,16 @@ const generateRoomsScreen = (meetingRooms) => {
                             return `<tr>
                                         <th scope="row">${item.roomId}</th>
                                         <td>${item.roomName}</td>
-                                        <td><button type="button" class="btn btn-info" id="roomStatus" onclick="changeStatus()">${item.roomStatus}</button></td>
-                                        <td><button class="btn btn-info" type="button" data-bs-toggle="collapse"
+                                        <td>${item.roomStatus}</td>
+                                        <!-- <td><button type="button" class="btn btn-info" id="roomStatus" onclick="changeStatus()">${item.roomStatus}</button></td>-->
+                                        <!-- <td><button class="btn btn-info" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#${item.roomId}" aria-expanded="false"
-                                            aria-controls="collapseExample">Slots</button></td>
+                                            aria-controls="collapseExample">Slots</button></td> -->
+                                        <td><button type="button" class="btn btn-outline-primary">Edit</button></td>
                                         <td><button type="button" class="btn btn-outline-danger" onclick="deleteRoom(${item.roomId})">Delete</button></td>
                 
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td colspan="5" style="padding: 0">
                                             <div class="collapse" id="${item.roomId}">
                                                 <div>
@@ -80,7 +82,8 @@ const generateRoomsScreen = (meetingRooms) => {
                                                 </div>
                                             </div>
                                         </td>
-                                    </tr>`
+                                    </tr> -->
+                                    `
                         })
                     }
                     
