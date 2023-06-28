@@ -1,24 +1,17 @@
 // Meeting Room Screen
 let dashboardButton = document.getElementById("dashboardButton");
-var meetings = [
-    {
-      meeting_id: 13,
-      meeting_name: "Sql Meeting",
-      start_time: "09:00:00",
-      end_time: "09:30:00",
-      meeting_date: "2023-06-20T18:30:00.000Z",
-      meeting_status: "Approved",
-      fk_emp_id: 1,
-      fk_room_id: 6,
-      updated_at: null,
-      updated_by: null,
-      created_at: "2023-06-21T04:00:00.000Z",
-      is_active: 1
-    }
-  ]
+
+var meetings = [];
+
+const getMeetings = () => {
+    axios.get('http://localhost:8080/meeting/all').then(res=>{
+        meetings = res.data.data;
+        dashboardScreen(meetings);
+    });
+}
 
 window.onload = () => {
-    dashboardScreen(meetings);
+    getMeetings();
 }
 
 dashboardButton.addEventListener("click", () => {
@@ -36,7 +29,7 @@ const dashboardScreen = (meetings) => {
             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addMeetingModal">Add Meeting</button>
         </div>
         ${
-            !isEmpty(meetings) ? `<div style="overflow: auto">
+            meetings.length > 0 ? `<div style="overflow: auto">
             <table class="table table-bordered mt-2">
                 <thead>
                     <tr>
@@ -56,7 +49,7 @@ const dashboardScreen = (meetings) => {
                                         <th scope="row">${item.meeting_id}</th>
                                         <td>${item.meeting_name}</td>
                                         <td>${item.fk_emp_id}</td>
-                                        <td>${item.meeting_date}</td>
+                                        <td>${item.meeting_date.slice(0,10)}</td>
                                         <td>${item.start_time}-${item.end_time}</td>
                                         <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button></td>
                                         <td><button type="button" class="btn btn-outline-danger" onclick="deleteRoom(${item.roomId})">Delete</button></td>
@@ -73,11 +66,6 @@ const dashboardScreen = (meetings) => {
     </div>` 
     dashboardScreen.innerHTML = dashboardScreenHtml;
 }
-
-// // Emty checker
-// const isEmpty = (value) => {
-//     return value === undefined || value === null || value === [];
-// }
 
 // // Add Room
 // let submitRoom = () => {
