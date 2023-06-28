@@ -44,22 +44,20 @@ const dashboardScreen = (meetings) => {
                 <tbody>
                     ${meetings?.map((item) => {
                       return `<tr>
-                                        <th scope="row">${item.meeting_id}</th>
-                                        <td>${item.meeting_name}</td>
-                                        <td>${item.fk_emp_id}</td>
-                                        <td>${item.meeting_date.slice(
-                                          0,
-                                          10
-                                        )}</td>
-                                        <td>${item.start_time}-${
-                        item.end_time
-                      }</td>
-                                        <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" onclick="saveId(${item.meeting_id})">Edit</button></td>
-                                        <td><button type="button" class="btn btn-outline-danger" onclick="deleteRoom(${
-                                          item.roomId
-                                        })">Delete</button></td>
-                
-                                    </tr>                                `;
+                                <th scope="row">${item.meeting_id}</th>
+                                <td>${item.meeting_name}</td>
+                                <td>${item.fk_emp_id}</td>
+                                <td>${item.meeting_date.slice(
+                                  0,
+                                  10
+                                )}</td>
+                                <td>${item.start_time}-${item.end_time}</td>
+                                <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" onclick="saveId(${
+                                  item.meeting_id
+                                })">Edit</button></td>
+                                <td><button type="button" class="btn btn-outline-danger" onclick="deleteMeeting(${item.meeting_id})">Delete</button></td>
+
+                              </tr>                                `;
                     })}
                     
                 </tbody>
@@ -99,9 +97,13 @@ const submitMeeting = () => {
         end_time,
         fk_emp_id,
       })
-      .then((res) => alert(res.data.message));
+      .then((res) => {
+        alert(res.data.message);
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      });
   }
-  location.reload();
 };
 
 //gemerate datepicker
@@ -116,18 +118,21 @@ $(document).ready(function () {
 });
 
 const saveId = (id) => {
-  const user = meetings.filter((item)=>item.meeting_id == id)[0];
+  localStorage.setItem("updateMeetingId", id);
+  const user = meetings.filter((item) => item.meeting_id == id)[0];
 
-  document.getElementById("editModalMeetingTitle").value = user.meeting_name
+  document.getElementById("editModalMeetingTitle").value = user.meeting_name;
   document.getElementById("editModalRoom").value = user.fk_room_id;
-  document.getElementById("editModalDate").value = user.meeting_date.slice(0, 10);
+  document.getElementById("editModalDate").value = user.meeting_date.slice(
+    0,
+    10
+  );
   document.getElementById("editModalClockInTime").value = user.start_time;
   document.getElementById("editModalClockOutTime").value = user.end_time;
-}
+};
 
 // Edit Meeting
 const updateMeeting = () => {
-
   let meeting_name = document.getElementById("editModalMeetingTitle").value;
   let fk_room_id = document.getElementById("editModalRoom").value;
   let meeting_date = document.getElementById("editModalDate").value;
@@ -154,7 +159,22 @@ const updateMeeting = () => {
         end_time,
         updated_by,
       })
-      .then((res) => alert(res.data.message));
+      .then((res) => {
+        alert(res.data.message);
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      });
   }
-  location.reload();
+};
+
+const deleteMeeting = (deleteID) => {
+  axios
+    .delete(`http://localhost:8080/meeting/delete/${deleteID}`)
+    .then((res) => {
+      alert(res.data.message);
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    });
 };
