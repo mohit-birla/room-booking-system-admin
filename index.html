@@ -53,7 +53,7 @@
             <button
               type="button"
               class="close"
-              data-dismiss="modal"
+              data-bs-dismiss="modal"
               aria-label="Close"
             >
               <span aria-hidden="true">&times;</span>
@@ -123,7 +123,7 @@
             <button
               type="button"
               class="close"
-              data-dismiss="modal"
+              data-bs-dismiss="modal"
               aria-label="Close"
             >
               <span aria-hidden="true">&times;</span>
@@ -520,6 +520,63 @@
       </div>
     </div>
     <!-- Model for Delete slots End-->
+    <!-- Model for update Room start-->
+    <div
+      class="modal fade"
+      id="updateRoomModel"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update Room</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="roomId" class="col-form-label">Room Id</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="roomId"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="roomName" class="col-form-label">Room Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="roomName"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" onclick="submitRoom()" class="btn btn-info">
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Model for update Room End-->
     <!-- Model for Add Room start-->
     <div
       class="modal fade"
@@ -671,7 +728,7 @@
                   id="dashboardButton"
                 >
                   <i class="fs-4 bi-speedometer2"></i>
-                  <span class="ms-1 d-none d-sm-inline" id="dashboardScreen"
+                  <span class="ms-1 d-none d-sm-inline"
                     >Dashboard</span
                   >
                 </a>
@@ -711,7 +768,7 @@
             </div>
           </nav>
           <div id="screenContent">
-            <div class="d-flex justify-content-between my-4">
+            <!-- <div class="d-flex justify-content-between my-4">
               <div>
                 <h3>Upcoming Meetings</h3>
               </div>
@@ -735,12 +792,11 @@
                   </tr>
                 </thead>
                 <tbody id="roomData">
-                  <!-- Dynamically generated rows will be inserted here -->
                 </tbody>
               </table>
-            </div>
+            </div> -->
 
-            <div class="py-xl-5">
+            <!-- <div class="py-xl-5">
               <div class="d-flex justify-content-between my-4">
                 <div>
                   <h3>Meetings for Approvel</h3>
@@ -762,10 +818,9 @@
                   </thead>
 
                   <tbody id="approvalData">
-                    <!-- Dynamically generated rows will be inserted here -->
                   </tbody>
                 </table>
-              </div>
+              </div> -->
             </div>
 
             <!-- Navbar -->
@@ -784,9 +839,10 @@
         crossorigin="anonymous"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
       <script src="https://smtpjs.com/v3/smtp.js"></script>
-      <script src="./js/script.js"></script>
+      <!-- <script src="./js/script.js"></script> -->
       <script src="./js/meetingRoom.js"></script>
       <script src="./js/users.js"></script>
+      <script src="./js/dashboard.js"></script>
       <script src="https://smtpjs.com/v3/smtp.js"></script>
 
 </body>
