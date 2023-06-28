@@ -54,7 +54,7 @@ const dashboardScreen = (meetings) => {
                                         <td>${item.start_time}-${
                         item.end_time
                       }</td>
-                                        <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button></td>
+                                        <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" onclick="saveId(${item.meeting_id})">Edit</button></td>
                                         <td><button type="button" class="btn btn-outline-danger" onclick="deleteRoom(${
                                           item.roomId
                                         })">Delete</button></td>
@@ -114,3 +114,47 @@ $(document).ready(function () {
   // Clear the date picker field
   $("#datepicker").val("");
 });
+
+const saveId = (id) => {
+  const user = meetings.filter((item)=>item.meeting_id == id)[0];
+
+  document.getElementById("editModalMeetingTitle").value = user.meeting_name
+  document.getElementById("editModalRoom").value = user.fk_room_id;
+  document.getElementById("editModalDate").value = user.meeting_date.slice(0, 10);
+  document.getElementById("editModalClockInTime").value = user.start_time;
+  document.getElementById("editModalClockOutTime").value = user.end_time;
+}
+
+// Edit Meeting
+const updateMeeting = () => {
+
+  let meeting_name = document.getElementById("editModalMeetingTitle").value;
+  let fk_room_id = document.getElementById("editModalRoom").value;
+  let meeting_date = document.getElementById("editModalDate").value;
+  let start_time = document.getElementById("editModalClockInTime").value;
+  let end_time = document.getElementById("editModalClockOutTime").value;
+  let updated_by = 2;
+
+  if (
+    !meeting_name &&
+    !fk_room_id &&
+    !meeting_date &&
+    !start_time &&
+    !end_time
+  ) {
+    alert("Please, Fill all Field");
+  } else {
+    const id = localStorage.getItem("updateMeetingId");
+    axios
+      .put(`http://localhost:8080/meeting/update/${id}`, {
+        meeting_name,
+        fk_room_id,
+        meeting_date,
+        start_time,
+        end_time,
+        updated_by,
+      })
+      .then((res) => alert(res.data.message));
+  }
+  location.reload();
+};

@@ -144,8 +144,8 @@
               <div class="form-group">
                 <label for="roomType" class="py-2">Room</label>
                 <select class="form-control" id="editModalRoom" required>
-                  <option value="A1">A1</option>
-                  <option value="A2">A2</option>
+                  <option value="1">A1</option>
+                  <option value="2">A2</option>
                 </select>
               </div>
               <div class="form-group">
@@ -181,6 +181,8 @@
                 type="submit"
                 class="btn btn-primary mt-2"
                 id="saveEditBtn"
+                onclick="updateMeeting()"
+                data-bs-dismiss="modal"
               >
                 Submit
               </button>
