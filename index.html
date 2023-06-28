@@ -73,8 +73,8 @@
               <div class="form-group">
                 <label for="roomType" class="py-2">Room</label>
                 <select class="form-control" id="roomType" required>
-                  <option value="A1">A1</option>
-                  <option value="A2">A2</option>
+                  <option value="1">A1</option>
+                  <option value="2">A2</option>
                 </select>
               </div>
               <div class="form-group">
@@ -82,6 +82,7 @@
                 <input
                   type="text"
                   id="datepicker"
+                  class="dateForMeeting"
                   placeholder="Select date"
                   required
                   autocomplete="off"
@@ -106,7 +107,7 @@
                   required
                 />
               </div>
-              <button type="submit" class="btn btn-primary mt-2">Submit</button>
+              <button type="submit" onclick="submitMeeting()" data-bs-dismiss="modal" class="btn btn-primary mt-2">Submit</button>
             </form>
           </div>
         </div>
