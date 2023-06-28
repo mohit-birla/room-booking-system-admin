@@ -100,32 +100,33 @@ const searchUser = () => {
 // save data to localStorage
 // Add Users
 let submitUser = () => {
-    let username = document.getElementById("username").value;
+    let name = document.getElementById("username").value;
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
-    let id = document.getElementById("userId").value;
+    let position = document.getElementById("position").value;
 
-    if(!username && !email && !password){
+    if (
+        !name &&
+        !email &&
+        !password &&
+        !position
+      ) {
         alert("Please, Fill all Field");
-    } else {
-        let users = JSON.parse(localStorage.getItem('users'));
-    
-        if(users){
-            users.push({id, username, email, password });
-            localStorage.setItem("users", JSON.stringify(users));
-        } else{
-            let users = [];
-            users.push({id, username, email, password });
-            localStorage.setItem("users", JSON.stringify(users));
-        }
-        document.getElementById("username").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("password").value = "";
-        document.getElementById("userId").value = "";
-        alert("Users added Succesfully")
-        sendEmail(email, "User added");
-        location.reload()
-    }
+      } else {
+        axios
+          .post("http://localhost:8080/register", {
+            name,
+            email,
+            password,
+            position
+          })
+          .then((res) => {
+            alert(res.data.message);
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          });
+      }
 }
 
 // Delete user
