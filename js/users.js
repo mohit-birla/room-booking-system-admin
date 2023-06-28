@@ -2,9 +2,16 @@
 var usersArray = []; 
 let usersButton = document.getElementById("usersButton");
 
+const getUsers = () => {
+    axios.get("http://localhost:8080/profile/all").then((res) => {
+        usersArray = res.data.data;
+        console.log(res.data.data)
+        generateUsersScreen(usersArray);
+    });
+};
+
 usersButton.addEventListener("click", () => {
-    usersArray = JSON.parse(localStorage.getItem('users'));
-    generateUsersScreen(usersArray);
+    getUsers();
 })
 
 const generateUsersScreen = (usersArray) => {
@@ -31,6 +38,7 @@ const generateUsersScreen = (usersArray) => {
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Position</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
                     </tr>
@@ -39,9 +47,10 @@ const generateUsersScreen = (usersArray) => {
                     ${
                         usersArray?.map((usr)=>{
                         return `<tr>
-                                <th scope="row">${usr.id}</th>
-                                <td>${usr.username}</td>
+                                <th scope="row">${usr.emp_id}</th>
+                                <td>${usr.name}</td>
                                 <td>${usr.email}</td>
+                                <td>${usr.position}</td>
                                 <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editUserModel" onclick="editUserFunction(${usr.id})">Edit</button></td>
                                 <td><button type="button" class="btn btn-outline-danger" onclick="deleteUser(${usr.id})">Delete</button></td>
                             </tr>`
@@ -64,16 +73,17 @@ const searchUser = () => {
     let tableBody = document.getElementById("tableBody");
 
     let filteredUser = usersArray.filter((item)=>{
-        return item.username.toLowerCase().includes(value);
+        return item.name.toLowerCase().includes(value);
     })
 
     var innerRows ='';
     const generateFilteredUser = () => {
         innerRows = filteredUser?.map((usr)=>{
             return `<tr>
-                        <th scope="row">${usr.id}</th>
-                        <td>${usr.username}</td>
+                        <th scope="row">${usr.emp_id}</th>
+                        <td>${usr.name}</td>
                         <td>${usr.email}</td>
+                        <td>${usr.position}</td>
                         <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editUserModel">Edit</button></td>
                         <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModel">Delete</button></td>
                     </tr>`
