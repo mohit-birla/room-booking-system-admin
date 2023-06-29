@@ -52,7 +52,7 @@ const generateUsersScreen = (usersArray) => {
                                 <td>${usr.email}</td>
                                 <td>${usr.position}</td>
                                 <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editUserModel" onclick="editUserFunction(${usr.id})">Edit</button></td>
-                                <td><button type="button" class="btn btn-outline-danger" onclick="deleteUser(${usr.id})">Delete</button></td>
+                                <td><button type="button" class="btn btn-outline-danger" onclick="deleteUser(${usr.emp_id})">Delete</button></td>
                             </tr>`
                         })
                     }
@@ -85,7 +85,7 @@ const searchUser = () => {
                         <td>${usr.email}</td>
                         <td>${usr.position}</td>
                         <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editUserModel">Edit</button></td>
-                        <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModel">Delete</button></td>
+                        <td><button type="button" class="btn btn-outline-danger" onclick="deleteUser(${usr.emp_id})">Delete</button></td>
                     </tr>`
         })
     }
@@ -130,21 +130,16 @@ let submitUser = () => {
 }
 
 // Delete user
-const deleteUser = (userId) => {
-    localStorage.setItem("userId", userId);
-    if (confirm("Are you sure you want to delete this user?")) {
-        let users = JSON.parse(localStorage.getItem('users'));
-        const userIndex = users.findIndex((user) => Number(user.id) === userId);
-        if (userIndex !== -1) {
-            sendEmail(users[userIndex].email, "Account Deleted");
-            users.splice(userIndex, 1);
-            localStorage.setItem("users", JSON.stringify(users));
-            alert("User deleted successfully");
-        } else {
-            alert("User not found");
-        }
+const deleteUser = (deleteUserId) => {
+    console.log(deleteUserId)
+    axios
+    .delete(`http://localhost:8080/profile/delete/${deleteUserId}`)
+    .then((res) => {
+      alert(res.data.message);
+      setTimeout(() => {
         location.reload();
-    }
+      }, 1000);
+    });
 }
 
 // Edit User Model Open
