@@ -90,6 +90,14 @@ const submitMeeting = () => {
   let start_time = document.getElementById("clockInTime").value;
   let end_time = document.getElementById("clockOutTime").value;
   let fk_emp_id = 1;
+  const data = {
+    meeting_name,
+    fk_room_id,
+    meeting_date,
+    start_time,
+    end_time,
+    fk_emp_id,
+  }
 
   if (
     !meeting_name &&
@@ -102,14 +110,7 @@ const submitMeeting = () => {
   } else {
     console.log(meeting_date);
     axios
-      .post("http://localhost:8080/meeting/add", {
-        meeting_name,
-        fk_room_id,
-        meeting_date,
-        start_time,
-        end_time,
-        fk_emp_id,
-      })
+      .post("http://localhost:8080/meeting/add", data)
       .then((res) => {
         alert(res.data.message);
         setTimeout(() => {
@@ -150,6 +151,14 @@ const updateMeeting = () => {
   let start_time = document.getElementById("clockInTime").value;
   let end_time = document.getElementById("clockOutTime").value;
   let updated_by = 2;
+  const data = {
+    meeting_name,
+    fk_room_id,
+    meeting_date,
+    start_time,
+    end_time,
+    updated_by,
+  }
 
   if (
     !meeting_name &&
@@ -162,14 +171,7 @@ const updateMeeting = () => {
   } else {
     const id = meetingId;
     axios
-      .put(`http://localhost:8080/meeting/update/${id}`, {
-        meeting_name,
-        fk_room_id,
-        meeting_date,
-        start_time,
-        end_time,
-        updated_by,
-      })
+      .put(`http://localhost:8080/meeting/update/${id}`, data)
       .then((res) => {
         alert(res.data.message);
         setTimeout(() => {
