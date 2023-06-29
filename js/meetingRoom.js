@@ -21,10 +21,10 @@ const generateRoomsScreen = (meetingRooms) => {
     `<div class="w-75 m-3 p-3">
         <div class="container d-flex justify-content-between">
             <h3>Meeting Rooms</h3>
-            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addRoomModel">Add Room</button>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addRoomModel" >Add Room</button>
         </div>
         ${
-            !isEmpty(meetingRooms) ? `<div style="overflow: auto">
+            meetingRooms.length > 0 ? `<div style="overflow: auto">
             <table class="table table-bordered mt-2">
                 <thead>
                     <tr>
@@ -62,7 +62,7 @@ const generateRoomsScreen = (meetingRooms) => {
 
                                                     </div>
                                                     ${
-                                                        !isEmpty(item.roomSlots) ? `<div style="overflow: auto">
+                                                        item.roomSlots ? `<div style="overflow: auto">
                                                             <table class="table" >
                                                                 <thead>
                                                                     ${item.roomSlots ? `<tr>
@@ -105,86 +105,34 @@ const generateRoomsScreen = (meetingRooms) => {
     meetingRoomScreen.innerHTML = meetingRoomHtml;
 }
 
-// Emty checker
-const isEmpty = (value) => {
-    return value === undefined || value === null || value === [];
-}
 
 // Add Room
 let submitRoom = () => {
-    let roomId = document.getElementById("roomId").value;
-    let roomName = document.getElementById("roomName").value;
-    if(!roomId && !roomName){
+    let room_code = document.getElementById("addRoomId").value;
+    let room_name = document.getElementById("addRoomName").value;
+    let capacity = document.getElementById("roomCapacity").value;
+    console.log(room_code, room_name, capacity)
+
+    if (
+        !room_code &&
+        !room_name &&
+        !capacity
+      ) {
         alert("Please, Fill all Field");
-    } else {
-        let rooms = JSON.parse(localStorage.getItem('rooms'));
-    
-        if(rooms){
-            rooms.push({roomId, roomName, roomStatus:  "Available", roomSlots: [] });
-            localStorage.setItem("rooms", JSON.stringify(rooms));
-        } else{
-            let rooms = [];
-            rooms.push({roomId, roomName, roomStatus:  "Available", roomSlots: [] });
-            localStorage.setItem("rooms", JSON.stringify(rooms));
-        }
-        document.getElementById("roomId").value = "";
-        document.getElementById("roomName").value = "";
-        alert("Room added Succesfully")
-        location.reload()
-    }
-}
-
-// Add Slot
-const addSlotFunction = (editRoomId) => {
-    localStorage.setItem("editRoomId", editRoomId);
-}
-
-
-const addSlot = () => {
-    let roomSlotDate = document.getElementById("roomSlotDate").value;
-    let roomSlotStartTime = document.getElementById("roomSlotStartTime").value;
-    let roomSlotEndTime = document.getElementById("roomSlotEndTime").value;
-    let roomSlotId = document.getElementById("roomSlotId").value;
-    let editRoomId = localStorage.getItem("editRoomId");
-
-
-    if(!roomSlotDate && !roomSlotStartTime && !roomSlotEndTime){
-        alert("Please, Fill all Field");
-    } else {
-        let rooms = JSON.parse(localStorage.getItem('rooms'));
-
-        const roomIndex = rooms.findIndex((room) => room.roomId === editRoomId);
-        if (roomIndex !== -1) {
-            rooms[roomIndex].roomSlots.push({roomSlotId, roomSlotDate, roomSlotStartTime, roomSlotEndTime});
-            localStorage.setItem("rooms", JSON.stringify(rooms));
-        
-            document.getElementById("roomSlotDate").value = "";
-            document.getElementById("roomSlotStartTime").value = "";
-            document.getElementById("roomSlotEndTime").value = "";
-            alert("Slots added Succesfully")
-        } else {
-            alert("Someting Went Wrong");
-        }
-        
-        location.reload()
-    }
-}
-
-// Delete Slot
-const deletSlot = (roomId, deleteSlotId) => {
-    if (confirm("Are you sure you want to delete this slot?")) {
-        let rooms = JSON.parse(localStorage.getItem('rooms'));
-        const roomIndex = rooms.findIndex((room) => Number(room.roomId) === roomId);
-        rooms[roomIndex].roomSlots.findIndex((slots)=> slots.roomSlotId === deleteSlotId)
-        if (roomIndex !== -1) {
-            rooms[roomIndex].roomSlots.splice(roomIndex, 1);
-            localStorage.setItem("rooms", JSON.stringify(rooms));
-            alert("Slot deleted successfully");
-        } else {
-            alert("Slot not found");
-        }
-        location.reload();
-    }
+      } else {
+        axios
+          .post("http://localhost:8080/rooms/add", {
+            room_code,
+            room_name,
+            capacity
+          })
+          .then((res) => {
+            alert(res.data.message);
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          });
+      }
 }
 
 // delete Room
@@ -214,9 +162,3 @@ $(document).ready(function () {
     // Clear the date picker field
     $("#roomSlotDate").val("");
   });
-
-  // change status
-  const changeStatus = () => {
-    let value = document.getElementById("roomStatus").innerHTML;
-    document.getElementById("roomStatus").innerHTML = value == "Available" ? "Unavilable" : "Available"
-  }

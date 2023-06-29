@@ -606,20 +606,29 @@
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="roomId" class="col-form-label">Room Id</label>
+                <label for="addRoomId" class="col-form-label">Room Short Code</label>
                 <input
                   type="number"
                   class="form-control"
-                  id="roomId"
+                  id="addRoomId"
                   required
                 />
               </div>
               <div class="mb-3">
-                <label for="roomName" class="col-form-label">Room Name</label>
+                <label for="addRoomName" class="col-form-label">Room Name</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="roomName"
+                  id="addRoomName"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="roomCapacity" class="col-form-label">Room Capacity</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="roomCapacity"
                   required
                 />
               </div>
@@ -633,7 +642,7 @@
             >
               Close
             </button>
-            <button type="submit" onclick="submitRoom()" class="btn btn-info">
+            <button type="submit" data-bs-dismiss="modal" onclick="submitRoom()" class="btn btn-info">
               Submit
             </button>
           </div>
