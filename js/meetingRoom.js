@@ -48,7 +48,7 @@ const generateRoomsScreen = (meetingRooms) => {
                                         <!-- <td><button class="btn btn-info" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#${item.roomId}" aria-expanded="false"
                                             aria-controls="collapseExample">Slots</button></td> -->
-                                        <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateRoomModel">Edit</button></td>
+                                        <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateRoomModel" onclick="getDataToUpdateRoom()">Edit</button></td>
                                         <td><button type="button" class="btn btn-outline-danger" onclick="deleteRoom(${item.room_id})">Delete</button></td>
                 
                                     </tr>
@@ -147,6 +147,48 @@ const deleteRoom = (deleteRoomId) => {
     });
 }
 
+const getDataToUpdateRoom = (id) => {
+    localStorage.setItem("updateRoomId", id);
+    const room = meetingRooms.filter((item) => item.room_id == id)[0];
+
+    document.getElementById("updateRoomId").value = room.room_code;
+    document.getElementById("addRoomName").value = room.room_name;
+    document.getElementById("roomCapacity").value = room.capacity;
+};
+
+// Edit User
+const updateUser = () => {
+let room_code = document.getElementById("updateRoomId").value;
+let password = document.getElementById("editPassword").value;
+let email = document.getElementById("editEmail").value;
+let position = document.getElementById("editPosition").value;
+
+if (
+    !username &&
+    !password &&
+    !email &&
+    !position
+) {
+    alert("Please, Fill all Field");
+} else {
+    const id = localStorage.getItem("updateUserId");
+    axios
+    .put(`http://localhost:8080/profile/update/${id}`, {
+        username,
+        password,
+        email,
+        position
+    })
+    .then((res) => {
+        alert(res.data.message);
+        setTimeout(() => {
+        location.reload();
+        }, 1000);
+    });
+}
+};
+
+
 // for calender
 $(document).ready(function () {
     // Initialize the date picker
@@ -156,4 +198,4 @@ $(document).ready(function () {
     });
     // Clear the date picker field
     $("#roomSlotDate").val("");
-  });
+});
