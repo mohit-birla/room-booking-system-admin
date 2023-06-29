@@ -1,6 +1,7 @@
 // Meeting Room Screen
 let meetingRoomButton = document.getElementById("roomButton");
 var meetingRooms = [];
+var roomId;
 
 const getRooms = () => {
     axios.get("http://localhost:8080/rooms/all").then((res) => {
@@ -21,7 +22,7 @@ const generateRoomsScreen = (meetingRooms) => {
     `<div class="w-75 m-3 p-3">
         <div class="container d-flex justify-content-between">
             <h3>Meeting Rooms</h3>
-            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addRoomModel" >Add Room</button>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addRoomModel" onclick="changeHtmlRoom()">Add Room</button>
         </div>
         ${
             meetingRooms.length > 0 ? `<div style="overflow: auto">
@@ -48,7 +49,7 @@ const generateRoomsScreen = (meetingRooms) => {
                                         <!-- <td><button class="btn btn-info" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#${item.roomId}" aria-expanded="false"
                                             aria-controls="collapseExample">Slots</button></td> -->
-                                        <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateRoomModel" onclick="getDataToUpdateRoom()">Edit</button></td>
+                                        <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addRoomModel" onclick="getDataToUpdateRoom(${item.room_id})">Edit</button></td>
                                         <td><button type="button" class="btn btn-outline-danger" onclick="deleteRoom(${item.room_id})">Delete</button></td>
                 
                                     </tr>
@@ -105,13 +106,28 @@ const generateRoomsScreen = (meetingRooms) => {
     meetingRoomScreen.innerHTML = meetingRoomHtml;
 }
 
+const changeHtmlRoom = () => {
+    document.getElementById("addRoomTitle").innerHTML = "Add Room";
+  
+    document.getElementById("addRoomId").value = "";
+    document.getElementById("addRoomName").value = "";
+    document.getElementById("roomCapacity").value = "";
+  };
 
 // Add Room
 let submitRoom = () => {
+    if (roomId) {
+        updateRoom();
+        return;
+      }
     let room_code = document.getElementById("addRoomId").value;
     let room_name = document.getElementById("addRoomName").value;
     let capacity = document.getElementById("roomCapacity").value;
-    console.log(room_code, room_name, capacity)
+    const data = {
+        room_code,
+        room_name,
+        capacity
+    }
 
     if (
         !room_code &&
@@ -121,11 +137,7 @@ let submitRoom = () => {
         alert("Please, Fill all Field");
       } else {
         axios
-          .post("http://localhost:8080/rooms/add", {
-            room_code,
-            room_name,
-            capacity
-          })
+          .post("http://localhost:8080/rooms/add", data)
           .then((res) => {
             alert(res.data.message);
             setTimeout(() => {
@@ -148,37 +160,36 @@ const deleteRoom = (deleteRoomId) => {
 }
 
 const getDataToUpdateRoom = (id) => {
-    localStorage.setItem("updateRoomId", id);
+    roomId = id;
+    document.getElementById("addRoomTitle").innerHTML = "Update Room"
     const room = meetingRooms.filter((item) => item.room_id == id)[0];
 
-    document.getElementById("updateRoomId").value = room.room_code;
+    document.getElementById("addRoomId").value = room.room_code;
     document.getElementById("addRoomName").value = room.room_name;
     document.getElementById("roomCapacity").value = room.capacity;
 };
 
 // Edit User
-const updateUser = () => {
-let room_code = document.getElementById("updateRoomId").value;
-let password = document.getElementById("editPassword").value;
-let email = document.getElementById("editEmail").value;
-let position = document.getElementById("editPosition").value;
+const updateRoom = () => {
+let room_code = document.getElementById("addRoomId").value;
+let capacity = document.getElementById("roomCapacity").value;
+let room_name = document.getElementById("addRoomName").value;
+const data = {
+    room_code,
+    room_name,
+    capacity
+}
 
 if (
-    !username &&
-    !password &&
-    !email &&
-    !position
+    !room_code &&
+    !room_name &&
+    !capacity
 ) {
     alert("Please, Fill all Field");
 } else {
-    const id = localStorage.getItem("updateUserId");
+    const id = roomId;
     axios
-    .put(`http://localhost:8080/profile/update/${id}`, {
-        username,
-        password,
-        email,
-        position
-    })
+    .put(`http://localhost:8080/rooms/update/${id}`, data)
     .then((res) => {
         alert(res.data.message);
         setTimeout(() => {
@@ -186,6 +197,7 @@ if (
         }, 1000);
     });
 }
+roomId = null;
 };
 
 

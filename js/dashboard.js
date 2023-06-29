@@ -2,6 +2,7 @@
 let dashboardButton = document.getElementById("dashboardButton");
 var meetingId;
 var meetings = [];
+var roomsForMeetings = [];
 
 const getMeetings = () => {
   axios.get("http://localhost:8080/meeting/all").then((res) => {
@@ -12,6 +13,7 @@ const getMeetings = () => {
 
 window.onload = () => {
   getMeetings();
+  getRoomsForAddMeeting();
 };
 
 dashboardButton.addEventListener("click", () => {
@@ -68,10 +70,22 @@ const dashboardScreen = (meetings) => {
   dashboardScreen.innerHTML = dashboardScreenHtml;
 };
 
+const getRoomsForAddMeeting = () => {
+  axios.get("http://localhost:8080/rooms/all").then((res) => {
+    roomsForMeetings = res.data.data;
+  });
+};
+
+
 const changeMeetingHtml = () => {
   document.getElementById("addMeetingTitle").innerHTML = "Add Meeting";
 
-  document.getElementById("roomType").value = "";
+  const selectRooms = roomsForMeetings.map((item)=>{
+    return `<option value="${item.room_id}">${item.room_name}</option>`
+  })
+
+  document.getElementById("roomType").innerHTML = selectRooms;
+  console.log(selectRooms)
   document.getElementById("meetingTitle").value = "";
   document.getElementById("datepicker").value = "";
   document.getElementById("clockInTime").value = "";
@@ -136,8 +150,12 @@ const saveId = (id) => {
   document.getElementById("addMeetingTitle").innerHTML = "Update Meeting";
   const meet = meetings.filter((item) => item.meeting_id == id)[0];
 
+  const selectRooms = roomsForMeetings.map((item)=>{
+    return `<option value="${item.room_id}">${item.room_name}</option>`
+  })
+
   document.getElementById("meetingTitle").value = meet.meeting_name;
-  document.getElementById("roomType").value = meet.fk_room_id;
+  document.getElementById("roomType").innerHTML = selectRooms;
   document.getElementById("datepicker").value = meet.meeting_date.slice(0, 10);
   document.getElementById("clockInTime").value = meet.start_time;
   document.getElementById("clockOutTime").value = meet.end_time;

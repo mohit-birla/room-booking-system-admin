@@ -73,8 +73,7 @@
               <div class="form-group">
                 <label for="roomType" class="py-2">Room</label>
                 <select class="form-control" id="roomType" required>
-                  <option value="1">A1</option>
-                  <option value="2">A2</option>
+                  
                 </select>
               </div>
               <div class="form-group">
@@ -396,72 +395,6 @@
       </div>
     </div>
     <!-- Model for Delete slots End-->
-    <!-- Model for update Room start-->
-    <div
-      class="modal fade"
-      id="updateRoomModel"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Update Room</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="updateRoomId" class="col-form-label">Room Id</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="roomId"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="udpateRoomName" class="col-form-label">Room Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="roomName"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="udpateRoomCapacity" class="col-form-label">Room Capacity</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="udpateRoomCapacity"
-                  required
-                />
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="submit" onclick="submitRoom()" class="btn btn-info">
-              Submit
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Model for update Room End-->
     <!-- Model for Add Room start-->
     <div
       class="modal fade"
@@ -473,7 +406,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Room</h5>
+            <h5 class="modal-title" id="addRoomTitle">Add Room</h5>
             <button
               type="button"
               class="btn-close"
@@ -486,7 +419,7 @@
               <div class="mb-3">
                 <label for="addRoomId" class="col-form-label">Room Short Code</label>
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
                   id="addRoomId"
                   required
