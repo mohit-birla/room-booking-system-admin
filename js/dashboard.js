@@ -1,6 +1,6 @@
 // Meeting Room Screen
 let dashboardButton = document.getElementById("dashboardButton");
-
+var meetingId;
 var meetings = [];
 
 const getMeetings = () => {
@@ -24,7 +24,7 @@ const dashboardScreen = (meetings) => {
   let dashboardScreenHtml = `<div class="w-75 m-3 p-3">
         <div class="container d-flex justify-content-between">
             <h3>Meetings</h3>
-            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addMeetingModal">Add Meeting</button>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addMeetingModal" onclick="changeMeetingHtml()">Add Meeting</button>
         </div>
         ${
           meetings.length > 0
@@ -47,15 +47,14 @@ const dashboardScreen = (meetings) => {
                                 <th scope="row">${item.meeting_id}</th>
                                 <td>${item.meeting_name}</td>
                                 <td>${item.fk_emp_id}</td>
-                                <td>${item.meeting_date.slice(
-                                  0,
-                                  10
-                                )}</td>
+                                <td>${item.meeting_date.slice(0, 10)}</td>
                                 <td>${item.start_time}-${item.end_time}</td>
-                                <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" onclick="saveId(${
+                                <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addMeetingModal" onclick="saveId(${
                                   item.meeting_id
                                 })">Edit</button></td>
-                                <td><button type="button" class="btn btn-outline-danger" onclick="deleteMeeting(${item.meeting_id})">Delete</button></td>
+                                <td><button type="button" class="btn btn-outline-danger" onclick="deleteMeeting(${
+                                  item.meeting_id
+                                })">Delete</button></td>
 
                               </tr>                                `;
                     })}
@@ -69,8 +68,22 @@ const dashboardScreen = (meetings) => {
   dashboardScreen.innerHTML = dashboardScreenHtml;
 };
 
+const changeMeetingHtml = () => {
+  document.getElementById("addMeetingTitle").innerHTML = "Add Meeting";
+
+  document.getElementById("roomType").value = "";
+  document.getElementById("meetingTitle").value = "";
+  document.getElementById("datepicker").value = "";
+  document.getElementById("clockInTime").value = "";
+  document.getElementById("clockOutTime").value = "";
+};
+
 // Add Meeting
 const submitMeeting = () => {
+  if (meetingId) {
+    updateMeeting();
+    return;
+  }
   let meeting_name = document.getElementById("meetingTitle").value;
   let fk_room_id = document.getElementById("roomType").value;
   let meeting_date = document.getElementById("datepicker").value;
@@ -118,26 +131,24 @@ $(document).ready(function () {
 });
 
 const saveId = (id) => {
-  localStorage.setItem("updateMeetingId", id);
-  const user = meetings.filter((item) => item.meeting_id == id)[0];
+  meetingId = id;
+  document.getElementById("addMeetingTitle").innerHTML = "Update Meeting";
+  const meet = meetings.filter((item) => item.meeting_id == id)[0];
 
-  document.getElementById("editModalMeetingTitle").value = user.meeting_name;
-  document.getElementById("editModalRoom").value = user.fk_room_id;
-  document.getElementById("editModalDate").value = user.meeting_date.slice(
-    0,
-    10
-  );
-  document.getElementById("editModalClockInTime").value = user.start_time;
-  document.getElementById("editModalClockOutTime").value = user.end_time;
+  document.getElementById("meetingTitle").value = meet.meeting_name;
+  document.getElementById("roomType").value = meet.fk_room_id;
+  document.getElementById("datepicker").value = meet.meeting_date.slice(0, 10);
+  document.getElementById("clockInTime").value = meet.start_time;
+  document.getElementById("clockOutTime").value = meet.end_time;
 };
 
 // Edit Meeting
 const updateMeeting = () => {
-  let meeting_name = document.getElementById("editModalMeetingTitle").value;
-  let fk_room_id = document.getElementById("editModalRoom").value;
-  let meeting_date = document.getElementById("editModalDate").value;
-  let start_time = document.getElementById("editModalClockInTime").value;
-  let end_time = document.getElementById("editModalClockOutTime").value;
+  let meeting_name = document.getElementById("meetingTitle").value;
+  let fk_room_id = document.getElementById("roomType").value;
+  let meeting_date = document.getElementById("datepicker").value;
+  let start_time = document.getElementById("clockInTime").value;
+  let end_time = document.getElementById("clockOutTime").value;
   let updated_by = 2;
 
   if (
@@ -149,7 +160,7 @@ const updateMeeting = () => {
   ) {
     alert("Please, Fill all Field");
   } else {
-    const id = localStorage.getItem("updateMeetingId");
+    const id = meetingId;
     axios
       .put(`http://localhost:8080/meeting/update/${id}`, {
         meeting_name,
@@ -166,6 +177,7 @@ const updateMeeting = () => {
         }, 1000);
       });
   }
+  meetingId = null;
 };
 
 const deleteMeeting = (deleteID) => {
