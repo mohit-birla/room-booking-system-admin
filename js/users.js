@@ -5,7 +5,6 @@ let usersButton = document.getElementById("usersButton");
 const getUsers = () => {
     axios.get("http://localhost:8080/profile/all").then((res) => {
         usersArray = res.data.data;
-        console.log(res.data.data)
         generateUsersScreen(usersArray);
     });
 };
@@ -51,7 +50,7 @@ const generateUsersScreen = (usersArray) => {
                                 <td>${usr.name}</td>
                                 <td>${usr.email}</td>
                                 <td>${usr.position}</td>
-                                <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editUserModel" onclick="editUserFunction(${usr.id})">Edit</button></td>
+                                <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editUserModel" onclick="getDataToUpdate(${usr.emp_id})">Edit</button></td>
                                 <td><button type="button" class="btn btn-outline-danger" onclick="deleteUser(${usr.emp_id})">Delete</button></td>
                             </tr>`
                         })
@@ -84,7 +83,7 @@ const searchUser = () => {
                         <td>${usr.name}</td>
                         <td>${usr.email}</td>
                         <td>${usr.position}</td>
-                        <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editUserModel">Edit</button></td>
+                        <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editUserModel" onclick="getDataToUpdate(${usr.emp_id})">Edit</button></td>
                         <td><button type="button" class="btn btn-outline-danger" onclick="deleteUser(${usr.emp_id})">Delete</button></td>
                     </tr>`
         })
@@ -142,46 +141,49 @@ const deleteUser = (deleteUserId) => {
     });
 }
 
-// Edit User Model Open
-const editUserFunction = (editUserId) => {
-    localStorage.setItem("editUserId", editUserId);
+const getDataToUpdate = (id) => {
+    localStorage.setItem("updateUserId", id);
+    const user = usersArray.filter((item) => item.emp_id == id)[0];
+    console.log(user)
 
-    let users = JSON.parse(localStorage.getItem('users'));
-    const user = users.find((user) => Number(user.id) === editUserId);
-
-    document.getElementById("editUsername").value = user.username;
+    document.getElementById("editUsername").value = user.name;
     document.getElementById("editEmail").value = user.email;
     document.getElementById("editPassword").value = user.password;
+    document.getElementById("editPosition").value = user.position;
+};
 
-    $('#editUserModel').modal('show');
-}
+// Edit User
+const updateUser = () => {
+let username = document.getElementById("editUsername").value;
+let password = document.getElementById("editPassword").value;
+let email = document.getElementById("editEmail").value;
+let position = document.getElementById("editPosition").value;
 
-
-// Edit user
-const editUser = () => {
-    let username = document.getElementById("editUsername").value;
-    let email = document.getElementById("editEmail").value;
-    let password = document.getElementById("editPassword").value;
-
-    const editUserId = localStorage.getItem("editUserId");
-    if (confirm("Are you sure you want to edit this user?")) {
-        let users = JSON.parse(localStorage.getItem('users'));
-        const userIndex = users.findIndex((user) => user.id === editUserId);
-
-        if (userIndex !== -1) {
-            users[userIndex].username = username;
-            users[userIndex].email = email;
-            users[userIndex].password = password;
-
-            localStorage.setItem("users", JSON.stringify(users));
-            alert("User edited successfully");
-        } else {
-            alert("User not found");
-        }
-        sendEmail(users[userIndex].email, "Account Edited");
+if (
+    !username &&
+    !password &&
+    !email &&
+    !position
+) {
+    alert("Please, Fill all Field");
+} else {
+    const id = localStorage.getItem("updateUserId");
+    axios
+    .put(`http://localhost:8080/profile/update/${id}`, {
+        username,
+        password,
+        email,
+        position
+    })
+    .then((res) => {
+        alert(res.data.message);
+        setTimeout(() => {
         location.reload();
-    }
+        }, 1000);
+    });
 }
+};
+  
 
 
 // sendEmail to user

@@ -432,6 +432,10 @@
                 <input type="email" class="form-control" id="editEmail" />
               </div>
               <div class="mb-3">
+                <label for="editPosition" class="col-form-label">Position</label>
+                <input type="text" class="form-control" id="editPosition" />
+              </div>
+              <div class="mb-3">
                 <label for="editPassword" class="col-form-label">Password</label>
                 <input type="password" class="form-control" id="editPassword" />
               </div>
@@ -445,7 +449,7 @@
             >
               Close
             </button>
-            <button type="button" id="editUserButton" class="btn btn-info" onclick="editUser()">Submit</button>
+            <button type="button" id="editUserButton" class="btn btn-info" data-bs-dismiss="modal" onclick="updateUser()">Submit</button>
           </div>
         </div>
       </div>
