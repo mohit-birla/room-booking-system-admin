@@ -49,7 +49,7 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <h3 class="modal-title">Add Meeting</h3>
+            <h3 class="modal-title" id="addMeetingTitle">Add Meeting</h3>
             <button
               type="button"
               class="close"
@@ -73,8 +73,8 @@
               <div class="form-group">
                 <label for="roomType" class="py-2">Room</label>
                 <select class="form-control" id="roomType" required>
-                  <option value="A1">A1</option>
-                  <option value="A2">A2</option>
+                  <option value="1">A1</option>
+                  <option value="2">A2</option>
                 </select>
               </div>
               <div class="form-group">
@@ -82,6 +82,7 @@
                 <input
                   type="text"
                   id="datepicker"
+                  class="dateForMeeting"
                   placeholder="Select date"
                   required
                   autocomplete="off"
@@ -106,83 +107,7 @@
                   required
                 />
               </div>
-              <button type="submit" class="btn btn-primary mt-2">Submit</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal For Edit Meeting -->
-    <div class="modal fade" id="editModal" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title">Edit Meeting</h3>
-            <button
-              type="button"
-              class="close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form id="addRoomForm">
-              <div class="form-group">
-                <label for="roomNumber " class="py-2">Meeting Title</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editModalMeetingTitle"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="roomType" class="py-2">Room</label>
-                <select class="form-control" id="editModalRoom" required>
-                  <option value="A1">A1</option>
-                  <option value="A2">A2</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="datepicker" class="py-2">Date :</label><br />
-                <input
-                  type="text"
-                  id="editModalDate"
-                  placeholder="Select date"
-                  required
-                  autocomplete="off"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="clockInTime" class="py-2">Clock In Time:</label>
-                <input
-                  type="time"
-                  class="form-control"
-                  id="editModalClockInTime"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="clockOutTime" class="py-2">Clock Out Time:</label>
-                <input
-                  type="time"
-                  class="form-control"
-                  id="editModalClockOutTime"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                class="btn btn-primary mt-2"
-                id="saveEditBtn"
-              >
-                Submit
-              </button>
+              <button type="submit" onclick="submitMeeting()" data-bs-dismiss="modal" class="btn btn-primary mt-2">Submit</button>
             </form>
           </div>
         </div>
@@ -339,18 +264,18 @@
       </div>
     </div>
 
-    <!-- Model for Add User -->
+    <!-- Model for Add and Edit User -->
     <div
       class="modal fade"
       id="addUsersModel"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="userModal"
       aria-hidden="true"
     >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Users</h5>
+            <h5 class="modal-title" id="userModal">Add Users</h5>
             <button
               type="button"
               class="btn-close"
@@ -361,16 +286,16 @@
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="userId" class="col-form-label">User Id</label>
-                <input type="text" class="form-control" id="userId" />
-              </div>
-              <div class="mb-3">
                 <label for="username" class="col-form-label">Username</label>
                 <input type="text" class="form-control" id="username" />
               </div>
               <div class="mb-3">
                 <label for="email" class="col-form-label">Email</label>
                 <input type="email" class="form-control" id="email" />
+              </div>
+              <div class="mb-3">
+                <label for="userId" class="col-form-label">Position</label>
+                <input type="text" class="form-control" id="position" />
               </div>
               <div class="mb-3">
                 <label for="password" class="col-form-label">Password</label>
@@ -389,6 +314,7 @@
             <button
               type="button"
               class="btn btn-info"
+              id="userButton"
               onclick="submitUser()"
               data-bs-dismiss="modal"
             >
@@ -398,56 +324,6 @@
         </div>
       </div>
     </div>
-    <!-- Model for Add User End-->
-    <!-- Model for Edit User -->
-    <div
-      class="modal fade"
-      id="editUserModel"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="editUsername" class="col-form-label">Username</label>
-                <input type="text" class="form-control" id="editUsername" />
-              </div>
-              <div class="mb-3">
-                <label for="editEmail" class="col-form-label">Email</label>
-                <input type="email" class="form-control" id="editEmail" />
-              </div>
-              <div class="mb-3">
-                <label for="editPassword" class="col-form-label">Password</label>
-                <input type="password" class="form-control" id="editPassword" />
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" id="editUserButton" class="btn btn-info" onclick="editUser()">Submit</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Model for Edit User Ends -->
     <!-- Model for Delete User -->
     <div
       class="modal fade"
@@ -829,7 +705,7 @@
         </div>
       </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <!-- Include jQuery UI library -->
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
