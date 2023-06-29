@@ -49,7 +49,7 @@ const generateRoomsScreen = (meetingRooms) => {
                                             data-bs-target="#${item.roomId}" aria-expanded="false"
                                             aria-controls="collapseExample">Slots</button></td> -->
                                         <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateRoomModel">Edit</button></td>
-                                        <td><button type="button" class="btn btn-outline-danger" onclick="deleteRoom(${item.roomId})">Delete</button></td>
+                                        <td><button type="button" class="btn btn-outline-danger" onclick="deleteRoom(${item.room_id})">Delete</button></td>
                 
                                     </tr>
                                     <!-- <tr>
@@ -136,20 +136,15 @@ let submitRoom = () => {
 }
 
 // delete Room
-const deleteRoom = (roomId) => {
-    localStorage.setItem("roomId", roomId);
-    if (confirm("Are you sure you want to delete this room?")) {
-        let rooms = JSON.parse(localStorage.getItem('rooms'));
-        const roomIndex = rooms.findIndex((room) => Number(room.roomId) === roomId);
-        if (roomIndex !== -1) {
-            rooms.splice(roomIndex, 1);
-            localStorage.setItem("rooms", JSON.stringify(rooms));
-            alert("Room deleted successfully");
-        } else {
-            alert("Room not found");
-        }
+const deleteRoom = (deleteRoomId) => {
+    axios
+    .delete(`http://localhost:8080/rooms/delete/${deleteRoomId}`)
+    .then((res) => {
+      alert(res.data.message);
+      setTimeout(() => {
         location.reload();
-    }
+      }, 1000);
+    });
 }
 
 // for calender
