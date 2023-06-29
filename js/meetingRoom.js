@@ -2,9 +2,16 @@
 let meetingRoomButton = document.getElementById("roomButton");
 var meetingRooms = [];
 
+const getRooms = () => {
+    axios.get("http://localhost:8080/rooms/all").then((res) => {
+        meetingRooms = res.data.data;
+        console.log(meetingRooms);
+        generateRoomsScreen(meetingRooms);
+    });
+};
+
 meetingRoomButton.addEventListener("click", () => {
-    meetingRooms = JSON.parse(localStorage.getItem('rooms'));
-    generateRoomsScreen(meetingRooms);
+    getRooms();
 })
 
 // Generate Screen
@@ -24,6 +31,7 @@ const generateRoomsScreen = (meetingRooms) => {
                         <th scope="col">#</th>
                         <th scope="col">Room Name</th>
                         <th scope="col">Short Code</th>
+                        <th scope="col">Capacity</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
                     </tr>
@@ -32,9 +40,10 @@ const generateRoomsScreen = (meetingRooms) => {
                     ${
                         meetingRooms?.map((item)=>{
                             return `<tr>
-                                        <th scope="row">${item.roomId}</th>
-                                        <td>${item.roomName}</td>
-                                        <td>${item.roomStatus}</td>
+                                        <th scope="row">${item.room_id}</th>
+                                        <td>${item.room_name}</td>
+                                        <td>${item.room_code}</td>
+                                        <td>${item.capacity}</td>
                                         <!-- <td><button type="button" class="btn btn-info" id="roomStatus" onclick="changeStatus()">${item.roomStatus}</button></td>-->
                                         <!-- <td><button class="btn btn-info" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#${item.roomId}" aria-expanded="false"
