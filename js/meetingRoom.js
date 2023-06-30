@@ -1,10 +1,18 @@
 // Meeting Room Screen
 let meetingRoomButton = document.getElementById("roomButton");
 var meetingRooms = [];
+var roomId;
+
+const getRooms = () => {
+    axios.get("http://localhost:8080/rooms/all").then((res) => {
+        meetingRooms = res.data.data;
+        console.log(meetingRooms);
+        generateRoomsScreen(meetingRooms);
+    });
+};
 
 meetingRoomButton.addEventListener("click", () => {
-    meetingRooms = JSON.parse(localStorage.getItem('rooms'));
-    generateRoomsScreen(meetingRooms);
+    getRooms();
 })
 
 // Generate Screen
@@ -14,16 +22,17 @@ const generateRoomsScreen = (meetingRooms) => {
     `<div class="w-75 m-3 p-3">
         <div class="container d-flex justify-content-between">
             <h3>Meeting Rooms</h3>
-            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addRoomModel">Add Room</button>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addRoomModel" onclick="changeHtmlRoom()">Add Room</button>
         </div>
         ${
-            !isEmpty(meetingRooms) ? `<div style="overflow: auto">
+            meetingRooms.length > 0 ? `<div style="overflow: auto">
             <table class="table table-bordered mt-2">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Room Name</th>
                         <th scope="col">Short Code</th>
+                        <th scope="col">Capacity</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
                     </tr>
@@ -32,15 +41,16 @@ const generateRoomsScreen = (meetingRooms) => {
                     ${
                         meetingRooms?.map((item)=>{
                             return `<tr>
-                                        <th scope="row">${item.roomId}</th>
-                                        <td>${item.roomName}</td>
-                                        <td>${item.roomStatus}</td>
+                                        <th scope="row">${item.room_id}</th>
+                                        <td>${item.room_name}</td>
+                                        <td>${item.room_code}</td>
+                                        <td>${item.capacity}</td>
                                         <!-- <td><button type="button" class="btn btn-info" id="roomStatus" onclick="changeStatus()">${item.roomStatus}</button></td>-->
                                         <!-- <td><button class="btn btn-info" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#${item.roomId}" aria-expanded="false"
                                             aria-controls="collapseExample">Slots</button></td> -->
-                                        <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateRoomModel">Edit</button></td>
-                                        <td><button type="button" class="btn btn-outline-danger" onclick="deleteRoom(${item.roomId})">Delete</button></td>
+                                        <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addRoomModel" onclick="getDataToUpdateRoom(${item.room_id})">Edit</button></td>
+                                        <td><button type="button" class="btn btn-outline-danger" onclick="deleteRoom(${item.room_id})">Delete</button></td>
                 
                                     </tr>
                                     <!-- <tr>
@@ -53,7 +63,7 @@ const generateRoomsScreen = (meetingRooms) => {
 
                                                     </div>
                                                     ${
-                                                        !isEmpty(item.roomSlots) ? `<div style="overflow: auto">
+                                                        item.roomSlots ? `<div style="overflow: auto">
                                                             <table class="table" >
                                                                 <thead>
                                                                     ${item.roomSlots ? `<tr>
@@ -96,104 +106,100 @@ const generateRoomsScreen = (meetingRooms) => {
     meetingRoomScreen.innerHTML = meetingRoomHtml;
 }
 
-// Emty checker
-const isEmpty = (value) => {
-    return value === undefined || value === null || value === [];
-}
+const changeHtmlRoom = () => {
+    document.getElementById("addRoomTitle").innerHTML = "Add Room";
+  
+    document.getElementById("addRoomId").value = "";
+    document.getElementById("addRoomName").value = "";
+    document.getElementById("roomCapacity").value = "";
+  };
 
 // Add Room
 let submitRoom = () => {
-    let roomId = document.getElementById("roomId").value;
-    let roomName = document.getElementById("roomName").value;
-    if(!roomId && !roomName){
+    if (roomId) {
+        updateRoom();
+        return;
+      }
+    let room_code = document.getElementById("addRoomId").value;
+    let room_name = document.getElementById("addRoomName").value;
+    let capacity = document.getElementById("roomCapacity").value;
+    const data = {
+        room_code,
+        room_name,
+        capacity
+    }
+
+    if (
+        !room_code ||
+        !room_name ||
+        !capacity
+      ) {
         alert("Please, Fill all Field");
-    } else {
-        let rooms = JSON.parse(localStorage.getItem('rooms'));
-    
-        if(rooms){
-            rooms.push({roomId, roomName, roomStatus:  "Available", roomSlots: [] });
-            localStorage.setItem("rooms", JSON.stringify(rooms));
-        } else{
-            let rooms = [];
-            rooms.push({roomId, roomName, roomStatus:  "Available", roomSlots: [] });
-            localStorage.setItem("rooms", JSON.stringify(rooms));
-        }
-        document.getElementById("roomId").value = "";
-        document.getElementById("roomName").value = "";
-        alert("Room added Succesfully")
-        location.reload()
-    }
-}
-
-// Add Slot
-const addSlotFunction = (editRoomId) => {
-    localStorage.setItem("editRoomId", editRoomId);
-}
-
-
-const addSlot = () => {
-    let roomSlotDate = document.getElementById("roomSlotDate").value;
-    let roomSlotStartTime = document.getElementById("roomSlotStartTime").value;
-    let roomSlotEndTime = document.getElementById("roomSlotEndTime").value;
-    let roomSlotId = document.getElementById("roomSlotId").value;
-    let editRoomId = localStorage.getItem("editRoomId");
-
-
-    if(!roomSlotDate && !roomSlotStartTime && !roomSlotEndTime){
-        alert("Please, Fill all Field");
-    } else {
-        let rooms = JSON.parse(localStorage.getItem('rooms'));
-
-        const roomIndex = rooms.findIndex((room) => room.roomId === editRoomId);
-        if (roomIndex !== -1) {
-            rooms[roomIndex].roomSlots.push({roomSlotId, roomSlotDate, roomSlotStartTime, roomSlotEndTime});
-            localStorage.setItem("rooms", JSON.stringify(rooms));
-        
-            document.getElementById("roomSlotDate").value = "";
-            document.getElementById("roomSlotStartTime").value = "";
-            document.getElementById("roomSlotEndTime").value = "";
-            alert("Slots added Succesfully")
-        } else {
-            alert("Someting Went Wrong");
-        }
-        
-        location.reload()
-    }
-}
-
-// Delete Slot
-const deletSlot = (roomId, deleteSlotId) => {
-    if (confirm("Are you sure you want to delete this slot?")) {
-        let rooms = JSON.parse(localStorage.getItem('rooms'));
-        const roomIndex = rooms.findIndex((room) => Number(room.roomId) === roomId);
-        rooms[roomIndex].roomSlots.findIndex((slots)=> slots.roomSlotId === deleteSlotId)
-        if (roomIndex !== -1) {
-            rooms[roomIndex].roomSlots.splice(roomIndex, 1);
-            localStorage.setItem("rooms", JSON.stringify(rooms));
-            alert("Slot deleted successfully");
-        } else {
-            alert("Slot not found");
-        }
-        location.reload();
-    }
+      } else {
+        axios
+          .post("http://localhost:8080/rooms/add", data)
+          .then((res) => {
+            alert(res.data.message);
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          });
+      }
 }
 
 // delete Room
-const deleteRoom = (roomId) => {
-    localStorage.setItem("roomId", roomId);
-    if (confirm("Are you sure you want to delete this room?")) {
-        let rooms = JSON.parse(localStorage.getItem('rooms'));
-        const roomIndex = rooms.findIndex((room) => Number(room.roomId) === roomId);
-        if (roomIndex !== -1) {
-            rooms.splice(roomIndex, 1);
-            localStorage.setItem("rooms", JSON.stringify(rooms));
-            alert("Room deleted successfully");
-        } else {
-            alert("Room not found");
-        }
+const deleteRoom = (deleteRoomId) => {
+    axios
+    .delete(`http://localhost:8080/rooms/delete/${deleteRoomId}`)
+    .then((res) => {
+      alert(res.data.message);
+      setTimeout(() => {
         location.reload();
-    }
+      }, 1000);
+    });
 }
+
+const getDataToUpdateRoom = (id) => {
+    roomId = id;
+    document.getElementById("addRoomTitle").innerHTML = "Update Room"
+    const room = meetingRooms.filter((item) => item.room_id == id)[0];
+
+    document.getElementById("addRoomId").value = room.room_code;
+    document.getElementById("addRoomName").value = room.room_name;
+    document.getElementById("roomCapacity").value = room.capacity;
+};
+
+// Edit User
+const updateRoom = () => {
+let room_code = document.getElementById("addRoomId").value;
+let capacity = document.getElementById("roomCapacity").value;
+let room_name = document.getElementById("addRoomName").value;
+const data = {
+    room_code,
+    room_name,
+    capacity
+}
+
+if (
+    !room_code ||
+    !room_name ||
+    !capacity
+) {
+    alert("Please, Fill all Field");
+} else {
+    const id = roomId;
+    axios
+    .put(`http://localhost:8080/rooms/update/${id}`, data)
+    .then((res) => {
+        alert(res.data.message);
+        setTimeout(() => {
+        location.reload();
+        }, 1000);
+    });
+}
+roomId = null;
+};
+
 
 // for calender
 $(document).ready(function () {
@@ -204,10 +210,4 @@ $(document).ready(function () {
     });
     // Clear the date picker field
     $("#roomSlotDate").val("");
-  });
-
-  // change status
-  const changeStatus = () => {
-    let value = document.getElementById("roomStatus").innerHTML;
-    document.getElementById("roomStatus").innerHTML = value == "Available" ? "Unavilable" : "Available"
-  }
+});

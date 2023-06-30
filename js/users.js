@@ -116,7 +116,7 @@ let submitUser = () => {
 
   const data = { name, email, password, position };
 
-  if (!name && !email && !password && !position) {
+  if (!name || !email || !password || !position) {
     alert("Please, Fill all Field");
   } else {
     axios.post("http://localhost:8080/register", data).then((res) => {
@@ -126,6 +126,7 @@ let submitUser = () => {
       }, 1000);
     });
   }
+  sendEmail(email, "Your Profile Created")
 };
 
 // Delete user
@@ -138,6 +139,7 @@ const deleteUser = (deleteUserId) => {
         location.reload();
       }, 1000);
     });
+    sendEmail(email, "Your Profile Deleted")
 };
 
 const getDataToUpdate = (id) => {
@@ -158,7 +160,7 @@ const updateUser = () => {
   let position = document.getElementById("position").value;
   const data = { username, email, password, position };
 
-  if (!username && !password && !email && !position) {
+  if (!username || !password || !email || !position) {
     alert("Please, Fill all Field");
   } else {
     const id = userId;
@@ -172,6 +174,7 @@ const updateUser = () => {
       });
   }
   userId = null;
+  sendEmail(email, "Your Profile Updated")
 };
 
 // sendEmail to user

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Room Booking System</title>
+    <title>Document</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -23,32 +23,37 @@
     >
       <form class="p-4 border rounded" style="min-width: 320px;">
         <!-- Email input -->
-        <div class="form-outline mb-4">
-          <label class="form-label" for="loginEmail">Email address</label>
-          <input type="email" id="loginEmail" class="form-control" />
+        <div class="form-outline mb-3">
+          <label class="form-label" for="nameForUserCreate">Full Name</label>
+            <input type="text" id="nameForUserCreate" class="form-control" />
+          </div>
+        <div class="form-outline mb-3">
+          <label class="form-label" for="emailForUserCreate">Email Address</label>
+          <input type="email" id="emailForUserCreate" class="form-control" />
         </div>
+        <div class="form-outline mb-3">
+          <label class="form-label" for="positionForUserCreate">Possition</label>
+            <input type="text" id="positionForUserCreate" class="form-control" />
+          </div>
 
         <!-- Password input -->
-        <div class="form-outline mb-4">
-          <label class="form-label" for="loginPassword">Password</label>
-          <input type="password" id="loginPassword" class="form-control" />
+        <div class="form-outline mb-3">
+          <label class="form-label" for="passwordForUserCreate">Password</label>
+          <input type="password" id="passwordForUserCreate" class="form-control" />
         </div>
-
-        <!-- 2 column grid layout for inline styling -->
         <div class="row mb-4">
-          <div class="col">Not a Member?
-            <a href="./html/signup.html">Register</a>
+          <div class="col">Already a Member?
+            <a href="../index.html">Login</a>
           </div>
         </div>
-
         <!-- Submit button -->
-        <button type="button" id="loginButton" class="btn btn-primary mb-4">
-          Sign in
+        <button type="button" id="buttonForUserCreate" class="btn btn-primary mb-4">
+          Register
         </button>
       </form>
     </div>
     
-    <script src="./js/login.js"></script>
+    <script src="../js/signup.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </body>
 </html>
