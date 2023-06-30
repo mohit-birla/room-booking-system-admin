@@ -116,7 +116,7 @@ let submitUser = () => {
 
   const data = { name, email, password, position };
 
-  if (!name && !email && !password && !position) {
+  if (!name || !email || !password || !position) {
     alert("Please, Fill all Field");
   } else {
     axios.post("http://localhost:8080/register", data).then((res) => {
@@ -158,7 +158,7 @@ const updateUser = () => {
   let position = document.getElementById("position").value;
   const data = { username, email, password, position };
 
-  if (!username && !password && !email && !position) {
+  if (!username || !password || !email || !position) {
     alert("Please, Fill all Field");
   } else {
     const id = userId;

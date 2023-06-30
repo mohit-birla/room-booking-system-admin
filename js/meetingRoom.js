@@ -130,8 +130,8 @@ let submitRoom = () => {
     }
 
     if (
-        !room_code &&
-        !room_name &&
+        !room_code ||
+        !room_name ||
         !capacity
       ) {
         alert("Please, Fill all Field");
@@ -181,8 +181,8 @@ const data = {
 }
 
 if (
-    !room_code &&
-    !room_name &&
+    !room_code ||
+    !room_name ||
     !capacity
 ) {
     alert("Please, Fill all Field");

@@ -1,19 +1,36 @@
 // Meeting Room Screen
+var loggedInAdminId;
 let dashboardButton = document.getElementById("dashboardButton");
 var meetingId;
+var userNameForMeeting = [];
 var meetings = [];
 var roomsForMeetings = [];
 
 const getMeetings = () => {
   axios.get("http://localhost:8080/meeting/all").then((res) => {
     meetings = res.data.data;
+  });
+  axios.get("http://localhost:8080/profile/all").then((res) => {
+    userNameForMeeting = res.data.data;
     dashboardScreen(meetings);
   });
+  
 };
 
+let logoutButton = document.getElementById('logoutButton');
+logoutButton.addEventListener('click', ()=>{
+  localStorage.removeItem("loggedInAdminId");
+  location.reload();
+})
+
 window.onload = () => {
-  getMeetings();
-  getRoomsForAddMeeting();
+  loggedInAdminId = localStorage.getItem('loggedInAdminId')
+  if(loggedInAdminId){
+    getMeetings();
+    getRoomsForAddMeeting();
+  }else {
+    location.replace('../index.html')
+  }
 };
 
 dashboardButton.addEventListener("click", () => {
@@ -45,10 +62,11 @@ const dashboardScreen = (meetings) => {
                 </thead>
                 <tbody>
                     ${meetings?.map((item) => {
+                      let n = userNameForMeeting.filter(u=>u.emp_id == item.fk_emp_id);
                       return `<tr>
                                 <th scope="row">${item.meeting_id}</th>
                                 <td>${item.meeting_name}</td>
-                                <td>${item.fk_emp_id}</td>
+                                <td>${n[0].name}</td>
                                 <td>${item.meeting_date.slice(0, 10)}</td>
                                 <td>${item.start_time}-${item.end_time}</td>
                                 <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addMeetingModal" onclick="saveId(${
@@ -103,7 +121,7 @@ const submitMeeting = () => {
   let meeting_date = document.getElementById("datepicker").value;
   let start_time = document.getElementById("clockInTime").value;
   let end_time = document.getElementById("clockOutTime").value;
-  let fk_emp_id = 1;
+  let fk_emp_id = loggedInAdminId;
   const data = {
     meeting_name,
     fk_room_id,
@@ -114,15 +132,14 @@ const submitMeeting = () => {
   }
 
   if (
-    !meeting_name &&
-    !fk_room_id &&
-    !meeting_date &&
-    !start_time &&
+    !meeting_name ||
+    !fk_room_id ||
+    !meeting_date ||
+    !start_time ||
     !end_time
   ) {
     alert("Please, Fill all Field");
   } else {
-    console.log(meeting_date);
     axios
       .post("http://localhost:8080/meeting/add", data)
       .then((res) => {
@@ -179,10 +196,10 @@ const updateMeeting = () => {
   }
 
   if (
-    !meeting_name &&
-    !fk_room_id &&
-    !meeting_date &&
-    !start_time &&
+    !meeting_name ||
+    !fk_room_id ||
+    !meeting_date ||
+    !start_time ||
     !end_time
   ) {
     alert("Please, Fill all Field");
