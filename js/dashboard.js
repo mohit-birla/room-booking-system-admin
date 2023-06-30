@@ -97,13 +97,19 @@ const getRoomsForAddMeeting = () => {
 
 const changeMeetingHtml = () => {
   document.getElementById("addMeetingTitle").innerHTML = "Add Meeting";
-
+  
+  
+  const selectParticipants = userNameForMeeting.map((item)=>{
+    return `<option value="${item.email}">${item.name}</option>`
+  })
+  
   const selectRooms = roomsForMeetings.map((item)=>{
     return `<option value="${item.room_id}">${item.room_name}</option>`
   })
 
+  document.getElementById("addMeetingParticipents").innerHTML = selectParticipants;
+
   document.getElementById("roomType").innerHTML = selectRooms;
-  console.log(selectRooms)
   document.getElementById("meetingTitle").value = "";
   document.getElementById("datepicker").value = "";
   document.getElementById("clockInTime").value = "";
@@ -121,6 +127,16 @@ const submitMeeting = () => {
   let meeting_date = document.getElementById("datepicker").value;
   let start_time = document.getElementById("clockInTime").value;
   let end_time = document.getElementById("clockOutTime").value;
+
+  let participant = document.getElementById("addMeetingParticipents").value;
+  let mailBody = `
+    Meeting scheduled :-
+    Title : ${meeting_name},
+    Date : ${meeting_date},
+    Time : ${start_time}-${end_time},
+  `
+
+
   let fk_emp_id = loggedInAdminId;
   const data = {
     meeting_name,
@@ -143,6 +159,9 @@ const submitMeeting = () => {
     axios
       .post("http://localhost:8080/meeting/add", data)
       .then((res) => {
+        if(res.data.success){
+          sendEmailToParti(participant, mailBody)
+        }
         alert(res.data.message);
         setTimeout(() => {
           location.reload();
@@ -180,6 +199,7 @@ const saveId = (id) => {
 
 // Edit Meeting
 const updateMeeting = () => {
+  document.getElementById("hideParticipants").display = none;
   let meeting_name = document.getElementById("meetingTitle").value;
   let fk_room_id = document.getElementById("roomType").value;
   let meeting_date = document.getElementById("datepicker").value;
@@ -226,4 +246,20 @@ const deleteMeeting = (deleteID) => {
         location.reload();
       }, 1000);
     });
+};
+
+const sendEmailToParti = (userEmail, msg) => {
+  console.log("runned");
+  console.log(userEmail);
+  Email.send({
+    Host: "smtp.elasticemail.com",
+    Username: "sumit.vishwakarma@averybit.in",
+    Password: "B5817F36815288F5FC9E97DABA161074033F",
+    To: `${userEmail}`,
+    From: "sumit.vishwakarma@averybit.in",
+    Subject: "Meeting Scheduled",
+    Body: msg,
+  }).then(function (message) {
+    // alert("mail sent successfully")
+  });
 };

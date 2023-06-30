@@ -62,13 +62,17 @@
           <div class="modal-body">
             <form id="addRoomForm">
               <div class="form-group">
-                <label for="roomNumber " class="py-2">Meeting Title</label>
+                <label for="meetingTitle " class="py-2">Meeting Title</label>
                 <input
                   type="text"
                   class="form-control"
                   id="meetingTitle"
                   required
                 />
+              </div>
+              <div class="form-group" id="hideParticipants">
+                <label for="roomType" class="py-2">Add Participant</label>
+                <select class="form-control" id="addMeetingParticipents" required></select>
               </div>
               <div class="form-group">
                 <label for="roomType" class="py-2">Room</label>
@@ -79,7 +83,7 @@
                 <input
                   type="text"
                   id="datepicker"
-                  class="dateForMeeting"
+                  class="dateForMeeting form-control"
                   placeholder="Select date"
                   required
                   autocomplete="off"
