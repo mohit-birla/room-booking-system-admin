@@ -126,6 +126,7 @@ let submitUser = () => {
       }, 1000);
     });
   }
+  sendEmail(email, "Your Profile Created")
 };
 
 // Delete user
@@ -138,6 +139,7 @@ const deleteUser = (deleteUserId) => {
         location.reload();
       }, 1000);
     });
+    sendEmail(email, "Your Profile Deleted")
 };
 
 const getDataToUpdate = (id) => {
@@ -172,6 +174,7 @@ const updateUser = () => {
       });
   }
   userId = null;
+  sendEmail(email, "Your Profile Updated")
 };
 
 // sendEmail to user

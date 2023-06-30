@@ -25,9 +25,6 @@ let loginUser = () => {
         } else {
           alert("Acces Denied");
         }
-        setTimeout(() => {
-          //   location.reload();
-        }, 1000);
       }
     });
   }

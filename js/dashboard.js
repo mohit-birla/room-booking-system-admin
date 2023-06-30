@@ -62,11 +62,11 @@ const dashboardScreen = (meetings) => {
                 </thead>
                 <tbody>
                     ${meetings?.map((item) => {
-                      let n = userNameForMeeting.filter(u=>u.emp_id == item.fk_emp_id);
+                      let meetingCreater = userNameForMeeting.filter(u=>u.emp_id == item.fk_emp_id);
                       return `<tr>
                                 <th scope="row">${item.meeting_id}</th>
                                 <td>${item.meeting_name}</td>
-                                <td>${n[0].name}</td>
+                                <td>${meetingCreater[0].name}</td>
                                 <td>${item.meeting_date.slice(0, 10)}</td>
                                 <td>${item.start_time}-${item.end_time}</td>
                                 <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addMeetingModal" onclick="saveId(${

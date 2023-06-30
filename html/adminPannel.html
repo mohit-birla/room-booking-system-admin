@@ -39,7 +39,7 @@
         }
       }
     </style>
-    <title>Room Booking System</title>
+    <title>Admin Pannel</title>
   </head>
 
   <body>
@@ -72,9 +72,7 @@
               </div>
               <div class="form-group">
                 <label for="roomType" class="py-2">Room</label>
-                <select class="form-control" id="roomType" required>
-                  
-                </select>
+                <select class="form-control" id="roomType" required></select>
               </div>
               <div class="form-group">
                 <label for="datepicker" class="py-2">Date :</label><br />
@@ -106,7 +104,14 @@
                   required
                 />
               </div>
-              <button type="submit" onclick="submitMeeting()" data-bs-dismiss="modal" class="btn btn-primary mt-2">Submit</button>
+              <button
+                type="submit"
+                onclick="submitMeeting()"
+                data-bs-dismiss="modal"
+                class="btn btn-primary mt-2"
+              >
+                Submit
+              </button>
             </form>
           </div>
         </div>
@@ -152,111 +157,6 @@
             </button>
             <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
               Delete
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Decline Room Modal -->
-    <div
-      class="modal fade"
-      id="declineRoomModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="deleteRoomModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title" id="deleteRoomModalLabel">
-              Decline Meeting
-            </h3>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Are you sure you want to decline this meeting?</p>
-            <div id="roomDetails"></div>
-          </div>
-
-          <div class="modal-body">
-            <label for="cancelReason" class="my-2">Reason in Brief : -</label>
-            <input
-              type="text"
-              class="form-control"
-              id="cancelReason"
-              placeholder="Reason for cancellation"
-            />
-          </div>
-
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              id="cancelDeclineMeeting"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger"
-              id="confirmDeclineMeeting"
-            >
-              Decline
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Approve Room Modal -->
-    <div
-      class="modal fade"
-      id="approveRoomModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="deleteRoomModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title" id="deleteRoomModalLabel">
-              Approve Meeting
-            </h3>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Do you want to approve this meeting?</p>
-            <div id="roomDetails"></div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              id="cancelAppproveMeeting"
-            >
-              Cancel
-            </button>
-            <button type="button" class="btn btn-danger" id="approveMeeting">
-              Approve
             </button>
           </div>
         </div>
@@ -359,42 +259,7 @@
       </div>
     </div>
     <!-- Model for Delete User Ends-->
-    <!-- Model for Delete Slot starts -->
-    <div
-      class="modal fade"
-      id="deleteSlotsModel"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Delete Slots</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p>Confirm to delete Slots</p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Cancel
-            </button>
-            <button type="button" class="btn btn-danger">Confirm</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Model for Delete slots End-->
+
     <!-- Model for Add Room start-->
     <div
       class="modal fade"
@@ -417,7 +282,9 @@
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="addRoomId" class="col-form-label">Room Short Code</label>
+                <label for="addRoomId" class="col-form-label"
+                  >Room Short Code</label
+                >
                 <input
                   type="text"
                   class="form-control"
@@ -426,7 +293,9 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="addRoomName" class="col-form-label">Room Name</label>
+                <label for="addRoomName" class="col-form-label"
+                  >Room Name</label
+                >
                 <input
                   type="text"
                   class="form-control"
@@ -435,7 +304,9 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="roomCapacity" class="col-form-label">Room Capacity</label>
+                <label for="roomCapacity" class="col-form-label"
+                  >Room Capacity</label
+                >
                 <input
                   type="text"
                   class="form-control"
@@ -453,7 +324,12 @@
             >
               Close
             </button>
-            <button type="submit" data-bs-dismiss="modal" onclick="submitRoom()" class="btn btn-info">
+            <button
+              type="submit"
+              data-bs-dismiss="modal"
+              onclick="submitRoom()"
+              class="btn btn-info"
+            >
               Submit
             </button>
           </div>
@@ -461,79 +337,14 @@
       </div>
     </div>
     <!-- Model for Add Room End-->
-    <!-- Model for Add Slot start-->
-    <div class="modal fade" id="addSlotModel" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title">Add Slot</h3>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group mb-3">
-                <label for="roomSlotId" class="py-2">Slot Id</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="roomSlotId"
-                  required
-                />
-              </div>
-              <div class="form-group mb-3">
-                <label for="roomSlotDate" class="py-2">Date :</label><br />
-                <input
-                  type="text"
-                  id="roomSlotDate"
-                  class="form-control"
-                  placeholder="Select date"
-                  required
-                  autocomplete="off"
-                />
-              </div>
-
-              <div class="form-group mb-3">
-                <label for="roomSlotStartTime" class="py-2">Start Time:</label>
-                <input
-                  type="time"
-                  class="form-control"
-                  id="roomSlotStartTime"
-                  required
-                />
-              </div>
-              <div class="form-group mb-3">
-                <label for="roomSlotEndTime" class="py-2">End Time:</label>
-                <input
-                  type="time"
-                  class="form-control"
-                  id="roomSlotEndTime"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                onclick="addSlot()"
-                class="btn btn-info mt-2"
-              >
-                Submit
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Model for Add Slot End-->
-
+    
     <div class="container-fluid">
       <div class="row flex-nowrap">
         <!-- Sidebar -->
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #e3f2fd;">
+        <div
+          class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
+          style="background-color: #e3f2fd"
+        >
           <div
             class="d-flex flex-column align-items-center px-3 pt-2 text-white min-vh-100"
           >
@@ -541,7 +352,12 @@
               href="/"
               class="d-flex align-items-center ms-auto pb-3 mb-md-0 me-md-auto text-decoration-none text-black mt-2"
             >
-            <img src="/images/averybit-logo.jpg" alt="" width="107px" height="50px">
+              <img
+                src="/images/averybit-logo.jpg"
+                alt=""
+                width="107px"
+                height="50px"
+              />
             </a>
             <ul
               class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
@@ -555,9 +371,7 @@
                   id="dashboardButton"
                 >
                   <i class="fs-4 bi-speedometer2"></i>
-                  <span class="ms-1 d-none d-sm-inline"
-                    >Dashboard</span
-                  >
+                  <span class="ms-1 d-none d-sm-inline">Dashboard</span>
                 </a>
               </li>
 
@@ -587,73 +401,23 @@
         </div>
 
         <div class="col py-0 px-4">
-          <nav class="d-flex" style="background-color: #e3f2fd; ">
+          <nav class="d-flex" style="background-color: #e3f2fd">
             <div class="container-fluid mt-2">
               <span class="navbar-text text-black">
                 Welcome to Admin Panel
               </span>
             </div>
-            <button type="button" class="btn btn btn-outline-danger m-1" id="logoutButton">Logout</button>
+            <button
+              type="button"
+              class="btn btn btn-outline-danger m-1"
+              id="logoutButton"
+            >
+              Logout
+            </button>
           </nav>
           <div id="screenContent">
-            <!-- <div class="d-flex justify-content-between my-4">
-              <div>
-                <h3>Upcoming Meetings</h3>
-              </div>
-              <div>
-                <button type="button" class="btn btn-success" id="myBtn">
-                  Add Meeting
-                </button>
-              </div>
-            </div>
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>Meeting Title</th>
-                    <th>Room</th>
-                    <th>Date</th>
-                    <th>Clock In Time</th>
-                    <th>Clock Out Time:</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="roomData">
-                </tbody>
-              </table>
-            </div> -->
-
-            <!-- <div class="py-xl-5">
-              <div class="d-flex justify-content-between my-4">
-                <div>
-                  <h3>Meetings for Approvel</h3>
-                </div>
-              </div>
-
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>Meeting Title</th>
-                      <th>Room</th>
-                      <th>Date</th>
-                      <th>Clock In Time</th>
-                      <th>Clock Out Time:</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-
-                  <tbody id="approvalData">
-                  </tbody>
-                </table>
-              </div> -->
-            </div>
-
-            <!-- Navbar -->
+            
           </div>
-
         </div>
       </div>
     </div>
@@ -662,17 +426,17 @@
     <!-- Include jQuery UI library -->
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-      <script src="https://smtpjs.com/v3/smtp.js"></script>
-      <!-- <script src="./js/script.js"></script> -->
-      <script src="../js/meetingRoom.js"></script>
-      <script src="../js/users.js"></script>
-      <script src="../js/dashboard.js"></script>
-      <script src="https://smtpjs.com/v3/smtp.js"></script>
-
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <!-- <script src="./js/script.js"></script> -->
+    <script src="../js/meetingRoom.js"></script>
+    <script src="../js/users.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+  </body>
 </html>
