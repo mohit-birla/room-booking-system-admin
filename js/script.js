@@ -19,17 +19,34 @@ $(document).ready(function () {
   $("#datepicker").val("");
 });
 
-$(document).ready(function () {
-  // Initialize the date picker
-  $("#datepickerForSlots").datepicker({
-    dateFormat: "dd-mm-yy", // Set the date format to yyyy-mm-dd
-    minDate: 0, // Set the minimum selectable date as today
+var dashboardScreen = document.getElementById("dashboardScreen");
+var screenContent = document.getElementById("screenContent");
 
-  });
-  // Clear the date picker field
-  $("#datepickerForSlots").val("");
+dashboardScreen.style.display = "block";
+
+if ((dashboardScreen.style.display = "block")) {
+  var isContentVisible = true;
+}
+
+screenContent.addEventListener("click", function (event) {
+  if (isContentVisible) {
+    screenContent.style.display = "block";
+    isContentVisible = true;
+  } else {
+    dashboardScreen.style.display = "block";
+    isContentVisible = false;
+  }
 });
 
+dashboardScreen.addEventListener("click", function (event) {
+  if (isContentVisible) {
+    dashboardScreen.style.display = "block";
+    isContentVisible = true;
+  } else {
+    screenContent.style.display = "block";
+    isContentVisible = false;
+  }
+});
 
 // Data array for meetingforApproval meetings
 var meetingsForApprovalData = [
@@ -229,6 +246,8 @@ function generateRows() {
       var saveEditBtn = document.getElementById("saveEditBtn");
 
       saveEditBtn.addEventListener("click", function () {
+        event.preventDefault();
+
         // Update the meeting data with the new values
         meetingToEdit.meetingTitle = editModalMeetingTitle.value;
         meetingToEdit.room = editModalRoom.value;
@@ -242,9 +261,13 @@ function generateRows() {
         );
 
         generateRows();
+
+        generateRows();
         $("#editModal").modal("hide");
+        location.reload();
       });
     });
+
     var deleteButton = document.createElement("button");
 
     deleteButton.setAttribute("type", "button");
@@ -343,3 +366,10 @@ addRoomForm.addEventListener("submit", function (event) {
   $("#addMeetingModal").modal("hide");
 });
 generateRows();
+
+// $(document).ready(function () {
+//   // Initialize the date picker
+//   $("#dashboardButton").click(function () {
+//     location.reload()
+//   });
+// });
