@@ -2,6 +2,7 @@
 var usersArray = [];
 var userId;
 let usersButton = document.getElementById("usersButton");
+let userIdToDeleteUser;
 
 const getUsers = () => {
   axios.get("http://localhost:8080/profile/all").then((res) => {
@@ -50,7 +51,7 @@ const generateUsersScreen = (usersArray) => {
                                 <td>${usr.email}</td>
                                 <td>${usr.position}</td>
                                 <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addUsersModel " onclick="getDataToUpdate(${usr.emp_id})">Edit</button></td>
-                                <td><button type="button" class="btn btn-outline-danger" onclick="deleteUser(${usr.emp_id})">Delete</button></td>
+                                <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal " onclick="deleteUserIdSaver(${usr.emp_id})">Delete</button></td>
                             </tr>`;
                     })}
                 </tbody>
@@ -62,6 +63,10 @@ const generateUsersScreen = (usersArray) => {
     `;
   usersScreen.innerHTML = usersHtml;
 };
+
+const deleteUserIdSaver = (id) => {
+  userIdToDeleteUser = id;
+}
 
 const changeHtml = () => {
   document.getElementById("userModal").innerHTML = "Add User";
@@ -130,7 +135,8 @@ let submitUser = () => {
 };
 
 // Delete user
-const deleteUser = (deleteUserId) => {
+const deleteUser = () => {
+  const deleteUserId = userIdToDeleteUser;
   axios
     .delete(`http://localhost:8080/profile/delete/${deleteUserId}`)
     .then((res) => {

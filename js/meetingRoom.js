@@ -2,6 +2,7 @@
 let meetingRoomButton = document.getElementById("roomButton");
 var meetingRooms = [];
 var roomId;
+var roomIdtoDeleteRoom;
 
 const getRooms = () => {
     axios.get("http://localhost:8080/rooms/all").then((res) => {
@@ -50,7 +51,7 @@ const generateRoomsScreen = (meetingRooms) => {
                                             data-bs-target="#${item.roomId}" aria-expanded="false"
                                             aria-controls="collapseExample">Slots</button></td> -->
                                         <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addRoomModel" onclick="getDataToUpdateRoom(${item.room_id})">Edit</button></td>
-                                        <td><button type="button" class="btn btn-outline-danger" onclick="deleteRoom(${item.room_id})">Delete</button></td>
+                                        <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteRoomModal" onclick="deleteRoomIdSaver(${item.room_id})">Delete</button></td>
                 
                                     </tr>
                                     <!-- <tr>
@@ -106,6 +107,10 @@ const generateRoomsScreen = (meetingRooms) => {
     meetingRoomScreen.innerHTML = meetingRoomHtml;
 }
 
+const deleteRoomIdSaver = (id) => {
+    roomIdtoDeleteRoom = id;
+}
+
 const changeHtmlRoom = () => {
     document.getElementById("addRoomTitle").innerHTML = "Add Room";
   
@@ -148,7 +153,8 @@ let submitRoom = () => {
 }
 
 // delete Room
-const deleteRoom = (deleteRoomId) => {
+const deleteRoom = () => {
+    const deleteRoomId = roomIdtoDeleteRoom;
     axios
     .delete(`http://localhost:8080/rooms/delete/${deleteRoomId}`)
     .then((res) => {

@@ -5,6 +5,7 @@ var meetingId;
 var userNameForMeeting = [];
 var meetings = [];
 var roomsForMeetings = [];
+var meetingIdtoDeleteMeeting;
 
 const getMeetings = () => {
   axios.get("http://localhost:8080/meeting/all").then((res) => {
@@ -72,9 +73,7 @@ const dashboardScreen = (meetings) => {
                                 <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addMeetingModal" onclick="saveId(${
                                   item.meeting_id
                                 })">Edit</button></td>
-                                <td><button type="button" class="btn btn-outline-danger" onclick="deleteMeeting(${
-                                  item.meeting_id
-                                })">Delete</button></td>
+                                <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteMeetingModal" onclick="deleteMeetingIdSaver(${item.meeting_id})">Delete</button></td>
 
                               </tr>                                `;
                     })}
@@ -87,6 +86,10 @@ const dashboardScreen = (meetings) => {
     </div>`;
   dashboardScreen.innerHTML = dashboardScreenHtml;
 };
+
+const deleteMeetingIdSaver = (id) => {
+  meetingIdtoDeleteMeeting = id;
+}
 
 const getRoomsForAddMeeting = () => {
   axios.get("http://localhost:8080/rooms/all").then((res) => {
@@ -251,7 +254,8 @@ const updateMeeting = () => {
   meetingId = null;
 };
 
-const deleteMeeting = (deleteID) => {
+const deleteMeeting = () => {
+  deleteID = meetingIdtoDeleteMeeting;
   axios
     .delete(`http://localhost:8080/meeting/delete/${deleteID}`)
     .then((res) => {
