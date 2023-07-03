@@ -186,9 +186,9 @@ const submitMeeting = () => {
       }
       toastMessage.innerHTML = res.data.message;
       toastBody.classList.add("show");
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 1000);
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
     });
   }
 };
