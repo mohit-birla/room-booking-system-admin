@@ -4,6 +4,9 @@ var userId;
 let usersButton = document.getElementById("usersButton");
 let userIdToDeleteUser;
 
+let toastMessageUser = document.getElementById("toastBody");
+let toastBodyUser = document.getElementById("toastToShowMessage");
+
 const getUsers = () => {
   axios.get("http://localhost:8080/profile/all").then((res) => {
     usersArray = res.data.data;
@@ -66,7 +69,7 @@ const generateUsersScreen = (usersArray) => {
 
 const deleteUserIdSaver = (id) => {
   userIdToDeleteUser = id;
-}
+};
 
 const changeHtml = () => {
   document.getElementById("userModal").innerHTML = "Add User";
@@ -122,16 +125,18 @@ let submitUser = () => {
   const data = { name, email, password, position };
 
   if (!name || !email || !password || !position) {
-    alert("Please, Fill all Field");
+    toastMessageUser.innerHTML = "Please fill all field";
+    toastBodyUser.classList.add("show");
   } else {
     axios.post("http://localhost:8080/register", data).then((res) => {
-      alert(res.data.message);
+      toastMessageUser.innerHTML = res.data.message;
+      toastBodyUser.classList.add("show");
       setTimeout(() => {
         location.reload();
       }, 1000);
     });
   }
-  sendEmail(email, "Your Profile Created by Admin")
+  sendEmail(email, "Your Profile Created by Admin");
 };
 
 // Delete user
@@ -140,12 +145,13 @@ const deleteUser = () => {
   axios
     .delete(`http://localhost:8080/profile/delete/${deleteUserId}`)
     .then((res) => {
-      alert(res.data.message);
+      toastMessageUser.innerHTML = res.data.message;
+      toastBodyUser.classList.add("show");
       setTimeout(() => {
         location.reload();
       }, 1000);
     });
-    sendEmail(email, "Your Profile Deleted by Admin")
+  sendEmail(email, "Your Profile Deleted by Admin");
 };
 
 const getDataToUpdate = (id) => {
@@ -167,20 +173,22 @@ const updateUser = () => {
   const data = { username, email, password, position };
 
   if (!username || !password || !email || !position) {
-    alert("Please, Fill all Field");
+    toastMessageUser.innerHTML = "Please fill all field";
+    toastBodyUser.classList.add("show");
   } else {
     const id = userId;
     axios
       .put(`http://localhost:8080/profile/update/${id}`, data)
       .then((res) => {
-        alert(res.data.message);
+        toastMessageUser.innerHTML = res.data.message;
+        toastBodyUser.classList.add("show");
         setTimeout(() => {
           location.reload();
         }, 1000);
       });
   }
   userId = null;
-  sendEmail(email, "Your Profile Information Updated by Admin")
+  sendEmail(email, "Your Profile Information Updated by Admin");
 };
 
 // sendEmail to user

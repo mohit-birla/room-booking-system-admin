@@ -42,7 +42,7 @@
     <title>Admin Pannel</title>
   </head>
 
-  <body>
+  <div>
     <!-- Modal For Add Meeting -->
     <div class="modal fade" id="addMeetingModal" role="dialog">
       <div class="modal-dialog">
@@ -151,7 +151,7 @@
             >
               Cancel
             </button>
-            <button type="button" class="btn btn-danger" id="confirmDeleteBtn" onclick="deleteMeeting()">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteBtn" onclick="deleteMeeting()">
               Delete
             </button>
           </div>
@@ -249,22 +249,23 @@
             >
               Cancel
             </button>
-            <button type="button" class="btn btn-danger" onclick="deleteUser()">Confirm</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteUser()">Confirm</button>
           </div>
         </div>
       </div>
     </div>
     <!-- Model for Delete User Ends-->
-
-    <div class="toast align-items-center text-white bg-primary border-0" id="toastForAlert" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="d-flex">
-        <div class="toast-body">
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div id="toastToShowMessage" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Message</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toastBody">
           Hello, world! This is a toast message.
         </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
     </div>
-
     <!-- Model for Room ends-->
     <div
       class="modal fade"
@@ -295,7 +296,7 @@
             >
               Cancel
             </button>
-            <button type="button" class="btn btn-danger" onclick="deleteRoom()">Confirm</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteRoom()">Confirm</button>
           </div>
         </div>
       </div>
@@ -479,6 +480,5 @@
     <script src="../js/meetingRoom.js"></script>
     <script src="../js/users.js"></script>
     <script src="../js/dashboard.js"></script>
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
   </body>
 </html>
