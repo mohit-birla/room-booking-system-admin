@@ -5,6 +5,10 @@ var meetingId;
 var userNameForMeeting = [];
 var meetings = [];
 var roomsForMeetings = [];
+var meetingIdtoDeleteMeeting;
+
+let toastMessage = document.getElementById("toastBody");
+let toastBody = document.getElementById("toastToShowMessage");
 
 const getMeetings = () => {
   axios.get("http://localhost:8080/meeting/all").then((res) => {
@@ -14,22 +18,21 @@ const getMeetings = () => {
     userNameForMeeting = res.data.data;
     dashboardScreen(meetings);
   });
-  
 };
 
-let logoutButton = document.getElementById('logoutButton');
-logoutButton.addEventListener('click', ()=>{
+let logoutButton = document.getElementById("logoutButton");
+logoutButton.addEventListener("click", () => {
   localStorage.removeItem("loggedInAdminId");
   location.reload();
-})
+});
 
 window.onload = () => {
-  loggedInAdminId = localStorage.getItem('loggedInAdminId')
-  if(loggedInAdminId){
+  loggedInAdminId = localStorage.getItem("loggedInAdminId");
+  if (loggedInAdminId) {
     getMeetings();
     getRoomsForAddMeeting();
-  }else {
-    location.replace('../index.html')
+  } else {
+    location.replace("../index.html");
   }
 };
 
@@ -62,7 +65,9 @@ const dashboardScreen = (meetings) => {
                 </thead>
                 <tbody>
                     ${meetings?.map((item) => {
-                      let meetingCreater = userNameForMeeting.filter(u=>u.emp_id == item.fk_emp_id);
+                      let meetingCreater = userNameForMeeting.filter(
+                        (u) => u.emp_id == item.fk_emp_id
+                      );
                       return `<tr>
                                 <th scope="row">${item.meeting_id}</th>
                                 <td>${item.meeting_name}</td>
@@ -72,7 +77,7 @@ const dashboardScreen = (meetings) => {
                                 <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addMeetingModal" onclick="saveId(${
                                   item.meeting_id
                                 })">Edit</button></td>
-                                <td><button type="button" class="btn btn-outline-danger" onclick="deleteMeeting(${
+                                <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteMeetingModal" onclick="deleteMeetingIdSaver(${
                                   item.meeting_id
                                 })">Delete</button></td>
 
@@ -88,26 +93,30 @@ const dashboardScreen = (meetings) => {
   dashboardScreen.innerHTML = dashboardScreenHtml;
 };
 
+const deleteMeetingIdSaver = (id) => {
+  meetingIdtoDeleteMeeting = id;
+};
+
 const getRoomsForAddMeeting = () => {
   axios.get("http://localhost:8080/rooms/all").then((res) => {
     roomsForMeetings = res.data.data;
   });
 };
 
-
 const changeMeetingHtml = () => {
   document.getElementById("addMeetingTitle").innerHTML = "Add Meeting";
-  
-  
-  const selectParticipants = userNameForMeeting.map((item)=>{
-    return `<option value="${item.email}">${item.name}</option>`
-  })
-  
-  const selectRooms = roomsForMeetings.map((item)=>{
-    return `<option value="${item.room_id}">${item.room_name}</option>`
-  })
+  document.getElementById("hideParticipants").classList.remove("d-none");
 
-  document.getElementById("addMeetingParticipents").innerHTML = selectParticipants;
+  const selectParticipants = userNameForMeeting.map((item) => {
+    return `<option value="${item.email}">${item.name}</option>`;
+  });
+
+  const selectRooms = roomsForMeetings.map((item) => {
+    return `<option value="${item.room_id}">${item.room_name}</option>`;
+  });
+
+  document.getElementById("addMeetingParticipents").innerHTML =
+    selectParticipants;
 
   document.getElementById("roomType").innerHTML = selectRooms;
   document.getElementById("meetingTitle").value = "";
@@ -128,14 +137,21 @@ const submitMeeting = () => {
   let start_time = document.getElementById("clockInTime").value;
   let end_time = document.getElementById("clockOutTime").value;
 
-  let participant = document.getElementById("addMeetingParticipents").value;
-  let mailBody = `
-    Meeting scheduled :-
-    Title : ${meeting_name},
-    Date : ${meeting_date},
-    Time : ${start_time}-${end_time},
-  `
+  let participant = document.getElementById("addMeetingParticipents");
+  var selectedParticipant = [...participant.selectedOptions].map(
+    (option) => option.value
+  );
 
+  let mailPeople = "";
+  for (let i = 0; i < selectedParticipant.length; i++) {
+    if (i + 1 == selectedParticipant.length) {
+      mailPeople += `${selectedParticipant[i]}`;
+    } else {
+      mailPeople += `${selectedParticipant[i]}, `;
+    }
+  }
+
+  console.log(mailPeople);
 
   let fk_emp_id = loggedInAdminId;
   const data = {
@@ -145,7 +161,14 @@ const submitMeeting = () => {
     start_time,
     end_time,
     fk_emp_id,
-  }
+  };
+
+  let mailBody = `
+  Meeting scheduled :-
+  Title : ${meeting_name},
+  Date : ${meeting_date},
+  Time : ${start_time}-${end_time},
+  `;
 
   if (
     !meeting_name ||
@@ -154,19 +177,19 @@ const submitMeeting = () => {
     !start_time ||
     !end_time
   ) {
-    alert("Please, Fill all Field");
+    toastMessage.innerHTML = "Please fill all field";
+    toastBody.classList.add("show");
   } else {
-    axios
-      .post("http://localhost:8080/meeting/add", data)
-      .then((res) => {
-        if(res.data.success){
-          sendEmailToParti(participant, mailBody)
-        }
-        alert(res.data.message);
-        setTimeout(() => {
-          location.reload();
-        }, 1000);
-      });
+    axios.post("http://localhost:8080/meeting/add", data).then((res) => {
+      if (res.data.success) {
+        sendEmailToParti(mailPeople, mailBody);
+      }
+      toastMessage.innerHTML = res.data.message;
+      toastBody.classList.add("show");
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 1000);
+    });
   }
 };
 
@@ -182,13 +205,14 @@ $(document).ready(function () {
 });
 
 const saveId = (id) => {
+  document.getElementById("hideParticipants").classList.add("d-none");
   meetingId = id;
   document.getElementById("addMeetingTitle").innerHTML = "Update Meeting";
   const meet = meetings.filter((item) => item.meeting_id == id)[0];
 
-  const selectRooms = roomsForMeetings.map((item)=>{
-    return `<option value="${item.room_id}">${item.room_name}</option>`
-  })
+  const selectRooms = roomsForMeetings.map((item) => {
+    return `<option value="${item.room_id}">${item.room_name}</option>`;
+  });
 
   document.getElementById("meetingTitle").value = meet.meeting_name;
   document.getElementById("roomType").innerHTML = selectRooms;
@@ -199,7 +223,6 @@ const saveId = (id) => {
 
 // Edit Meeting
 const updateMeeting = () => {
-  document.getElementById("hideParticipants").display = none;
   let meeting_name = document.getElementById("meetingTitle").value;
   let fk_room_id = document.getElementById("roomType").value;
   let meeting_date = document.getElementById("datepicker").value;
@@ -213,7 +236,7 @@ const updateMeeting = () => {
     start_time,
     end_time,
     updated_by,
-  }
+  };
 
   if (
     !meeting_name ||
@@ -222,13 +245,15 @@ const updateMeeting = () => {
     !start_time ||
     !end_time
   ) {
-    alert("Please, Fill all Field");
+    toastMessage.innerHTML = "Please fill all field";
+    toastBody.classList.add("show");
   } else {
     const id = meetingId;
     axios
       .put(`http://localhost:8080/meeting/update/${id}`, data)
       .then((res) => {
-        alert(res.data.message);
+        toastMessage.innerHTML = res.data.message;
+        toastBody.classList.add("show");
         setTimeout(() => {
           location.reload();
         }, 1000);
@@ -237,14 +262,16 @@ const updateMeeting = () => {
   meetingId = null;
 };
 
-const deleteMeeting = (deleteID) => {
+const deleteMeeting = () => {
+  deleteID = meetingIdtoDeleteMeeting;
   axios
     .delete(`http://localhost:8080/meeting/delete/${deleteID}`)
     .then((res) => {
-      alert(res.data.message);
+      toastMessage.innerHTML = res.data.message;
+      toastBody.classList.add("show");
       setTimeout(() => {
         location.reload();
-      }, 1000);
+      }, 2000);
     });
 };
 

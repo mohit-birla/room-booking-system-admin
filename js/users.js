@@ -2,6 +2,10 @@
 var usersArray = [];
 var userId;
 let usersButton = document.getElementById("usersButton");
+let userIdToDeleteUser;
+
+let toastMessageUser = document.getElementById("toastBody");
+let toastBodyUser = document.getElementById("toastToShowMessage");
 
 const getUsers = () => {
   axios.get("http://localhost:8080/profile/all").then((res) => {
@@ -50,7 +54,7 @@ const generateUsersScreen = (usersArray) => {
                                 <td>${usr.email}</td>
                                 <td>${usr.position}</td>
                                 <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addUsersModel " onclick="getDataToUpdate(${usr.emp_id})">Edit</button></td>
-                                <td><button type="button" class="btn btn-outline-danger" onclick="deleteUser(${usr.emp_id})">Delete</button></td>
+                                <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal " onclick="deleteUserIdSaver(${usr.emp_id})">Delete</button></td>
                             </tr>`;
                     })}
                 </tbody>
@@ -61,6 +65,10 @@ const generateUsersScreen = (usersArray) => {
     </div>
     `;
   usersScreen.innerHTML = usersHtml;
+};
+
+const deleteUserIdSaver = (id) => {
+  userIdToDeleteUser = id;
 };
 
 const changeHtml = () => {
@@ -117,29 +125,33 @@ let submitUser = () => {
   const data = { name, email, password, position };
 
   if (!name || !email || !password || !position) {
-    alert("Please, Fill all Field");
+    toastMessageUser.innerHTML = "Please fill all field";
+    toastBodyUser.classList.add("show");
   } else {
     axios.post("http://localhost:8080/register", data).then((res) => {
-      alert(res.data.message);
+      toastMessageUser.innerHTML = res.data.message;
+      toastBodyUser.classList.add("show");
       setTimeout(() => {
         location.reload();
       }, 1000);
     });
   }
-  sendEmail(email, "Your Profile Created")
+  sendEmail(email, "Your Profile Created by Admin");
 };
 
 // Delete user
-const deleteUser = (deleteUserId) => {
+const deleteUser = () => {
+  const deleteUserId = userIdToDeleteUser;
   axios
     .delete(`http://localhost:8080/profile/delete/${deleteUserId}`)
     .then((res) => {
-      alert(res.data.message);
+      toastMessageUser.innerHTML = res.data.message;
+      toastBodyUser.classList.add("show");
       setTimeout(() => {
         location.reload();
       }, 1000);
     });
-    sendEmail(email, "Your Profile Deleted")
+  sendEmail(email, "Your Profile Deleted by Admin");
 };
 
 const getDataToUpdate = (id) => {
@@ -161,20 +173,22 @@ const updateUser = () => {
   const data = { username, email, password, position };
 
   if (!username || !password || !email || !position) {
-    alert("Please, Fill all Field");
+    toastMessageUser.innerHTML = "Please fill all field";
+    toastBodyUser.classList.add("show");
   } else {
     const id = userId;
     axios
       .put(`http://localhost:8080/profile/update/${id}`, data)
       .then((res) => {
-        alert(res.data.message);
+        toastMessageUser.innerHTML = res.data.message;
+        toastBodyUser.classList.add("show");
         setTimeout(() => {
           location.reload();
         }, 1000);
       });
   }
   userId = null;
-  sendEmail(email, "Your Profile Updated")
+  sendEmail(email, "Your Profile Information Updated by Admin");
 };
 
 // sendEmail to user
