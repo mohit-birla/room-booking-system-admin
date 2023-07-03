@@ -42,7 +42,7 @@
     <title>Admin Pannel</title>
   </head>
 
-  <div>
+  <body>
     <!-- Modal For Add Meeting -->
     <div class="modal fade" id="addMeetingModal" role="dialog">
       <div class="modal-dialog">
@@ -72,7 +72,12 @@
               </div>
               <div class="form-group d-none" id="hideParticipants">
                 <label for="roomType" class="py-2">Add Participant</label>
-                <select class="form-control" id="addMeetingParticipents" required multiple></select>
+                <select
+                  class="form-control"
+                  id="addMeetingParticipents"
+                  required
+                  multiple
+                ></select>
               </div>
               <div class="form-group">
                 <label for="roomType" class="py-2">Room</label>
@@ -151,7 +156,13 @@
             >
               Cancel
             </button>
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteBtn" onclick="deleteMeeting()">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+              id="confirmDeleteBtn"
+              onclick="deleteMeeting()"
+            >
               Delete
             </button>
           </div>
@@ -249,17 +260,35 @@
             >
               Cancel
             </button>
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteUser()">Confirm</button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+              onclick="deleteUser()"
+            >
+              Confirm
+            </button>
           </div>
         </div>
       </div>
     </div>
     <!-- Model for Delete User Ends-->
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-      <div id="toastToShowMessage" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+      <div
+        id="toastToShowMessage"
+        class="toast hide"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
         <div class="toast-header">
           <strong class="me-auto">Message</strong>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="toast-body" id="toastBody">
           Hello, world! This is a toast message.
@@ -296,7 +325,14 @@
             >
               Cancel
             </button>
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteRoom()">Confirm</button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+              onclick="deleteRoom()"
+            >
+              Confirm
+            </button>
           </div>
         </div>
       </div>
@@ -380,7 +416,7 @@
       </div>
     </div>
     <!-- Model for Add Room End-->
-    
+
     <div class="container-fluid">
       <div class="row flex-nowrap">
         <!-- Sidebar -->
@@ -458,9 +494,7 @@
               Logout
             </button>
           </nav>
-          <div id="screenContent">
-            
-          </div>
+          <div id="screenContent"></div>
         </div>
       </div>
     </div>
