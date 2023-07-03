@@ -97,7 +97,7 @@ const getRoomsForAddMeeting = () => {
 
 const changeMeetingHtml = () => {
   document.getElementById("addMeetingTitle").innerHTML = "Add Meeting";
-  
+  document.getElementById("hideParticipants").classList.remove("d-none")
   
   const selectParticipants = userNameForMeeting.map((item)=>{
     return `<option value="${item.email}">${item.name}</option>`
@@ -128,15 +128,21 @@ const submitMeeting = () => {
   let start_time = document.getElementById("clockInTime").value;
   let end_time = document.getElementById("clockOutTime").value;
 
-  let participant = document.getElementById("addMeetingParticipents").value;
-  let mailBody = `
-    Meeting scheduled :-
-    Title : ${meeting_name},
-    Date : ${meeting_date},
-    Time : ${start_time}-${end_time},
-  `
+  let participant = document.getElementById("addMeetingParticipents");
+  var selectedParticipant = [...participant.selectedOptions].map(option => option.value);
 
+  let mailPeople = "";
+  for(let i=0; i<selectedParticipant.length; i++){
+    if(i + 1 == selectedParticipant.length){
+      mailPeople += `${selectedParticipant[i]}`;
+    }else {
+      mailPeople += `${selectedParticipant[i]}, `;
+    }
+  }
 
+  console.log(mailPeople)
+  
+  
   let fk_emp_id = loggedInAdminId;
   const data = {
     meeting_name,
@@ -146,6 +152,13 @@ const submitMeeting = () => {
     end_time,
     fk_emp_id,
   }
+  
+  let mailBody = `
+  Meeting scheduled :-
+  Title : ${meeting_name},
+  Date : ${meeting_date},
+  Time : ${start_time}-${end_time},
+  `
 
   if (
     !meeting_name ||
@@ -160,7 +173,7 @@ const submitMeeting = () => {
       .post("http://localhost:8080/meeting/add", data)
       .then((res) => {
         if(res.data.success){
-          sendEmailToParti(participant, mailBody)
+          sendEmailToParti(mailPeople, mailBody)
         }
         alert(res.data.message);
         setTimeout(() => {
@@ -182,6 +195,8 @@ $(document).ready(function () {
 });
 
 const saveId = (id) => {
+  
+  document.getElementById("hideParticipants").classList.add("d-none");
   meetingId = id;
   document.getElementById("addMeetingTitle").innerHTML = "Update Meeting";
   const meet = meetings.filter((item) => item.meeting_id == id)[0];
@@ -199,7 +214,6 @@ const saveId = (id) => {
 
 // Edit Meeting
 const updateMeeting = () => {
-  document.getElementById("hideParticipants").display = none;
   let meeting_name = document.getElementById("meetingTitle").value;
   let fk_room_id = document.getElementById("roomType").value;
   let meeting_date = document.getElementById("datepicker").value;
