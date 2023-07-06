@@ -11,10 +11,10 @@ let toastMessage = document.getElementById("toastBody");
 let toastBody = document.getElementById("toastToShowMessage");
 
 const getMeetings = () => {
-  axios.get("http://localhost:8080/meeting/all").then((res) => {
+  axios.get("http://10.0.0.13:8080/meeting/all").then((res) => {
     meetings = res.data.data;
   });
-  axios.get("http://localhost:8080/profile/all").then((res) => {
+  axios.get("http://10.0.0.13:8080/profile/all").then((res) => {
     userNameForMeeting = res.data.data;
     dashboardScreen(meetings);
   });
@@ -98,7 +98,7 @@ const deleteMeetingIdSaver = (id) => {
 };
 
 const getRoomsForAddMeeting = () => {
-  axios.get("http://localhost:8080/rooms/all").then((res) => {
+  axios.get("http://10.0.0.13:8080/rooms/all").then((res) => {
     roomsForMeetings = res.data.data;
   });
 };
@@ -180,7 +180,7 @@ const submitMeeting = () => {
     toastMessage.innerHTML = "Please fill all field";
     toastBody.classList.add("show");
   } else {
-    axios.post("http://localhost:8080/meeting/add", data).then((res) => {
+    axios.post("http://10.0.0.13:8080/meeting/add", data).then((res) => {
       if (res.data.success) {
         sendEmailToParti(mailPeople, mailBody);
       }
@@ -250,7 +250,7 @@ const updateMeeting = () => {
   } else {
     const id = meetingId;
     axios
-      .put(`http://localhost:8080/meeting/update/${id}`, data)
+      .put(`http://10.0.0.13:8080/meeting/update/${id}`, data)
       .then((res) => {
         toastMessage.innerHTML = res.data.message;
         toastBody.classList.add("show");
@@ -265,7 +265,7 @@ const updateMeeting = () => {
 const deleteMeeting = () => {
   deleteID = meetingIdtoDeleteMeeting;
   axios
-    .delete(`http://localhost:8080/meeting/delete/${deleteID}`)
+    .delete(`http://10.0.0.13:8080/meeting/delete/${deleteID}`)
     .then((res) => {
       toastMessage.innerHTML = res.data.message;
       toastBody.classList.add("show");

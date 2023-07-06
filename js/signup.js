@@ -16,7 +16,7 @@ let registerUser = () => {
     if (!name && !email && !password && !position) {
       alert("Please, Fill all Field");
     } else {
-      axios.post("http://localhost:8080/register", data).then((res) => {
+      axios.post("http://10.0.0.13:8080/register", data).then((res) => {
         alert(res.data.message);
         setTimeout(() => {
           location.replace('../index.html');

@@ -8,7 +8,7 @@ let toastMessageRoom = document.getElementById("toastBody");
 let toastBodyRoom = document.getElementById("toastToShowMessage");
 
 const getRooms = () => {
-  axios.get("http://localhost:8080/rooms/all").then((res) => {
+  axios.get("http://10.0.0.13:8080/rooms/all").then((res) => {
     meetingRooms = res.data.data;
     console.log(meetingRooms);
     generateRoomsScreen(meetingRooms);
@@ -163,7 +163,7 @@ let submitRoom = () => {
     toastMessageRoom.innerHTML = "Please fill all field";
     toastBodyRoom.classList.add("show");
   } else {
-    axios.post("http://localhost:8080/rooms/add", data).then((res) => {
+    axios.post("http://10.0.0.13:8080/rooms/add", data).then((res) => {
       toastMessageRoom.innerHTML = res.data.message;
       toastBodyRoom.classList.add("show");
       setTimeout(() => {
@@ -213,7 +213,7 @@ const updateRoom = () => {
     toastBodyRoom.classList.add("show");
   } else {
     const id = roomId;
-    axios.put(`http://localhost:8080/rooms/update/${id}`, data).then((res) => {
+    axios.put(`http://10.0.0.13:8080/rooms/update/${id}`, data).then((res) => {
       toastMessageRoom.innerHTML = res.data.message;
       toastBodyRoom.classList.add("show");
       setTimeout(() => {

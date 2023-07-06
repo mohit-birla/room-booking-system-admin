@@ -8,7 +8,7 @@ let toastMessageUser = document.getElementById("toastBody");
 let toastBodyUser = document.getElementById("toastToShowMessage");
 
 const getUsers = () => {
-  axios.get("http://localhost:8080/profile/all").then((res) => {
+  axios.get("http://10.0.0.13:8080/profile/all").then((res) => {
     usersArray = res.data.data;
     generateUsersScreen(usersArray);
   });
@@ -128,7 +128,7 @@ let submitUser = () => {
     toastMessageUser.innerHTML = "Please fill all field";
     toastBodyUser.classList.add("show");
   } else {
-    axios.post("http://localhost:8080/register", data).then((res) => {
+    axios.post("http://10.0.0.13:8080/register", data).then((res) => {
       toastMessageUser.innerHTML = res.data.message;
       toastBodyUser.classList.add("show");
       setTimeout(() => {
@@ -143,7 +143,7 @@ let submitUser = () => {
 const deleteUser = () => {
   const deleteUserId = userIdToDeleteUser;
   axios
-    .delete(`http://localhost:8080/profile/delete/${deleteUserId}`)
+    .delete(`http://10.0.0.13:8080/profile/delete/${deleteUserId}`)
     .then((res) => {
       toastMessageUser.innerHTML = res.data.message;
       toastBodyUser.classList.add("show");
@@ -178,7 +178,7 @@ const updateUser = () => {
   } else {
     const id = userId;
     axios
-      .put(`http://localhost:8080/profile/update/${id}`, data)
+      .put(`http://10.0.0.13:8080/profile/update/${id}`, data)
       .then((res) => {
         toastMessageUser.innerHTML = res.data.message;
         toastBodyUser.classList.add("show");

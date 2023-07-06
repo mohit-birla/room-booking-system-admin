@@ -13,8 +13,8 @@ let loginUser = () => {
   if (!email && !password) {
     alert("Please, Fill all Field");
   } else {
-    axios.post("http://localhost:8080/login", data).then((res) => {
-      if (res.data.message == "User not found") {
+    axios.post("http://10.0.0.13:8080/login", data).then((res) => {
+      if (res.data.message == "User not found, Please register") {
         alert("Email password do not match");
       } else {
         let loggedInAdminId = res.data.data[0];
