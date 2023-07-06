@@ -71,7 +71,7 @@ const dashboardScreen = (meetings) => {
                       return `<tr>
                                 <th scope="row">${item.meeting_id}</th>
                                 <td>${item.meeting_name}</td>
-                                <td>${meetingCreater[0].name}</td>
+                                <td>${meetingCreater.length != 0 ? meetingCreater[0].name : "No Name"}</td>
                                 <td>${item.meeting_date.slice(0, 10)}</td>
                                 <td>${item.start_time}-${item.end_time}</td>
                                 <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addMeetingModal" onclick="saveId(${
@@ -186,9 +186,9 @@ const submitMeeting = () => {
       }
       toastMessage.innerHTML = res.data.message;
       toastBody.classList.add("show");
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 1000);
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
     });
   }
 };
@@ -228,7 +228,8 @@ const updateMeeting = () => {
   let meeting_date = document.getElementById("datepicker").value;
   let start_time = document.getElementById("clockInTime").value;
   let end_time = document.getElementById("clockOutTime").value;
-  let updated_by = 2;
+  let updated_by = loggedInAdminId;
+  let fk_emp_id = loggedInAdminId;
   const data = {
     meeting_name,
     fk_room_id,
@@ -236,6 +237,7 @@ const updateMeeting = () => {
     start_time,
     end_time,
     updated_by,
+    fk_emp_id
   };
 
   if (
