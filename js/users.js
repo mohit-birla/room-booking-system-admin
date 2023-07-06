@@ -3,9 +3,15 @@ var usersArray = [];
 var userId;
 let usersButton = document.getElementById("usersButton");
 let userIdToDeleteUser;
+var counterUser = 0;
 
 let toastMessageUser = document.getElementById("toastBody");
 let toastBodyUser = document.getElementById("toastToShowMessage");
+
+
+const counterFunctionUser = () => {
+  counterUser += 1;
+}
 
 const getUsers = () => {
   axios.get("http://10.0.0.13:8080/profile/all").then((res) => {
@@ -48,8 +54,9 @@ const generateUsersScreen = (usersArray) => {
                 </thead>
                 <tbody id="tableBody">
                     ${usersArray?.map((usr) => {
+                      counterFunctionUser();
                       return `<tr>
-                                <th scope="row">${usr.emp_id}</th>
+                                <th scope="row">${counterUser}</th>
                                 <td>${usr.name}</td>
                                 <td>${usr.email}</td>
                                 <td>${usr.position}</td>
@@ -64,6 +71,7 @@ const generateUsersScreen = (usersArray) => {
         } 
     </div>
     `;
+  counterUser = 0;
   usersScreen.innerHTML = usersHtml;
 };
 

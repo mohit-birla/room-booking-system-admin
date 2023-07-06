@@ -3,9 +3,14 @@ let meetingRoomButton = document.getElementById("roomButton");
 var meetingRooms = [];
 var roomId;
 var roomIdtoDeleteRoom;
+var counterRoom = 0;
 
 let toastMessageRoom = document.getElementById("toastBody");
 let toastBodyRoom = document.getElementById("toastToShowMessage");
+
+const counterFunctionRoom = () => {
+  counterRoom += 1;
+}
 
 const getRooms = () => {
   axios.get("http://10.0.0.13:8080/rooms/all").then((res) => {
@@ -43,8 +48,9 @@ const generateRoomsScreen = (meetingRooms) => {
                 </thead>
                 <tbody>
                     ${meetingRooms?.map((item) => {
+                      counterFunctionRoom();
                       return `<tr>
-                                        <th scope="row">${item.room_id}</th>
+                                        <th scope="row">${counterRoom}</th>
                                         <td>${item.room_name}</td>
                                         <td>${item.room_code}</td>
                                         <td>${item.capacity}</td>
@@ -129,6 +135,7 @@ const generateRoomsScreen = (meetingRooms) => {
             : `<div style="text-align: center; margin-top: 10rem"><h5>No Meeting Room</h5></div>`
         }
     </div>`;
+    counterRoom = 0;
   meetingRoomScreen.innerHTML = meetingRoomHtml;
 };
 

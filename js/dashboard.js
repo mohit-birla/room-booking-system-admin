@@ -6,6 +6,7 @@ var userNameForMeeting = [];
 var meetings = [];
 var roomsForMeetings = [];
 var meetingIdtoDeleteMeeting;
+var counter = 0;
 
 let toastMessage = document.getElementById("toastBody");
 let toastBody = document.getElementById("toastToShowMessage");
@@ -19,6 +20,10 @@ const getMeetings = () => {
     dashboardScreen(meetings);
   });
 };
+
+const counterFunction = () => {
+  counter += 1;
+}
 
 let logoutButton = document.getElementById("logoutButton");
 logoutButton.addEventListener("click", () => {
@@ -51,7 +56,7 @@ const dashboardScreen = (meetings) => {
         ${
           meetings.length > 0
             ? `<div style="overflow: auto">
-            <table class="table table-bordered mt-2">
+            <table class="table table-bordered mt-2 css-serial">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -68,8 +73,9 @@ const dashboardScreen = (meetings) => {
                       let meetingCreater = userNameForMeeting.filter(
                         (u) => u.emp_id == item.fk_emp_id
                       );
+                      counterFunction();
                       return `<tr>
-                                <th scope="row">${item.meeting_id}</th>
+                                <th scope="row">${counter}</th>
                                 <td>${item.meeting_name}</td>
                                 <td>${meetingCreater.length != 0 ? meetingCreater[0].name : "No Name"}</td>
                                 <td>${item.meeting_date.slice(0, 10)}</td>
@@ -90,6 +96,7 @@ const dashboardScreen = (meetings) => {
             : `<div style="text-align: center; margin-top: 10rem"><h5>No Meeting Room</h5></div>`
         }
     </div>`;
+    counter = 0;
   dashboardScreen.innerHTML = dashboardScreenHtml;
 };
 
