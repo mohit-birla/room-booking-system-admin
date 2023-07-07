@@ -90,7 +90,7 @@ const dashboardScreen = (meetings) => {
                                 })">Delete</button></td>
 
                               </tr>                                `;
-                    })}
+                    }).join('')}
                     
                 </tbody>
             </table>

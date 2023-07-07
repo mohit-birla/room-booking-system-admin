@@ -127,7 +127,7 @@ const generateRoomsScreen = (meetingRooms) => {
                                         </td>
                                     </tr> -->
                                     `;
-                    })}
+                    }).join('')}
                     
                 </tbody>
             </table>

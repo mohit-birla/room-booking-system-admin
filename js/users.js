@@ -63,7 +63,7 @@ const generateUsersScreen = (usersArray) => {
                                 <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addUsersModel " onclick="getDataToUpdate(${usr.emp_id})">Edit</button></td>
                                 <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal " onclick="deleteUserIdSaver(${usr.emp_id})">Delete</button></td>
                             </tr>`;
-                    })}
+                    }).join('')}
                 </tbody>
             </table>
         </div>`
