@@ -184,7 +184,7 @@ let submitRoom = () => {
 const deleteRoom = () => {
   const deleteRoomId = roomIdtoDeleteRoom;
   axios
-    .delete(`http://localhost:8080/rooms/delete/${deleteRoomId}`)
+    .delete(`http://10.0.0.13:8080/rooms/delete/${deleteRoomId}`)
     .then((res) => {
       toastMessageRoom.innerHTML = res.data.message;
       toastBodyRoom.classList.add("show");

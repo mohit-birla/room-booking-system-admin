@@ -96,12 +96,14 @@ const searchUser = () => {
   let filteredUser = usersArray.filter((item) => {
     return item.name.toLowerCase().includes(value);
   });
+  counterUser = 0;
 
   var innerRows = "";
   const generateFilteredUser = () => {
     innerRows = filteredUser?.map((usr) => {
+      counterFunctionUser();
       return `<tr>
-                        <th scope="row">${usr.emp_id}</th>
+                        <th scope="row">${counterUser}</th>
                         <td>${usr.name}</td>
                         <td>${usr.email}</td>
                         <td>${usr.position}</td>
@@ -109,6 +111,7 @@ const searchUser = () => {
                         <td><button type="button" class="btn btn-outline-danger" onclick="deleteUser(${usr.emp_id})">Delete</button></td>
                     </tr>`;
     });
+    counterUser = 0;
   };
   generateFilteredUser();
   if (innerRows.length > 0) {
