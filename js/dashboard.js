@@ -143,7 +143,7 @@ const changeMeetingHtml = () => {
 };
 
 document.querySelector('#example-select').addEventListener('change', function() {
-  mailToUser = JSON.stringify(this.value);
+  mailToUser = this.value;
 });
 
 // Add Meeting
@@ -158,7 +158,12 @@ const submitMeeting = () => {
   let start_time = document.getElementById("clockInTime").value;
   let end_time = document.getElementById("clockOutTime").value;
 
-  mailToUser.slice(1, mailToUser.length-1);
+  let mailEmails = "";
+  mailToUser.forEach((item)=>{
+    mailEmails += item + ",";
+  })
+
+  let finalMails = mailEmails.slice(0, mailEmails.length-1);
 
   let fk_emp_id = loggedInAdminId;
   const data = {
@@ -189,7 +194,7 @@ const submitMeeting = () => {
   } else {
     axios.post("http://10.0.0.13:8080/meeting/add", data).then((res) => {
       if (res.data.success) {
-        sendEmailToParti(mailToUser, mailBody);
+        sendEmailToParti(finalMails, mailBody);
       }
       toastMessage.innerHTML = res.data.message;
       toastBody.classList.add("show");
@@ -280,7 +285,7 @@ const deleteMeeting = () => {
       toastBody.classList.add("show");
       setTimeout(() => {
         location.reload();
-      }, 2000);
+      }, 1000);
     });
 };
 
@@ -291,7 +296,7 @@ const sendEmailToParti = (userEmail, msg) => {
     Host: "smtp.elasticemail.com",
     Username: "sumit.vishwakarma@averybit.in",
     Password: "B5817F36815288F5FC9E97DABA161074033F",
-    To: `${userEmail}`,
+    To: userEmail,
     From: "sumit.vishwakarma@averybit.in",
     Subject: "Meeting Scheduled",
     Body: msg,
