@@ -7,6 +7,8 @@ var meetings = [];
 var roomsForMeetings = [];
 var meetingIdtoDeleteMeeting;
 var counter = 0;
+var myOptions = [];
+var mailToUser;
 
 let toastMessage = document.getElementById("toastBody");
 let toastBody = document.getElementById("toastToShowMessage");
@@ -110,20 +112,28 @@ const getRoomsForAddMeeting = () => {
   });
 };
 
+const generateOptions = () => {
+  userNameForMeeting.forEach(element => {
+    let value = { label: element.name, value: element.email}
+    myOptions.push(value);
+  });
+}
+
 const changeMeetingHtml = () => {
   document.getElementById("addMeetingTitle").innerHTML = "Add Meeting";
   document.getElementById("hideParticipants").classList.remove("d-none");
 
-  const selectParticipants = userNameForMeeting.map((item) => {
-    return `<option value="${item.email}">${item.name}</option>`;
+  generateOptions();
+
+  VirtualSelect.init({
+    ele: '#example-select',
+    options: myOptions,
+    multiple: true
   });
 
   const selectRooms = roomsForMeetings.map((item) => {
     return `<option value="${item.room_id}">${item.room_name}</option>`;
   });
-
-  document.getElementById("addMeetingParticipents").innerHTML =
-    selectParticipants;
 
   document.getElementById("roomType").innerHTML = selectRooms;
   document.getElementById("meetingTitle").value = "";
@@ -131,6 +141,10 @@ const changeMeetingHtml = () => {
   document.getElementById("clockInTime").value = "";
   document.getElementById("clockOutTime").value = "";
 };
+
+document.querySelector('#example-select').addEventListener('change', function() {
+  mailToUser = JSON.stringify(this.value);
+});
 
 // Add Meeting
 const submitMeeting = () => {
@@ -144,21 +158,7 @@ const submitMeeting = () => {
   let start_time = document.getElementById("clockInTime").value;
   let end_time = document.getElementById("clockOutTime").value;
 
-  let participant = document.getElementById("addMeetingParticipents");
-  var selectedParticipant = [...participant.selectedOptions].map(
-    (option) => option.value
-  );
-
-  let mailPeople = "";
-  for (let i = 0; i < selectedParticipant.length; i++) {
-    if (i + 1 == selectedParticipant.length) {
-      mailPeople += `${selectedParticipant[i]}`;
-    } else {
-      mailPeople += `${selectedParticipant[i]}, `;
-    }
-  }
-
-  console.log(mailPeople);
+  mailToUser.slice(1, mailToUser.length-1);
 
   let fk_emp_id = loggedInAdminId;
   const data = {
@@ -189,7 +189,7 @@ const submitMeeting = () => {
   } else {
     axios.post("http://10.0.0.13:8080/meeting/add", data).then((res) => {
       if (res.data.success) {
-        sendEmailToParti(mailPeople, mailBody);
+        sendEmailToParti(mailToUser, mailBody);
       }
       toastMessage.innerHTML = res.data.message;
       toastBody.classList.add("show");
